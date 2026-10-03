@@ -10,7 +10,6 @@ Eligible rows with no purchases in the window are kept with target 0.
 
 from __future__ import annotations
 
-import numpy as np
 import pandas as pd
 
 from src.config import load_config
@@ -47,3 +46,13 @@ def build_targets() -> pd.DataFrame:
     out["snapshot_day"] = out["snapshot_day"].astype("int16")
     out[TARGET] = out[TARGET].round(2)  # cents; removes float-summation-order noise
     return out.sort_values(KEYS, ignore_index=True)
+
+
+def load_targets() -> pd.DataFrame:
+    """Harness-only: the persisted table with labels for every split (incl. test)."""
+    from src.config import PROCESSED_DIR
+
+    path = PROCESSED_DIR / "targets.parquet"
+    if not path.exists():
+        raise FileNotFoundError(f"{path} missing — run `uv run python scripts/build_targets.py`")
+    return pd.read_parquet(path)

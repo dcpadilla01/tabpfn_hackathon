@@ -1,8 +1,13 @@
 """Model backends behind the fixed evaluator. The agent never touches these.
 
-`fit_predict(backend, X_train, y_train, X_eval)` returns (point_predictions, meta).
+`fit_predict(backend, X_train, y_train, X_eval, cat_cols)` returns (point_predictions, meta).
 Point predictions are loss-consistent with MAE: TabPFN's predictive median,
 XGBoost with an L1 objective.
+
+Categorical columns arrive from the evaluator as integer codes (float, NaN = missing or
+unseen in train). TabPFN gets them flagged via `categorical_features_indices`; XGBoost
+gets them as `category` dtype with `enable_categorical=True`. Same encoding, every
+experiment, both backends — harness plumbing the agent never touches.
 """
 
 from __future__ import annotations
@@ -26,25 +31,28 @@ def _init_api() -> None:
         _api_ready = True
 
 
-def make_tabpfn(backend: str | None = None):
+def make_tabpfn(backend: str | None = None, cat_idx: list[int] | None = None):
     cfg = load_config()["tabpfn"]
     backend = backend or cfg["backend"]
     if backend == "api":
         _init_api()
         from tabpfn_client import TabPFNRegressor
 
-        return TabPFNRegressor(model_path=cfg["model_path"], random_state=cfg["random_state"])
+        return TabPFNRegressor(
+            model_path=cfg["model_path"], random_state=cfg["random_state"],
+            categorical_features_indices=cat_idx or [],
+        )
     if backend == "local":
         from tabpfn import TabPFNRegressor
 
-        return TabPFNRegressor(random_state=cfg["random_state"])
+        return TabPFNRegressor(random_state=cfg["random_state"], categorical_features_indices=cat_idx or [])
     raise ValueError(f"unknown tabpfn backend {backend!r}")
 
 
-def fit_predict_tabpfn(X_train, y_train, X_eval, backend: str | None = None):
+def fit_predict_tabpfn(X_train, y_train, X_eval, cat_cols=(), backend: str | None = None):
     cfg = load_config()["tabpfn"]
     backend = backend or cfg["backend"]
-    model = make_tabpfn(backend)
+    model = make_tabpfn(backend, [list(X_train.columns).index(c) for c in cat_cols])
     t0 = time.perf_counter()
     model.fit(X_train, y_train)
     preds = np.asarray(model.predict(X_eval, output_type=cfg["output_type"]), dtype=float)
@@ -61,11 +69,15 @@ def fit_predict_tabpfn(X_train, y_train, X_eval, backend: str | None = None):
     return preds, meta
 
 
-def fit_predict_xgb(X_train, y_train, X_eval):
+def fit_predict_xgb(X_train, y_train, X_eval, cat_cols=()):
     import xgboost as xgb
 
     params = dict(load_config()["xgb"])
-    X_train, X_eval = _xgb_categoricals(X_train, X_eval)
+    X_train, X_eval = X_train.copy(), X_eval.copy()
+    for c in cat_cols:  # integer codes → category dtype over the train vocabulary
+        cats = sorted(int(v) for v in X_train[c].dropna().unique())  # xgboost wants int categories
+        X_train[c] = pd.Categorical(X_train[c].astype("Int64"), categories=cats)
+        X_eval[c] = pd.Categorical(X_eval[c].astype("Int64"), categories=cats)
     model = xgb.XGBRegressor(**params)
     t0 = time.perf_counter()
     model.fit(X_train, y_train)  # no eval_set, no early stopping — by design
@@ -78,25 +90,12 @@ def fit_predict_xgb(X_train, y_train, X_eval):
     }
 
 
-def fit_predict(backend: str, X_train, y_train, X_eval):
+def fit_predict(backend: str, X_train, y_train, X_eval, cat_cols=()):
     if backend == "tabpfn":
-        return fit_predict_tabpfn(X_train, y_train, X_eval)
+        return fit_predict_tabpfn(X_train, y_train, X_eval, cat_cols)
     if backend == "xgb":
-        return fit_predict_xgb(X_train, y_train, X_eval)
+        return fit_predict_xgb(X_train, y_train, X_eval, cat_cols)
     raise ValueError(f"unknown backend {backend!r}")
-
-
-def _xgb_categoricals(X_train: pd.DataFrame, X_eval: pd.DataFrame):
-    """Fixed harness encoding: object/string/bool columns → `category` dtype with the
-    train vocabulary; categories unseen in train become missing in eval."""
-    X_train, X_eval = X_train.copy(), X_eval.copy()
-    for c in X_train.columns:
-        if X_train[c].dtype == object or str(X_train[c].dtype) in ("string", "category", "bool"):
-            cats = pd.Index(X_train[c].dropna().astype(str).unique()).sort_values()
-            dtype = pd.CategoricalDtype(cats)
-            X_train[c] = X_train[c].astype("string").astype(dtype)
-            X_eval[c] = X_eval[c].astype("string").astype(dtype)
-    return X_train, X_eval
 
 
 def _jsonable(obj):
