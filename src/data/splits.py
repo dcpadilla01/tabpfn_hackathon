@@ -28,3 +28,12 @@ def assign_split(targets: pd.DataFrame) -> pd.DataFrame:
     out = targets.copy()
     out["split"] = pd.Categorical(out["snapshot_day"].map(lookup), categories=list(SPLITS))
     return out
+
+
+def research_visible_day() -> int:
+    """Last day the agent may see directly during research: the first validation snapshot.
+    Every train label window ends on or before it; no validation label window starts before it."""
+    from src.data.targets import load_targets
+
+    t = load_targets()
+    return int(t.loc[t["split"] == "validation", "snapshot_day"].min())

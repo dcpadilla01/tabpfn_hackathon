@@ -21,8 +21,10 @@ xgb:                      # Arm A′ — untuned, fixed; no early stopping (see 
 llm:                      # Phase 7
   base_url: https://openrouter.ai/api/v1
   api_key_env: OPENROUTER_API_KEY
-  model: TBD-pin-in-phase-7   # GLM 5.3 Flash exact OpenRouter id
+  model: z-ai/glm-5.3-flash
   temperature: 0.7
+  max_tokens: 16000         # per call, incl. reasoning; 8000 truncated GLM reasoning in smoke run
+  max_tool_calls_between_experiments: 15
 
 task:                     # Phase 2 — decided after the Phase 0 row-budget check (16.7 s at 35k rows)
   horizon_days: 28        # target = spend in (snapshot_day, snapshot_day + 28]

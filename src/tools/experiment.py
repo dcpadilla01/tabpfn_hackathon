@@ -25,6 +25,7 @@ class ExperimentTool:
     def __init__(self, backend: str, log: ExperimentLog, workspace: Path, trace: RunTrace | None = None):
         self.backend, self.log, self.trace = backend, log, trace
         self.workspace = Path(workspace).resolve()
+        self.pending_code: str = ""  # run_python code since the last experiment; set by the loop
 
     def _resolve(self, table_path: str) -> Path:
         p = (self.workspace / table_path).resolve()
@@ -33,7 +34,8 @@ class ExperimentTool:
         if p.suffix != ".parquet":
             raise ValueError("table_path must be a .parquet file written with DataFrame.to_parquet")
         if not p.exists():
-            raise ValueError(f"no file at {table_path!r} in your workspace")
+            saved = sorted(f.name for f in self.workspace.glob("*.parquet"))
+            raise ValueError(f"no file at {table_path!r} in your workspace; saved tables: {saved or 'none'}")
         return p
 
     def __call__(self, table_path: str, hypothesis: str, parent: str, mutation: str,
@@ -55,7 +57,7 @@ class ExperimentTool:
             path, table = None, None
 
         exp_dir = self.log.experiment_dir(experiment_id)
-        extra = self._rollup_extra(experiment_id)
+        extra = self._rollup_extra(experiment_id) | self._persist_code(exp_dir)
         if problems:  # still consumes an experiment: logged as invalid, not evaluated
             return evaluate(pd.DataFrame(), self.backend, log=self.log, experiment_id=experiment_id,
                             parent_id=parent, hypothesis=hypothesis, transformation_description=mutation,
@@ -80,3 +82,17 @@ class ExperimentTool:
             "tool_calls_rejected": r["tool_calls_rejected"],
             "wall_clock_seconds": round(self.trace.seconds_since_experiment_began(), 2),
         }
+
+    def _persist_code(self, exp_dir: Path) -> dict:
+        (exp_dir / "code.py").write_text(self.pending_code)
+        return {"generated_code_size": len(self.pending_code)}
+
+    def log_failed(self, reason: str, hypothesis: str = "", parent: str | None = None) -> dict:
+        """Record a failed experiment (e.g. tool-call cap exceeded). Consumes budget."""
+        experiment_id = self.log.next_id()
+        exp_dir = self.log.experiment_dir(experiment_id)
+        extra = self._rollup_extra(experiment_id) | self._persist_code(exp_dir)
+        extra["tool_calls"] -= 1  # no experiment() call happened
+        return evaluate(pd.DataFrame(), self.backend, log=self.log, experiment_id=experiment_id,
+                        parent_id=parent, hypothesis=hypothesis, transformation_description="",
+                        extra=extra, invalid_reason=reason)

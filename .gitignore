@@ -20,3 +20,5 @@ __pycache__/
 .vscode/
 docs/source/*.pdf
 experiments/results/**/reasoning.jsonl
+# smoke/dev runs (seed >= 900)
+experiments/results/*/9[0-9][0-9]/

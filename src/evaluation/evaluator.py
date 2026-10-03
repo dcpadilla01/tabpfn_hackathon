@@ -152,7 +152,7 @@ def evaluate(
     started = time.perf_counter()
     extra = dict(extra or {})
     prior_seconds = extra.pop("wall_clock_seconds", 0.0) or 0.0
-    seed = load_config()["seed"]
+    seed = log.seed if log else load_config()["seed"]  # run (agent) seed; model random_state is in backend_meta
     rec = ExperimentRecord(
         experiment_id=experiment_id or (log.next_id() if log else "E???"),
         parent_id=parent_id,
