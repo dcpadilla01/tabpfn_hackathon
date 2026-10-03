@@ -69,6 +69,11 @@ def test_happy_path_cap_and_nudges(make):
     assert all("reasoning" not in m for kw in r.client.seen for m in kw["messages"])
     # context resets per experiment: first E002 call has only system + user
     assert len(r.client.seen[2]["messages"]) == 2
+    # tool results carry the call counter; warning near the cap
+    e002_last = r.client.seen[2 + 15]["messages"]
+    tool_msgs = [m["content"] for m in e002_last if m["role"] == "tool"]
+    assert tool_msgs[0].endswith("[tool calls since last experiment: 1/15]")
+    assert "1 left" in tool_msgs[13] and "0 left" in tool_msgs[14]
 
 
 def test_bad_experiment_args_consume_budget(make):

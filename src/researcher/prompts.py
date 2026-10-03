@@ -33,7 +33,8 @@ no calendar dates.
 # Budget
 - You have {budget} experiments. One experiment = one call to `{eval_tool}`.
 - Between two experiments you may make at most 15 other tool calls. If you exceed that, the
-  current experiment is recorded as failed and counts against your budget.
+  current experiment is recorded as failed and counts against your budget. Every tool result
+  ends with a counter of the calls used so far.
 - An invalid `{eval_tool}` call (bad file, wrong keys, missing metadata) also uses one experiment.
 
 # What to do

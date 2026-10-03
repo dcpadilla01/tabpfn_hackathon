@@ -121,6 +121,7 @@ class Researcher:
                         self.tool.log_failed(f"exceeded {self.cap} tool calls without calling the evaluation tool")
                         return
                     out = self._run_tool(name, tc, code_blocks)
+                    out += self._budget_note()
                 messages.append({"role": "tool", "tool_call_id": tc["id"], "content": out})
 
     # ---------------------------------------------------------------- tools
@@ -151,6 +152,15 @@ class Researcher:
             out, status, error = f"unknown tool {name!r}", "error", "unknown tool"
         self._log_tool(name, args, out, status, time.perf_counter() - t0, error)
         return out
+
+    def _budget_note(self) -> str:
+        """Tell the agent how many tool calls remain before the evaluation tool must be called."""
+        used = self.trace.tool_calls_since_experiment
+        left = self.cap - used
+        note = f"\n\n[tool calls since last experiment: {used}/{self.cap}"
+        if left <= 3:
+            note += f" — {left} left; call the evaluation tool before the limit or this experiment fails"
+        return note + "]"
 
     def _log_tool(self, name, args, output, status, seconds, error):
         self.trace.log_tool_call(tool=name, args=args, output=output, status=status,
