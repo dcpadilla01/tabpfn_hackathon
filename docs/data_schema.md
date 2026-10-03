@@ -214,6 +214,7 @@ Early train snapshots are small (onboarding): day 95 only includes households fi
 | 2026-10-03 | float32 cannot hold cents exactly | money columns float64; lossy casts refused |
 | 2026-10-03 | No campaign starts before day 224 | campaign features empty for early snapshots |
 | 2026-10-03 | Only ~1,300 of 2,500 households shop in a given week after onboarding (~week 17) | zero-spend windows are ~20% of rows, not an edge case |
+| 2026-10-03 | Households *with* demographics spend ~3x more (validation median $209 vs $36): coverage is a selection effect, so `has_demographics` alone is a strong feature | E000 is weak but not trivial (MAE 92 vs 119 for a constant median) |
 | 2026-10-03 | 34 households never transact after day 431 | they contribute all-zero targets in validation/test; kept by design |
 
 ## Open questions
