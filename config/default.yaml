@@ -1,0 +1,31 @@
+# Single source of run configuration. Seeds are fixed everywhere.
+seed: 0
+
+tabpfn:
+  backend: api            # api | local  (local needs a CUDA GPU for realistic sizes)
+  model_path: v3.5_default  # pinned explicitly; "auto" would let the server drift
+  output_type: median     # loss-consistent point prediction for MAE
+  random_state: 0
+
+xgb:                      # Arm A′ — untuned, fixed; no early stopping (see CLAUDE.md)
+  objective: reg:absoluteerror
+  n_estimators: 500
+  learning_rate: 0.05
+  max_depth: 6
+  subsample: 0.8
+  colsample_bytree: 0.8
+  tree_method: hist
+  enable_categorical: true
+  random_state: 0
+
+llm:                      # Phase 7
+  base_url: https://openrouter.ai/api/v1
+  api_key_env: OPENROUTER_API_KEY
+  model: TBD-pin-in-phase-7   # GLM 5.3 Flash exact OpenRouter id
+  temperature: 0.7
+
+task:                     # Phase 2 — decided after the Phase 0 row-budget check (16.7 s at 35k rows)
+  horizon_days: 28        # target = spend in (snapshot_day, snapshot_day + 28]
+  cadence_days: 28        # snapshot spacing; grid anchored at the last day with a complete horizon
+  min_history_days: 84    # first observed transaction <= snapshot_day - 84
+  split_fractions: [0.6, 0.2, 0.2]   # train / validation / test, by snapshot day

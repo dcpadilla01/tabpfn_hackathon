@@ -1,0 +1,128 @@
+{
+  "smoke": {
+    "backend": "api",
+    "n_train": 300,
+    "n_eval": 50,
+    "n_features": 10,
+    "seed": 0,
+    "wall_clock_seconds": 6.19,
+    "mae": 36.812809419784365,
+    "first_prediction": 116.3084716796875,
+    "usage_before": "Currently, you have used 0 of the allowed limit of 20000000 credits. The limit will reset at 2026-11-01 00:00:00 UTC.",
+    "usage_after": "Currently, you have used 10000 of the allowed limit of 20000000 credits. The limit will reset at 2026-11-01 00:00:00 UTC.",
+    "versions": {
+      "tabpfn": "9.1.0",
+      "tabpfn-client": "0.6.1",
+      "xgboost": "3.4.1",
+      "openai": "3.24.0",
+      "pandas": "2.3.3",
+      "scikit-learn": "1.9.0"
+    },
+    "meta": {
+      "backend": "tabpfn-api",
+      "fit_predict_seconds": 6.190681249951012,
+      "random_state": 0,
+      "model_path": "v3.5_default",
+      "api_meta": {
+        "test_set_num_rows": 50,
+        "test_set_num_cols": 10,
+        "n_estimators": 8,
+        "billing_model_version": "v3.5",
+        "execution_mode": "standard",
+        "cache_outcome": "not_requested",
+        "task": "regression",
+        "package_version": "9.0.0",
+        "tabpfn_config": {
+          "categorical_features_indices": [],
+          "average_before_softmax": false,
+          "random_state": 0,
+          "inference_config": {
+            "TRANSFORM_DATES": false,
+            "TRANSFORM_TEXT": false
+          },
+          "inference_precision": "auto",
+          "ignore_pretraining_limits": false,
+          "fit_mode": "fit_preprocessors",
+          "model_path": "/app/tabpfn_models/tabpfn-v3.5-20260909.safetensors"
+        }
+      },
+      "api_timings": {
+        "fit": {
+          "elapsed_s": 0.764,
+          "queue_wait_s": 0.33,
+          "train_set_transform_s": 0.434,
+          "fit_s": 0.0
+        },
+        "predict": {
+          "test_set_transform_queue_wait_s": 0.095,
+          "test_set_transform_s": 0.247,
+          "predict_queue_wait_s": 0.098,
+          "predict_s": 0.294
+        }
+      }
+    }
+  },
+  "row_budget": {
+    "backend": "api",
+    "n_train": 35000,
+    "n_eval": 9000,
+    "n_features": 30,
+    "seed": 0,
+    "wall_clock_seconds": 16.65,
+    "mae": 38.98910163507788,
+    "first_prediction": 108.2018051147461,
+    "usage_before": "Currently, you have used 10000 of the allowed limit of 20000000 credits. The limit will reset at 2026-11-01 00:00:00 UTC.",
+    "usage_after": "Currently, you have used 20893 of the allowed limit of 20000000 credits. The limit will reset at 2026-11-01 00:00:00 UTC.",
+    "versions": {
+      "tabpfn": "9.1.0",
+      "tabpfn-client": "0.6.1",
+      "xgboost": "3.4.1",
+      "openai": "3.24.0",
+      "pandas": "2.3.3",
+      "scikit-learn": "1.9.0"
+    },
+    "meta": {
+      "backend": "tabpfn-api",
+      "fit_predict_seconds": 16.6485871670302,
+      "random_state": 0,
+      "model_path": "v3.5_default",
+      "api_meta": {
+        "test_set_num_rows": 9000,
+        "test_set_num_cols": 30,
+        "n_estimators": 8,
+        "billing_model_version": "v3.5",
+        "execution_mode": "standard",
+        "cache_outcome": "not_requested",
+        "task": "regression",
+        "package_version": "9.0.0",
+        "tabpfn_config": {
+          "categorical_features_indices": [],
+          "average_before_softmax": false,
+          "random_state": 0,
+          "inference_config": {
+            "TRANSFORM_DATES": false,
+            "TRANSFORM_TEXT": false
+          },
+          "inference_precision": "auto",
+          "ignore_pretraining_limits": false,
+          "fit_mode": "fit_preprocessors",
+          "model_path": "/app/tabpfn_models/tabpfn-v3.5-20260909.safetensors"
+        }
+      },
+      "api_timings": {
+        "fit": {
+          "elapsed_s": 0.93,
+          "queue_wait_s": 0.288,
+          "train_set_transform_s": 0.643,
+          "fit_s": 0.0
+        },
+        "predict": {
+          "test_set_transform_queue_wait_s": 0.096,
+          "test_set_transform_s": 0.327,
+          "predict_queue_wait_s": 1.455,
+          "predict_s": 7.691
+        }
+      }
+    }
+  }
+}

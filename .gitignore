@@ -1,0 +1,21 @@
+# secrets
+.env
+
+# data (never commit raw or derived data)
+data/raw/
+data/interim/
+data/processed/
+*.parquet
+
+# python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# os / editors
+.DS_Store
+.idea/
+.vscode/
+docs/source/*.pdf
