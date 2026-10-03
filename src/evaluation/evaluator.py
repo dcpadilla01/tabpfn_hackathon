@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import hashlib
 import time
+from pathlib import Path
 from datetime import datetime, timezone
 
 import numpy as np
@@ -113,7 +114,9 @@ def _fit_and_score(ft, backend, fit_splits, eval_split):
     preds, meta = fit_predict(backend, Xtr, train[TARGET].to_numpy(), Xev, cats)
     runtime = time.perf_counter() - t0
     y = ev[TARGET].to_numpy()
+    predictions = ev[KEYS].assign(prediction=preds).reset_index(drop=True)
     return {
+        "_predictions": predictions,
         "mae": round(mae(y, preds), 4),
         "r2": round(r2(y, preds), 4),
         "n_features": len(features),
@@ -138,10 +141,17 @@ def evaluate(
     parent_id: str | None = None,
     experiment_id: str | None = None,
     extra: dict | None = None,
+    save_dir=None,
+    invalid_reason: str | None = None,
 ) -> dict:
     """Fit on train, score on validation. Logs one record if `log` is given.
-    Contract violations come back as status="invalid" with a safe error message."""
+    Contract violations come back as status="invalid" with a safe error message.
+    With `save_dir`, writes predictions.parquet (keys + prediction, no labels) for analysis.
+    `invalid_reason` logs an invalid experiment without fitting (caller-side contract failure).
+    `extra["wall_clock_seconds"]`, if given, is time spent before this call; evaluation time is added."""
     started = time.perf_counter()
+    extra = dict(extra or {})
+    prior_seconds = extra.pop("wall_clock_seconds", 0.0) or 0.0
     seed = load_config()["seed"]
     rec = ExperimentRecord(
         experiment_id=experiment_id or (log.next_id() if log else "E???"),
@@ -156,18 +166,25 @@ def evaluate(
         timestamp=datetime.now(timezone.utc).isoformat(timespec="seconds"),
     )
     try:
+        if invalid_reason:
+            raise FeatureTableError(invalid_reason)
         res = _fit_and_score(feature_table, backend, ("train",), "validation")
         rec.mae, rec.r2, rec.n_features = res["mae"], res["r2"], res["n_features"]
         rec.runtime_seconds, rec.n_train, rec.n_eval = res["runtime_seconds"], res["n_train"], res["n_eval"]
         rec.backend_meta = {"categorical_columns": res["_categoricals"], **res["_meta"]}
         rec.feature_table_hash = feature_table_hash(feature_table)
+        rec.tabpfn_estimated_credits = res["_meta"].get("estimated_credits")
+        if save_dir is not None:
+            res["_predictions"].to_parquet(Path(save_dir) / "predictions.parquet", index=False)
     except FeatureTableError as e:
         rec.status, rec.error = "invalid", str(e)
     except Exception as e:  # backend/API failure: logged, not swallowed silently
         first_line = str(e).strip().splitlines()[0] if str(e).strip() else ""
         rec.status, rec.error = "error", f"{type(e).__name__}: {first_line}"[:500]
-    rec.wall_clock_seconds = round(time.perf_counter() - started, 2)
-    for k, v in (extra or {}).items():
+    rec.wall_clock_seconds = round(prior_seconds + time.perf_counter() - started, 2)
+    for k, v in extra.items():
+        if not hasattr(rec, k):
+            raise AttributeError(f"unknown experiment record field {k!r}")
         setattr(rec, k, v)
     if log:
         log.append(rec)

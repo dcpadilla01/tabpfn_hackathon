@@ -35,6 +35,14 @@ class ExperimentRecord:
     tool_calls: int | None = None
     generated_code_size: int | None = None
     wall_clock_seconds: float | None = None
+    # rollup snapshot from calls.jsonl at experiment time (Phase 11 recomputes from calls.jsonl)
+    cached_tokens: int | None = None
+    reasoning_tokens: int | None = None
+    uncached_equivalent_tokens: int | None = None
+    llm_calls: int | None = None
+    llm_cost_usd: float | None = None
+    tool_calls_rejected: int | None = None
+    tabpfn_estimated_credits: int | None = None
     reasoning_summary: str | None = None
     feature_table_hash: str | None = None
     n_train: int | None = None

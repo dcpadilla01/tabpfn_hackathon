@@ -351,12 +351,19 @@ Structured metadata is required on every `experiment`/`score` call:
 {"hypothesis": "...", "reasoning_summary": "...", "parent_experiment": "E003", "proposed_transformation": "..."}
 ```
 
-Store concise rationale only, not chain-of-thought.
+The rationale fed back to the agent and stored in experiment records is concise only. Raw model reasoning text, if the provider returns it, goes to a separate audit log (`reasoning.jsonl`) that the agent never reads and that is never used as evidence for a claim.
 
 ## Bounds and accounting
 
 - One experiment = one `experiment()` or `score()` call. Max **15 tool calls** between consecutive experiments; exceeding it logs a failed experiment and resets. Same cap in all arms so "an experiment" means the same thing.
 - Per step, log: tool name, tokens in/out, cached tokens, wall-clock. Report **uncached-equivalent tokens** as the budget metric so prompt caching cannot favour an arm.
+- Three logs per run in `experiments/results/<arm>/<seed>/`:
+  - `calls.jsonl` — one line per LLM call or tool call; the single source of truth for cost (tokens incl. cached/reasoning, OpenRouter `generation_id`, cost if returned, tool status incl. rejections).
+  - `transcript.jsonl` — full requests/responses and tool I/O, for audit and replay (reasoning text excluded).
+  - `reasoning.jsonl` — raw reasoning text keyed by run/step/generation_id; git-ignored except one or two committed example runs.
+  - `experiments.jsonl` token/tool-call fields are rollups computed from `calls.jsonl`, never counted separately.
+- Each experiment also logs the TabPFN credit cost (`estimate_cost`, no quota consumed) so Arm B's API spend is counted.
+- Phase 11 effort classification uses actions (tool calls, code, error/retry patterns), never reasoning text.
 - History is the compact table, never generated code. Code is persisted to `experiments/results/<arm>/<seed>/E###/code.py` for audit.
 
 ## Accessor enforcement (tripwires, not a jail — disclose in README)

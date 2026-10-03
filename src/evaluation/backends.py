@@ -66,6 +66,7 @@ def fit_predict_tabpfn(X_train, y_train, X_eval, cat_cols=(), backend: str | Non
         meta["api_meta"] = _jsonable(getattr(model, "_last_meta", {}) or {})
         timings = getattr(model, "get_timings", None)
         meta["api_timings"] = _jsonable(timings()) if timings else None
+        meta["estimated_credits"] = _estimate_credits(X_train, X_eval)
     return preds, meta
 
 
@@ -96,6 +97,16 @@ def fit_predict(backend: str, X_train, y_train, X_eval, cat_cols=()):
     if backend == "xgb":
         return fit_predict_xgb(X_train, y_train, X_eval, cat_cols)
     raise ValueError(f"unknown backend {backend!r}")
+
+
+def _estimate_credits(X_train, X_eval) -> int | None:
+    """Server-side quote for this fit+predict; consumes no quota. None if unavailable."""
+    try:
+        import tabpfn_client
+
+        return int(tabpfn_client.estimate_cost(X_train, X_eval).estimated_cost)
+    except Exception:
+        return None
 
 
 def _jsonable(obj):
