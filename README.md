@@ -65,10 +65,30 @@ which in the replay includes test-period **feature** values (never labels): B/2'
 quantiles (29 columns, max relative difference 0.068); A′/2 submitted a row-number column `index` left over
 from `reset_index()`. Restricted to the four exact reproductions the means are B 64.16 vs A′ 65.04.
 
-- Validation→test degradation (same train-only fit) is similar in both arms: +3.18 (B) vs +3.05 (A′).
-- Adding the validation rows to training helps XGBoost (65.29 → 65.03) but not TabPFN (63.90 → 64.09), so
-  B's edge narrows from 1.39 to 0.94 as training data grows — consistent with TabPFN's advantage being
-  largest in the small-data regime. One data point; we do not generalise it.
+**Fitting regime × arm** (means over 3 runs; Δ = test − validation; E000 = the demographics + calendar
+root on the same backend and regime):
+
+| Fitting regime | Arm | Validation | Test | Δ | E000 val → test | E000 Δ | Test B − A′ (95% CI) |
+|---|---|---:|---:|---:|---:|---:|---|
+| **train + validation (primary)** | B — TabPFN | 60.72 | **64.09** | +3.37 | 92.53 → 98.64 | +6.11 | **−0.94** [−1.28, −0.61] |
+| **train + validation (primary)** | A′ — XGBoost | 62.24 | 65.03 | +2.79 | 92.45 → 97.74 | +5.30 | |
+| train only | B — TabPFN | 60.72 | 63.90 | +3.18 | 92.53 → 100.18 | +7.65 | −1.39 [−1.95, −0.95] |
+| train only | A′ — XGBoost | 62.24 | 65.29 | +3.05 | 92.45 → 99.68 | +7.23 | |
+
+- **Primary regime.** Refitting the selected feature table on train + validation and scoring test was
+  declared the primary Phase 12 result in `scripts/evaluate_test.py` before any test number was computed,
+  and it stays primary. The train-only fit (the exact model that was scored on validation) is reported
+  beside it; it shows the larger B advantage, which is one reason we do not promote it after the fact.
+- **Both regimes agree on direction:** B beats A′ on test in all 9 run pairings in either regime
+  (household-clustered bootstrap CIs all below zero).
+- **The test period is harder, not the agents overfit.** E000 — which involves no search at all — loses 5–8
+  MAE from validation to test; the researched candidates lose ~3 in both arms.
+- **Adding validation rows helps XGBoost more than TabPFN** (65.29 → 65.03 vs 63.90 → 64.09), so B's edge is
+  1.39 with the training data the agents worked with and 0.94 with one more quarter of data — consistent with
+  TabPFN's advantage being largest in the small-data regime. One data point; we do not generalise it.
+- **"Evaluate once."** Each final candidate was scored in both regimes, once each. To save per-row predictions
+  for the bootstrap, the identical deterministic scoring was re-run; every re-run reproduced the same numbers.
+  No choice (candidate, features, regime) was made on test.
 
 ---
 
@@ -163,7 +183,8 @@ uv run python -m src.analysis.transfer     # representation transfer
 uv run python -m src.analysis.effort       # action-based effort shares
 uv run python scripts/audit_labels.py      # label-access audit
 uv run python scripts/evaluate_test.py --accept-approx   # Phase 12: replay each final table, score test once
-uv run python -m src.analysis.frozen_test  # test summary + paired bootstrap
+uv run python scripts/evaluate_test_e000.py # E000 on test, both regimes
+uv run python -m src.analysis.frozen_test  # 2×2 summary + paired bootstrap per regime
 ```
 
 `tabpfn.backend: local` in `config/default.yaml` runs TabPFN on a local GPU instead of the API.
@@ -182,8 +203,8 @@ uv run python -m src.analysis.frozen_test  # test summary + paired bootstrap
 
 - **Three runs per arm, one dataset, one LLM.** The bootstrap CI reflects row sampling, not run-to-run LLM
   variance; with three runs per arm that variance is only roughly characterised (sd 0.04 vs 0.24).
-- **Best-of-20 on validation is optimistic** (B's edge 1.52 on validation, 0.94 on test); the frozen test
-  is the honest number. Two of six test numbers come from approximate replays (see the Phase 12 table).
+- **Best-of-20 on validation is optimistic** (B's edge 1.52 on validation, 0.94 on test in the primary
+  regime); the frozen test is the honest number. Two of six test numbers come from approximate replays (see the Phase 12 table).
 - **Effort classification is rule-based on actions** (code patterns, retries), checked by hand on a sample;
   its "preprocessing" class is unreliable (≈3% of calls).
 - **Arm A (free-form researcher with sklearn/XGBoost and its own model choice) was not run.** It would

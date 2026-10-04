@@ -131,6 +131,7 @@ def evaluate_run(arm: str, seed: int, experiment_id: str, val_mae: float, reuse:
     tv = evaluate_frozen_test(table, backend, ("train", "validation"))
     tr = evaluate_frozen_test(table, backend, ("train",))
     tv["predictions"].to_parquet(OUT / f"{arm}_{seed}_test_predictions.parquet", index=False)
+    tr["predictions"].to_parquet(OUT / f"{arm}_{seed}_test_predictions_fit_train.parquet", index=False)
     res.update({
         "status": "ok", "backend": backend,
         "test_mae_fit_train_val": tv["mae"], "test_r2_fit_train_val": tv["r2"],
