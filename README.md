@@ -29,11 +29,14 @@ What the evidence supports:
    (selection on validation is optimistic) but stays clear: all 9 run pairings favour B. "Fast" holds in
    both units: B runs reach 62.24 after 1–8 experiments and 0.02–0.87 hours from run start; one A′ run
    reaches it after 17 experiments and 2.17 hours, two never do.
-2. **TabPFN fits either arm's features better; the features themselves co-adapted to their backend.** In the
-   representation-transfer 2×2 the model effect favours TabPFN in every seed pair and in both orderings. But
-   how much of B's edge is "model" versus "features" depends on the ordering — 74% holding A′'s features,
-   238% holding B's — because B's tables were tuned to TabPFN and lose 2.09 MAE on XGBoost (one by 5.6). We
-   therefore do not report a single model/feature split.
+2. **TabPFN scored lower than XGBoost on every feature table in the transfer check** — all six (three runs
+   per arm). But the features each agent found were specific to the backend that scored them: on average,
+   B's features improved TabPFN slightly (−0.39; by pair −0.26, +0.05, −0.96) and hurt XGBoost (+2.09; positive
+   in every pair, +0.32 without pair 2). On average the feature–backend interaction (−2.48) exceeds the whole
+   validation gap (−1.52); one pair drives that, but in every pair the two decomposition orderings disagree by
+   more than 10 points, so the gap cannot be attributed to "model" versus "features." This is consistent with
+   the researcher's search adapting its representations to the evaluator it is given — partly by
+   construction, since each run's best table was selected on that evaluator.
 3. **TabPFN did *not* make individual hypotheses cheaper, and did *not* move effort away from plumbing.**
    Per experiment, both arms cost the same tokens and time; B tests slightly *fewer* valid hypotheses per
    hour and per token. Agents in *both* fixed-model arms rebuilt the plumbing they were spared: **41% of all
