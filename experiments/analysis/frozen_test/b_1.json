@@ -1,0 +1,185 @@
+{
+  "arm": "b",
+  "seed": 1,
+  "experiment_id": "E015",
+  "val_mae": 60.7609,
+  "replay": {
+    "cells_replayed": 25,
+    "replay_seconds": 2435.8,
+    "cells": [
+      {
+        "step": 10,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "=95:\nAttributeError: 'bool' object has no attribute 'astype'\nTraceback (most recent call last):\n  File \"<harness>/src/researcher/agent_api.py\", line 106, in _run_isolated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 27, in fn\nAttributeError: 'bool' object has no attribute 'astype'"
+      },
+      {
+        "step": 12,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 20,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 34,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "RCH_VISIBLE_DAY if as_of_day is None else as_of_day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/src/researcher/agent_api.py\", line 49, in _cap\n    raise AccessDenied(\nsrc.researcher.agent_api.AccessDenied: as_of_day=487 is beyond the research horizon (day 459). Data after that day is only reachable inside build_features(fn), per snapshot."
+      },
+      {
+        "step": 36,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "e \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 4852, in _drop_axis\n    new_axis = axis.drop(labels, errors=errors)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 7136, in drop\n    raise KeyError(f\"{labels[mask].tolist()} not found in axis\")\nKeyError: \"['index'] not found in axis\""
+      },
+      {
+        "step": 40,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 46,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "TIMEOUT after 1800s"
+      },
+      {
+        "step": 48,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 76,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 103,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "ess>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 4852, in _drop_axis\n    new_axis = axis.drop(labels, errors=errors)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 7136, in drop\n    raise KeyError(f\"{labels[mask].tolist()} not found in axis\")\nKeyError: \"['household_key'] not found in axis\""
+      },
+      {
+        "step": 107,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 132,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "  File \"<harness>/src/researcher/agent_api.py\", line 106, in _run_isolated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 61, in fn\n  File \"<your code>\", line 29, in compute_new\nValueError: non-broadcastable output operand with shape (199,) doesn't match the broadcast shape (13,199)"
+      },
+      {
+        "step": 134,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 142,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 172,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 182,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "b/python3.12/site-packages/pandas/core/groupby/groupby.py\", line 2005, in _cython_agg_general\n    new_mgr = data.grouped_reduce(array_func)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/base.py\", line 367, in grouped_reduce\n    res = func(arr)\n          ^^^^^^^^^\nTypeError: category dtype does not support aggregation 'mean'"
+      },
+      {
+        "step": 184,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 197,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "ain': [95, 123, 151, 179, 207, 235, 263, 291, 319, 347, 375, 403, 431], 'validation': [459, 487, 515, 543]}\nwcols: ['weekly_rate_84', 'week_of_year', 'w1']\n\n[stderr]\nTraceback (most recent call last):\n  File \"<run>/cells/runner_144711_93708.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 16, in <module>\nTypeError: iteration over a 0-d array"
+      },
+      {
+        "step": 203,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": " SeriesGroupBy(\n           ^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/groupby/groupby.py\", line 1331, in __init__\n    grouper, exclusions, obj = get_grouper(\n                               ^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/groupby/grouper.py\", line 1043, in get_grouper\n    raise KeyError(gpr)\nKeyError: 'household_key'"
+      },
+      {
+        "step": 209,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 219,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": " code>\", line 101, in <module>\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/groupby/generic.py\", line 1951, in __getitem__\n    return super().__getitem__(key)\n           ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/base.py\", line 245, in __getitem__\n    raise KeyError(f\"Column not found: {key}\")\nKeyError: 'Column not found: spend_84'"
+      },
+      {
+        "step": 221,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 6212, in _get_indexer_strict\n    self._raise_if_missing(keyarr, indexer, axis_name)\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 6264, in _raise_if_missing\n    raise KeyError(f\"{not_found} not in index\")\nKeyError: \"['e13', 'usual13', 'b75', 'nb_84'] not in index\""
+      },
+      {
+        "step": 235,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 239,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 271,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      }
+    ],
+    "table_path": "e015_base.parquet"
+  },
+  "reproduction": {
+    "n_logged_rows": 36426,
+    "rows_found": 36426,
+    "missing_columns": [],
+    "mismatched_columns": [],
+    "max_rel_diff": 0.0,
+    "reproduced": true
+  },
+  "test_rows_in_table": 12490,
+  "reproduction_kind": "exact",
+  "status": "ok",
+  "backend": "tabpfn",
+  "test_mae_fit_train_val": 64.1819,
+  "test_r2_fit_train_val": 0.686,
+  "test_mae_fit_train": 64.1774,
+  "test_r2_fit_train": 0.6874,
+  "val_to_test_degradation_same_fit": 3.4165,
+  "model_meta": {
+    "train_val": "/app/tabpfn_models/tabpfn-v3.5-20260909.safetensors",
+    "n_train_rows": 36426,
+    "n_test_rows": 12490
+  }
+}

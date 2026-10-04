@@ -1,0 +1,7 @@
+arm,seed,experiment_id,val_mae,test_mae_fit_train_val,test_r2_fit_train_val,test_mae_fit_train,val_to_test_degradation_same_fit,reproduction_kind
+b,0,E018,60.6745,64.1417,0.686,63.7369,3.0624,exact
+b,1,E015,60.7609,64.1819,0.686,64.1774,3.4165,exact
+b,2,E019,60.731,63.951,0.6884,63.7849,3.0539,approximate
+a_prime,0,E019,62.4506,65.2181,0.6897,65.6957,3.2451,exact
+a_prime,1,E020,61.976,64.8596,0.6882,65.1212,3.1452,exact
+a_prime,2,E009,62.2919,65.0029,0.687,65.0417,2.7498,approximate

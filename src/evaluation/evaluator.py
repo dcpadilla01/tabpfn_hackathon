@@ -205,4 +205,4 @@ def evaluate_frozen_test(feature_table: pd.DataFrame, backend: str,
                          fit_splits: tuple[str, ...] = ("train", "validation")) -> dict:
     """Phase 12 only: fit on `fit_splits`, score once on test. Not exposed to agents."""
     res = _fit_and_score(feature_table, backend, tuple(fit_splits), "test")
-    return {k: v for k, v in res.items() if not k.startswith("_")} | {"meta": res["_meta"]}
+    return {k: v for k, v in res.items() if not k.startswith("_")} | {"meta": res["_meta"], "predictions": res["_predictions"]}

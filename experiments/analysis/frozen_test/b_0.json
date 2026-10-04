@@ -1,0 +1,197 @@
+{
+  "arm": "b",
+  "seed": 0,
+  "experiment_id": "E018",
+  "val_mae": 60.6745,
+  "replay": {
+    "cells_replayed": 27,
+    "replay_seconds": 991.8,
+    "cells": [
+      {
+        "step": 28,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 63,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 71,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "n3.12/site-packages/pandas/core/reshape/merge.py\", line 1298, in _get_merge_keys\n    right_keys.append(right._get_label_or_level_values(rk))\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 1928, in _get_label_or_level_values\n    raise ValueError(\nValueError: The column label 'household_key' is not unique."
+      },
+      {
+        "step": 73,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 85,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 117,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 121,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 151,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": " _run_isolated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 5, in fn\n  File \"<harness>/src/researcher/agent_api.py\", line 185, in load_saved\n    raise AccessDenied(\"load_saved cannot be called inside fn\")\nsrc.researcher.agent_api.AccessDenied: load_saved cannot be called inside fn"
+      },
+      {
+        "step": 169,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "eatures\n    return _acc.build_features(lambda view, d: cache[d], splits=tuple(splits))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/src/data/accessor.py\", line 175, in build_features\n    raise ValueError(f\"fn returned duplicate {HOUSEHOLD_KEY} values at snapshot_day={day}\")\nValueError: fn returned duplicate household_key values at snapshot_day=95"
+      },
+      {
+        "step": 173,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 181,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "rness>/.venv/lib/python3.12/site-packages/pandas/core/series.py\", line 5578, in isin\n    result = algorithms.isin(self._values, values)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/algorithms.py\", line 477, in isin\n    raise TypeError(\nTypeError: only list-like objects are allowed to be passed to isin(), you passed a `NoneType`"
+      },
+      {
+        "step": 189,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 199,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 201,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 229,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 238,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 249,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "[stderr]\nTraceback (most recent call last):\n  File \"<run>/cells/runner_141444_836333.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 1, in <module>\nNameError: name 'out' is not defined. Did you mean: 'oct'?"
+      },
+      {
+        "step": 251,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 271,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 281,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "e11 (48916, 230) dm (48916, 18)\ndm dup keys: 0 | e11 dup keys: 0\nmerged: (48916, 246) | NaN dm_disp_spend28: 0\n\n[stderr]\nTraceback (most recent call last):\n  File \"<run>/cells/runner_141843_799583.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 19, in <module>\nTypeError: 'NoneType' object is not iterable"
+      },
+      {
+        "step": 285,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 296,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 6212, in _get_indexer_strict\n    self._raise_if_missing(keyarr, indexer, axis_name)\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 6264, in _raise_if_missing\n    raise KeyError(f\"{not_found} not in index\")\nKeyError: \"['department'] not in index\""
+      },
+      {
+        "step": 298,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "8_d364', 'peer10_trips28_d364', 'peer10_recency_d364', 'peer10_tenure_d364', 'sim_max10', 'sim_mean10', 'nn_pos', 'peer10_spend28_c112', 'peer10_trips28_c112', 'peer10_recency_c112', 'peer10_tenure_c112', 'sim_max10', 'sim_mean10', 'nn_pos', 'lines_basket28', 'lines_basket112', 'evening_share28', 'morning_share28', 'tt_std28', 'ndow28', 'store_top_share112', 'store_entropy112', 'private_share112']"
+      },
+      {
+        "step": 300,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 326,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 328,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 356,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      }
+    ],
+    "table_path": "e018_basestab.parquet"
+  },
+  "reproduction": {
+    "n_logged_rows": 36426,
+    "rows_found": 36426,
+    "missing_columns": [],
+    "mismatched_columns": [],
+    "max_rel_diff": 0.0,
+    "reproduced": true
+  },
+  "test_rows_in_table": 12490,
+  "reproduction_kind": "exact",
+  "status": "ok",
+  "backend": "tabpfn",
+  "test_mae_fit_train_val": 64.1417,
+  "test_r2_fit_train_val": 0.686,
+  "test_mae_fit_train": 63.7369,
+  "test_r2_fit_train": 0.6954,
+  "val_to_test_degradation_same_fit": 3.0624,
+  "model_meta": {
+    "train_val": "/app/tabpfn_models/tabpfn-v3.5-20260909.safetensors",
+    "n_train_rows": 36426,
+    "n_test_rows": 12490
+  }
+}

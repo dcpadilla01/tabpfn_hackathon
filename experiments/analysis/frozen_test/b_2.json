@@ -1,0 +1,293 @@
+{
+  "arm": "b",
+  "seed": 2,
+  "experiment_id": "E019",
+  "val_mae": 60.731,
+  "replay": {
+    "cells_replayed": 38,
+    "replay_seconds": 1672.6,
+    "cells": [
+      {
+        "step": 5,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 13,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 15,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 25,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py\", line 2407, in fillna\n    new_values = self.values.fillna(value=value, method=None, limit=limit)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: Cannot setitem on a Categorical with a new category (OTHER), set the categories first"
+      },
+      {
+        "step": 27,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "as no attribute 'index'\nTraceback (most recent call last):\n  File \"<harness>/src/researcher/agent_api.py\", line 106, in _run_isolated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 17, in make_features\nAttributeError: 'Index' object has no attribute 'index'. Did you mean: 'reindex'?"
+      },
+      {
+        "step": 31,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 51,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 55,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 61,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "      8\n2              1  427  54200000033         8\n3              8  422  53600000078         8\n4             13  396  53700048182         5\n\n[stderr]\nTraceback (most recent call last):\n  File \"<run>/cells/runner_141819_696833.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 10, in <module>\nTypeError: object of type 'NoneType' has no len()"
+      },
+      {
+        "step": 65,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 71,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 103,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 115,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": " File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/reshape/merge.py\", line 1298, in _get_merge_keys\n    right_keys.append(right._get_label_or_level_values(rk))\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 1914, in _get_label_or_level_values\n    raise KeyError(key)\nKeyError: 'household_key'"
+      },
+      {
+        "step": 117,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "/lib/python3.12/site-packages/pandas/core/reshape/concat.py\", line 445, in __init__\n    objs, keys = self._clean_keys_and_objs(objs, keys)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/reshape/concat.py\", line 507, in _clean_keys_and_objs\n    raise ValueError(\"No objects to concatenate\")\nValueError: No objects to concatenate"
+      },
+      {
+        "step": 119,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "y, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 66, in analog_feats\n  File \"<harness>/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py\", line 107, in _clip\n    return um.positive(a, out=out, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: positive() got an unexpected keyword argument 'lower'"
+      },
+      {
+        "step": 121,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 125,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 131,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "e-packages/pandas/core/arrays/categorical.py\", line 1590, in _validate_setitem_value\n    return self._validate_scalar(value)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/arrays/categorical.py\", line 1615, in _validate_scalar\n    raise TypeError(\nTypeError: Cannot setitem on a Categorical with a new category (0.0), set the categories first"
+      },
+      {
+        "step": 133,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 169,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "^^^^^^^^^^^\n  File \"<your code>\", line 45, in make_feats\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/frame.py\", line 4113, in __getitem__\n    indexer = self.columns.get_loc(key)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 3819, in get_loc\n    raise KeyError(key) from err\nKeyError: 'description'"
+      },
+      {
+        "step": 171,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 181,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "[stderr]\nTraceback (most recent call last):\n  File \"<run>/cells/runner_142348_380458.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 2, in <module>\nNameError: name 'feats' is not defined"
+      },
+      {
+        "step": 183,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 193,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "d\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 19, in cand_fn\n  File \"<harness>/.venv/lib/python3.12/site-packages/numpy/_core/shape_base.py\", line 458, in stack\n    raise ValueError('all input arrays must have the same shape')\nValueError: all input arrays must have the same shape"
+      },
+      {
+        "step": 195,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "as/core/internals/construction.py\", line 119, in arrays_to_mgr\n    arrays, refs = _homogenize(arrays, index, dtype)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py\", line 630, in _homogenize\n    com.require_length_match(val, index)\nValueError: Length of values (1881) does not match length of index (199)"
+      },
+      {
+        "step": 197,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 213,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": " File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/reshape/merge.py\", line 1298, in _get_merge_keys\n    right_keys.append(right._get_label_or_level_values(rk))\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 1914, in _get_label_or_level_values\n    raise KeyError(key)\nKeyError: 'household_key'"
+      },
+      {
+        "step": 215,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 243,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 245,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 275,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/frame.py\", line 5288, in _sanitize_column\n    com.require_length_match(value, self.index)\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/common.py\", line 573, in require_length_match\n    raise ValueError(\nValueError: Length of values (26437) does not match length of index (48916)"
+      },
+      {
+        "step": 277,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 313,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 4852, in _drop_axis\n    new_axis = axis.drop(labels, errors=errors)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 7136, in drop\n    raise KeyError(f\"{labels[mask].tolist()} not found in axis\")\nKeyError: \"['gbm_corr'] not found in axis\""
+      },
+      {
+        "step": 315,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 347,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 369,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "idge_eval\n  File \"<harness>/.venv/lib/python3.12/site-packages/numpy/_core/shape_base.py\", line 363, in hstack\n    return _nx.concatenate(arrs, 0, dtype=dtype, casting=casting)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: all the input arrays must have same number of dimensions, but the array at index 0 has 1 dimension(s) and the array at index 1 has 2 dimension(s)"
+      },
+      {
+        "step": 377,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "\"), _ns)\n  File \"<your code>\", line 11, in <module>\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/frame.py\", line 4113, in __getitem__\n    indexer = self.columns.get_loc(key)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 3819, in get_loc\n    raise KeyError(key) from err\nKeyError: 'exp84_mail_spend'"
+      },
+      {
+        "step": 379,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      }
+    ],
+    "table_path": "e019_final.parquet"
+  },
+  "reproduction": {
+    "n_logged_rows": 36426,
+    "rows_found": 36426,
+    "missing_columns": [],
+    "mismatched_columns": [
+      "hg_spend_84_0",
+      "hg_spend_84_1",
+      "hg_spend_84_2",
+      "hg_spend_84_3",
+      "hg_spend_84_4",
+      "hg_spend_84_5",
+      "hg_spend_28_1",
+      "hg_spend_28_2",
+      "hg_spend_28_3",
+      "hg_spend_28_4",
+      "hg_spend_28_5",
+      "hg_fwd28_mean_0",
+      "hg_fwd28_mean_1",
+      "hg_fwd28_mean_2",
+      "hg_fwd28_mean_3",
+      "hg_fwd28_mean_4",
+      "hg_fwd28_mean_5",
+      "hg_wk_avg_84_0",
+      "hg_wk_avg_84_1",
+      "hg_wk_avg_84_2",
+      "hg_wk_avg_84_3",
+      "hg_wk_avg_84_4",
+      "hg_wk_avg_84_5",
+      "hg_spend_56_0",
+      "hg_spend_56_1",
+      "hg_spend_56_2",
+      "hg_spend_56_3",
+      "hg_spend_56_4",
+      "hg_spend_56_5"
+    ],
+    "max_rel_diff": 0.06805246095515671,
+    "reproduced": false
+  },
+  "test_rows_in_table": 12490,
+  "reproduction_kind": "approximate",
+  "status": "ok",
+  "backend": "tabpfn",
+  "test_mae_fit_train_val": 63.951,
+  "test_r2_fit_train_val": 0.6884,
+  "test_mae_fit_train": 63.7849,
+  "test_r2_fit_train": 0.6928,
+  "val_to_test_degradation_same_fit": 3.0539,
+  "model_meta": {
+    "train_val": "/app/tabpfn_models/tabpfn-v3.5-20260909.safetensors",
+    "n_train_rows": 36426,
+    "n_test_rows": 12490
+  }
+}

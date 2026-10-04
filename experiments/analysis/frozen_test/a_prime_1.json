@@ -247,6 +247,7 @@
     "reproduced": true
   },
   "test_rows_in_table": 12490,
+  "reproduction_kind": "exact",
   "status": "ok",
   "backend": "xgb",
   "test_mae_fit_train_val": 64.8596,

@@ -14,7 +14,8 @@ untuned **XGBoost** (Arm A′). Then we measure what it finds, what it costs, an
 | Best validation MAE (mean ± sd over runs) | **60.72 ± 0.04** | 62.24 ± 0.24 |
 | Paired, household-clustered bootstrap, B − A′ | **−1.52** MAE, 95% CI [−2.19, −1.02] | |
 | Experiments to reach A′'s mean final MAE (62.24), per run | **3, 8, 1** | 17 (1 of 3 runs; 2 never) |
-| Frozen test MAE (fit train+val), mean | <!-- PHASE12 --> | <!-- PHASE12 --> |
+| **Frozen test MAE** (fit train+val), mean ± sd | **64.09 ± 0.12** | 65.03 ± 0.18 |
+| Paired bootstrap on test, B − A′ | **−0.94** MAE, 95% CI [−1.28, −0.61] | |
 | Valid experiments / 60 | 52 | 58 |
 | Valid hypotheses per hour / per M tokens | 5.50 / 6.49 | **5.80 / 7.58** |
 | Effort on model engineering + debugging (share of tool calls) | 58% | 51% |
@@ -22,8 +23,10 @@ untuned **XGBoost** (Arm A′). Then we measure what it finds, what it costs, an
 
 What the evidence supports:
 
-1. **TabPFN makes the researcher better, fast.** Every B run beats every A′ run on validation, and B reaches
-   the level A′ ends at within a median of 3 experiments (minutes), a level two of three A′ runs never reach.
+1. **TabPFN makes the researcher better, fast — and it holds on the frozen test.** Every B run beats every A′
+   run on validation, and B reaches the level A′ ends at within a median of 3 experiments (minutes), a level
+   two of three A′ runs never reach. On the held-out test period the gap shrinks from 1.52 to **0.94 MAE**
+   (selection on validation is optimistic) but stays clear: all 9 run pairings favour B.
 2. **Mostly a better fit, partly better features.** The representation-transfer check (each run's best
    feature table on the other backend) puts roughly **¾ of B's edge on the model** — TabPFN fits A′'s own
    tables 1.13 MAE better than XGBoost does — and **¼ on the features B found** (0.39 MAE on a common backend).
@@ -38,6 +41,34 @@ reusable primitive raises the quality ceiling and the speed to a good answer, bu
 score to minimise will re-create model engineering around any fixed primitive.*
 
 ![Best-so-far validation MAE per run](experiments/analysis/trajectories.png)
+
+### Frozen test (Phase 12)
+
+Each run's final candidate was chosen on validation only and evaluated once on the 5 test snapshots
+(12,490 rows). Test features did not exist during research, so `scripts/evaluate_test.py` replays every
+code cell that saved a table up to the final experiment, with a harness-only switch that makes
+`build_features` also emit test-snapshot rows (still as-of per snapshot), and checks that the replayed
+train+validation rows reproduce the logged feature table before scoring. The agents' `assert` statements
+(research-time row counts) are stripped; they compute nothing.
+
+| Run | Final | Val MAE | Test MAE (fit train+val) | Test MAE (fit train) | Reproduction |
+|---|---|---:|---:|---:|---|
+| B/0 | E018 | 60.67 | 64.14 | 63.74 | exact |
+| B/1 | E015 | 60.76 | 64.18 | 64.18 | exact |
+| B/2 | E019 | 60.73 | 63.95 | 63.78 | approximate¹ |
+| A′/0 | E019 | 62.45 | 65.22 | 65.70 | exact |
+| A′/1 | E020 | 61.98 | 64.86 | 65.12 | exact |
+| A′/2 | E009 | 62.29 | 65.00 | 65.04 | approximate¹ |
+
+¹ Same rows and columns; values differ only through statistics the agent computed over the whole table,
+which in the replay includes test-period **feature** values (never labels): B/2's hinge knots are feature
+quantiles (29 columns, max relative difference 0.068); A′/2 submitted a row-number column `index` left over
+from `reset_index()`. Restricted to the four exact reproductions the means are B 64.16 vs A′ 65.04.
+
+- Validation→test degradation (same train-only fit) is similar in both arms: +3.18 (B) vs +3.05 (A′).
+- Adding the validation rows to training helps XGBoost (65.29 → 65.03) but not TabPFN (63.90 → 64.09), so
+  B's edge narrows from 1.39 to 0.94 as training data grows — consistent with TabPFN's advantage being
+  largest in the small-data regime. One data point; we do not generalise it.
 
 ---
 
@@ -131,7 +162,8 @@ uv run python -m src.analysis.compare_runs # trajectories, bootstrap, time-to-qu
 uv run python -m src.analysis.transfer     # representation transfer
 uv run python -m src.analysis.effort       # action-based effort shares
 uv run python scripts/audit_labels.py      # label-access audit
-uv run python scripts/evaluate_test.py     # Phase 12 frozen test (replays each final table)
+uv run python scripts/evaluate_test.py --accept-approx   # Phase 12: replay each final table, score test once
+uv run python -m src.analysis.frozen_test  # test summary + paired bootstrap
 ```
 
 `tabpfn.backend: local` in `config/default.yaml` runs TabPFN on a local GPU instead of the API.
@@ -150,7 +182,8 @@ uv run python scripts/evaluate_test.py     # Phase 12 frozen test (replays each 
 
 - **Three runs per arm, one dataset, one LLM.** The bootstrap CI reflects row sampling, not run-to-run LLM
   variance; with three runs per arm that variance is only roughly characterised (sd 0.04 vs 0.24).
-- **Best-of-20 on validation is optimistic**; the frozen test is the honest number.
+- **Best-of-20 on validation is optimistic** (B's edge 1.52 on validation, 0.94 on test); the frozen test
+  is the honest number. Two of six test numbers come from approximate replays (see the Phase 12 table).
 - **Effort classification is rule-based on actions** (code patterns, retries), checked by hand on a sample;
   its "preprocessing" class is unreliable (≈3% of calls).
 - **Arm A (free-form researcher with sklearn/XGBoost and its own model choice) was not run.** It would

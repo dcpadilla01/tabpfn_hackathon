@@ -1,0 +1,145 @@
+{
+  "arm": "a_prime",
+  "seed": 2,
+  "experiment_id": "E009",
+  "val_mae": 62.2919,
+  "replay": {
+    "cells_replayed": 18,
+    "replay_seconds": 1146.4,
+    "cells": [
+      {
+        "step": 9,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 16,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "eatures\n    return _acc.build_features(lambda view, d: cache[d], splits=tuple(splits))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/src/data/accessor.py\", line 175, in build_features\n    raise ValueError(f\"fn returned duplicate {HOUSEHOLD_KEY} values at snapshot_day={day}\")\nValueError: fn returned duplicate household_key values at snapshot_day=95"
+      },
+      {
+        "step": 24,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 30,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 32,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 54,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": " line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 55, in <module>\n  File \"<your code>\", line 48, in partial_corr\n  File \"<your code>\", line 46, in res\n  File \"<harness>/.venv/lib/python3.12/site-packages/numpy/linalg/_linalg.py\", line 2523, in lstsq\n    raise LinAlgError('Incompatible dimensions')\nnumpy.linalg.LinAlgError: Incompatible dimensions"
+      },
+      {
+        "step": 56,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "g.py\", line 2539, in lstsq\n    x, resids, rank, s = _umath_linalg.lstsq(a, b, rcond,\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/numpy/linalg/_linalg.py\", line 156, in _raise_linalgerror_lstsq\n    raise LinAlgError(\"SVD did not converge in Linear Least Squares\")\nnumpy.linalg.LinAlgError: SVD did not converge in Linear Least Squares"
+      },
+      {
+        "step": 58,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 62,
+        "orig_status": "error",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 64,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 68,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 74,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "ll last):\n  File \"<harness>/src/researcher/agent_api.py\", line 106, in _run_isolated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 20, in fn\n  File \"<your code>\", line 17, in wsum\nTypeError: Cannot cast array data from dtype('float64') to dtype('int64') according to the rule 'safe'"
+      },
+      {
+        "step": 76,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": " with shapes (146035,) (30623,) \nTraceback (most recent call last):\n  File \"<harness>/src/researcher/agent_api.py\", line 106, in _run_isolated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 33, in fn\nValueError: operands could not be broadcast together with shapes (146035,) (30623,)"
+      },
+      {
+        "step": 78,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "\"<your code>\", line 34, in fn\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/frame.py\", line 4104, in __getitem__\n    return self._getitem_bool_array(key)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/frame.py\", line 4154, in _getitem_bool_array\n    raise ValueError(\nValueError: Item wrong length 30623 instead of 146035."
+      },
+      {
+        "step": 80,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 95,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 129,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 137,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      }
+    ],
+    "table_path": "e009_ewma_longlags.parquet"
+  },
+  "reproduction": {
+    "n_logged_rows": 36426,
+    "rows_found": 36426,
+    "missing_columns": [],
+    "mismatched_columns": [
+      "index"
+    ],
+    "max_rel_diff": 0.36585365853658536,
+    "reproduced": false
+  },
+  "test_rows_in_table": 12490,
+  "reproduction_kind": "approximate",
+  "status": "ok",
+  "backend": "xgb",
+  "test_mae_fit_train_val": 65.0029,
+  "test_r2_fit_train_val": 0.687,
+  "test_mae_fit_train": 65.0417,
+  "test_r2_fit_train": 0.6863,
+  "val_to_test_degradation_same_fit": 2.7498,
+  "model_meta": {
+    "train_val": null,
+    "n_train_rows": 36426,
+    "n_test_rows": 12490
+  }
+}

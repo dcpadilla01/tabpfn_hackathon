@@ -1,0 +1,275 @@
+{
+  "arm": "a_prime",
+  "seed": 0,
+  "experiment_id": "E019",
+  "val_mae": 62.4506,
+  "replay": {
+    "cells_replayed": 40,
+    "replay_seconds": 1012.6,
+    "cells": [
+      {
+        "step": 6,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 10,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "**kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py\", line 2407, in fillna\n    new_values = self.values.fillna(value=value, method=None, limit=limit)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: Cannot setitem on a Categorical with a new category (UNK), set the categories first"
+      },
+      {
+        "step": 12,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 18,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "(**kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py\", line 2407, in fillna\n    new_values = self.values.fillna(value=value, method=None, limit=limit)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: Cannot setitem on a Categorical with a new category (NA), set the categories first"
+      },
+      {
+        "step": 20,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 22,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 39,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "RCH_VISIBLE_DAY if as_of_day is None else as_of_day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/src/researcher/agent_api.py\", line 49, in _cap\n    raise AccessDenied(\nsrc.researcher.agent_api.AccessDenied: as_of_day=487 is beyond the research horizon (day 459). Data after that day is only reachable inside build_features(fn), per snapshot."
+      },
+      {
+        "step": 43,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "/lib/python3.12/site-packages/pandas/core/reshape/concat.py\", line 445, in __init__\n    objs, keys = self._clean_keys_and_objs(objs, keys)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/reshape/concat.py\", line 507, in _clean_keys_and_objs\n    raise ValueError(\"No objects to concatenate\")\nValueError: No objects to concatenate"
+      },
+      {
+        "step": 45,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 49,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 57,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 65,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 6212, in _get_indexer_strict\n    self._raise_if_missing(keyarr, indexer, axis_name)\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 6264, in _raise_if_missing\n    raise KeyError(f\"{not_found} not in index\")\nKeyError: \"['p1'] not in index\""
+      },
+      {
+        "step": 71,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 81,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 99,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 6212, in _get_indexer_strict\n    self._raise_if_missing(keyarr, indexer, axis_name)\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 6264, in _raise_if_missing\n    raise KeyError(f\"{not_found} not in index\")\nKeyError: \"['tenure'] not in index\""
+      },
+      {
+        "step": 103,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 126,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": " attribute 'set_index'\nTraceback (most recent call last):\n  File \"<harness>/src/researcher/agent_api.py\", line 106, in _run_isolated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 48, in blocks\nAttributeError: 'Index' object has no attribute 'set_index'. Did you mean: 'get_indexer'?"
+      },
+      {
+        "step": 128,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 132,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 164,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 170,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "holds), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 58, in rhythm\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 6321, in __getattr__\n    return object.__getattribute__(self, name)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'DataFrame' object has no attribute 'tot'. Did you mean: 'dot'?"
+      },
+      {
+        "step": 172,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "n3.12/site-packages/pandas/core/reshape/merge.py\", line 1298, in _get_merge_keys\n    right_keys.append(right._get_label_or_level_values(rk))\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 1928, in _get_label_or_level_values\n    raise ValueError(\nValueError: The column label 'household_key' is not unique."
+      },
+      {
+        "step": 176,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 193,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 219,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 233,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/reshape/merge.py\", line 1298, in _get_merge_keys\n    right_keys.append(right._get_label_or_level_values(rk))\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 1914, in _get_label_or_level_values\n    raise KeyError(key)\nKeyError: 'snapshot_day'"
+      },
+      {
+        "step": 237,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 243,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 285,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 291,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "astype.py\", line 182, in astype_array\n    values = _astype_nansafe(values, dtype, copy=copy)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/dtypes/astype.py\", line 133, in _astype_nansafe\n    return arr.astype(dtype, copy=True)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: could not convert string to float: 'Age Group6'"
+      },
+      {
+        "step": 297,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "packages/pandas/core/arrays/categorical.py\", line 1590, in _validate_setitem_value\n    return self._validate_scalar(value)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/arrays/categorical.py\", line 1615, in _validate_scalar\n    raise TypeError(\nTypeError: Cannot setitem on a Categorical with a new category (other), set the categories first"
+      },
+      {
+        "step": 299,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "astype.py\", line 182, in astype_array\n    values = _astype_nansafe(values, dtype, copy=copy)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/dtypes/astype.py\", line 133, in _astype_nansafe\n    return arr.astype(dtype, copy=True)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: could not convert string to float: 'Age Group6'"
+      },
+      {
+        "step": 301,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 305,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 324,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 330,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 366,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "[stderr]\nTraceback (most recent call last):\n  File \"<run>/cells/runner_142314_682000.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 27, in <module>\n  File \"<your code>\", line 27, in <genexpr>\nIndexError: only integers, slices (`:`), ellipsis (`...`), numpy.newaxis (`None`) and integer or boolean arrays are valid indices"
+      },
+      {
+        "step": 368,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 376,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "**kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py\", line 2407, in fillna\n    new_values = self.values.fillna(value=value, method=None, limit=limit)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: Cannot setitem on a Categorical with a new category (UNK), set the categories first"
+      },
+      {
+        "step": 378,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      }
+    ],
+    "table_path": "e019_knn.parquet"
+  },
+  "reproduction": {
+    "n_logged_rows": 36426,
+    "rows_found": 36426,
+    "missing_columns": [],
+    "mismatched_columns": [],
+    "max_rel_diff": 0.0,
+    "reproduced": true
+  },
+  "test_rows_in_table": 12490,
+  "reproduction_kind": "exact",
+  "status": "ok",
+  "backend": "xgb",
+  "test_mae_fit_train_val": 65.2181,
+  "test_r2_fit_train_val": 0.6897,
+  "test_mae_fit_train": 65.6957,
+  "test_r2_fit_train": 0.6828,
+  "val_to_test_degradation_same_fit": 3.2451,
+  "model_meta": {
+    "train_val": null,
+    "n_train_rows": 36426,
+    "n_test_rows": 12490
+  }
+}
