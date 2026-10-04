@@ -117,3 +117,29 @@ def test_run_dir_not_revealed(tmp_path):
     w = run_dir / "workspace"; w.mkdir(parents=True)
     r = run_python("raise ValueError('x')", w, run_dir / "cells")
     assert "results/b/1" not in r.output and "<run>" in r.output
+
+
+def test_fn_output_suppressed_at_validation_snapshots(ws):
+    w, h = ws
+    code = """
+def fn(view, day):
+    print("SNAP", day, "SECRET", view.transactions["day"].max())
+    return pd.DataFrame({"x": 0.0}, index=view.households)
+build_features(fn)
+"""
+    r = run_python(code, w, h)
+    assert r.status == "ok" and "SNAP 431" in r.output
+    assert "SNAP 459" not in r.output and "SNAP 543" not in r.output
+
+
+def test_fn_error_message_suppressed_at_validation_snapshots(ws):
+    w, h = ws
+    code = """
+def fn(view, day):
+    if day >= 459:
+        raise ValueError(f"leaky {view.transactions['sales_value'].sum()}")
+    return pd.DataFrame({"x": 0.0}, index=view.households)
+build_features(fn)
+"""
+    r = run_python(code, w, h)
+    assert r.status == "error" and "ValueError at line" in r.output and "leaky" not in r.output

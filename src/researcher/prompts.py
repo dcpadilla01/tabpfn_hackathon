@@ -84,6 +84,8 @@ AGENT_API_DOC = """\
   snapshot; fn must return a DataFrame indexed by household_key. Returns household_key,
   snapshot_day and your columns for exactly the train+validation rows. Each fn call runs in
   isolation: it cannot keep state between snapshots or write files.
+  print() inside fn is shown for train snapshots only; at validation snapshots output is
+  suppressed and errors report only their type and line.
 - view.households: the households needing a row at that snapshot. view.day, view.week.
 - baseline_features() -> the E000 feature table (merge on household_key, snapshot_day).
 - train_targets() -> household_key, snapshot_day, future_spend_4w for TRAIN rows only.

@@ -83,22 +83,40 @@ def _preload() -> None:
 
 
 def _run_isolated(fn, day: int, households: pd.Index):
+    import sys
+
+    sys.stdout.flush(); sys.stderr.flush()  # don't let the child inherit unflushed parent output
     r, w = os.pipe()
     pid = os.fork()
     if pid == 0:  # child
         global _IN_CHILD
         _IN_CHILD = True
         os.close(r)
+        # At validation snapshots the view contains earlier validation snapshots' label windows.
+        # Only the returned DataFrame may leave the child: silence output, and reduce errors to
+        # type + line (messages can carry data values).
+        quiet = day >= RESEARCH_VISIBLE_DAY
+        if quiet:
+            devnull = os.open(os.devnull, os.O_WRONLY)
+            os.dup2(devnull, 1)
+            os.dup2(devnull, 2)
         try:
             payload = ("ok", fn(_acc.AsOf(day, households=households), day))
         except BaseException as e:  # noqa: BLE001
-            payload = ("err", f"{type(e).__name__}: {e}\n{traceback.format_exc(limit=6)}")
+            if quiet:
+                tb = traceback.extract_tb(e.__traceback__)
+                line = next((f.lineno for f in reversed(tb) if f.filename == "<your code>"), None)
+                payload = ("err", f"{type(e).__name__} at line {line} of your code (validation snapshot: "
+                                  "output and error messages are suppressed; debug on a train snapshot)")
+            else:
+                payload = ("err", f"{type(e).__name__}: {e}\n{traceback.format_exc(limit=6)}")
         try:
             data = pickle.dumps(payload)
         except Exception as e:  # unpicklable return value
             data = pickle.dumps(("err", f"fn must return a pandas DataFrame ({type(e).__name__}: {e})"))
         with os.fdopen(w, "wb") as f:
             f.write(data)
+        sys.stdout.flush(); sys.stderr.flush()  # os._exit skips buffered output
         os._exit(0)
     os.close(w)
     with os.fdopen(r, "rb") as f:
