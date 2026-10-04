@@ -1,0 +1,1160 @@
+arm,seed,experiment_id,step,tool,status,category,turn_tokens,tokens
+b,0,E001,2,run_python,error,data exploration,4770,4770.0
+b,0,E001,4,run_python,ok,debugging,3085,3085.0
+b,0,E001,6,run_python,error,data exploration,3456,3456.0
+b,0,E001,8,run_python,ok,debugging,3475,3475.0
+b,0,E001,10,run_python,ok,feature construction,4255,4255.0
+b,0,E001,12,run_python,ok,feature construction,4448,4448.0
+b,0,E001,14,run_python,ok,feature construction,4641,4641.0
+b,0,E001,16,run_python,ok,feature construction,4834,4834.0
+b,0,E001,18,run_python,ok,feature construction,5027,5027.0
+b,0,E001,20,run_python,ok,feature construction,5220,5220.0
+b,0,E001,22,run_python,ok,feature construction,5413,5413.0
+b,0,E001,24,run_python,ok,feature construction,5606,5606.0
+b,0,E001,26,run_python,ok,feature construction,5815,5815.0
+b,0,E001,28,run_python,ok,feature construction,6626,6626.0
+b,0,E001,30,experiment,ok,evaluation,6404,6404.0
+b,0,E002,32,run_python,error,data exploration,4067,2033.5
+b,0,E002,33,inspect,ok,data exploration,4067,2033.5
+b,0,E002,35,run_python,rejected,data exploration,3826,3826.0
+b,0,E002,37,run_python,error,debugging,3871,3871.0
+b,0,E002,39,run_python,ok,debugging,4183,4183.0
+b,0,E002,41,run_python,ok,preprocessing,5056,5056.0
+b,0,E002,43,run_python,ok,feature construction,5341,5341.0
+b,0,E002,45,run_python,ok,feature construction,5446,5446.0
+b,0,E002,47,run_python,error,feature construction,5626,5626.0
+b,0,E002,49,run_python,ok,debugging,5920,5920.0
+b,0,E002,51,run_python,rejected,feature construction,6091,6091.0
+b,0,E002,53,run_python,rejected,debugging,6314,6314.0
+b,0,E002,55,run_python,ok,debugging,6497,6497.0
+b,0,E002,57,run_python,ok,feature construction,6632,6632.0
+b,0,E002,59,experiment,error,evaluation,6840,6840.0
+b,0,E003,61,run_python,rejected,feature construction,11301,11301.0
+b,0,E003,63,run_python,ok,debugging,5129,5129.0
+b,0,E003,65,experiment,ok,evaluation,5717,5717.0
+b,0,E004,67,run_python,ok,data exploration,5594,5594.0
+b,0,E004,69,run_python,ok,data exploration,5162,5162.0
+b,0,E004,71,run_python,error,feature construction,9122,9122.0
+b,0,E004,73,run_python,ok,debugging,6728,6728.0
+b,0,E004,75,experiment,ok,evaluation,6964,6964.0
+b,0,E005,77,run_python,ok,data exploration,6319,6319.0
+b,0,E005,79,run_python,rejected,feature construction,7335,7335.0
+b,0,E005,81,run_python,ok,debugging,4782,4782.0
+b,0,E005,83,run_python,rejected,feature construction,18191,18191.0
+b,0,E005,85,run_python,ok,debugging,8177,8177.0
+b,0,E005,87,experiment,ok,evaluation,9004,9004.0
+b,0,E006,89,run_python,ok,model engineering,14361,14361.0
+b,0,E006,91,run_python,ok,model engineering,6471,6471.0
+b,0,E006,93,run_python,ok,model engineering,9323,9323.0
+b,0,E006,95,run_python,ok,data exploration,8283,8283.0
+b,0,E006,97,run_python,ok,model engineering,9116,9116.0
+b,0,E006,99,run_python,ok,model engineering,12453,12453.0
+b,0,E006,101,run_python,rejected,data exploration,10896,10896.0
+b,0,E006,103,run_python,rejected,debugging,11780,11780.0
+b,0,E006,105,run_python,ok,debugging,12643,12643.0
+b,0,E006,107,run_python,error,model engineering,14322,14322.0
+b,0,E006,109,run_python,rejected,debugging,17814,17814.0
+b,0,E006,111,run_python,error,debugging,16877,16877.0
+b,0,E006,113,run_python,error,debugging,18269,18269.0
+b,0,E006,115,run_python,error,debugging,21421,21421.0
+b,0,E006,117,run_python,ok,debugging,32346,32346.0
+b,0,E006,119,experiment,ok,evaluation,23424,23424.0
+b,0,E007,121,run_python,ok,feature construction,14594,14594.0
+b,0,E007,123,experiment,ok,evaluation,4693,4693.0
+b,0,E008,125,run_python,error,data exploration,8404,8404.0
+b,0,E008,127,run_python,ok,debugging,5280,5280.0
+b,0,E008,129,run_python,ok,preprocessing,7703,7703.0
+b,0,E008,131,run_python,ok,model engineering,10074,10074.0
+b,0,E008,133,run_python,ok,model engineering,8542,8542.0
+b,0,E008,135,run_python,ok,model engineering,9801,9801.0
+b,0,E008,137,run_python,ok,data exploration,11870,11870.0
+b,0,E008,139,run_python,ok,model engineering,11965,11965.0
+b,0,E008,141,run_python,ok,data exploration,12668,12668.0
+b,0,E008,143,run_python,rejected,data exploration,13339,13339.0
+b,0,E008,145,run_python,error,debugging,13604,13604.0
+b,0,E008,147,run_python,ok,debugging,13771,13771.0
+b,0,E008,149,run_python,ok,data exploration,14009,14009.0
+b,0,E008,151,run_python,error,feature construction,18414,18414.0
+b,0,E008,153,experiment,ok,evaluation,17495,17495.0
+b,0,E009,155,run_python,error,data exploration,10757,10757.0
+b,0,E009,157,run_python,ok,debugging,6212,6212.0
+b,0,E009,159,run_python,rejected,data exploration,8572,8572.0
+b,0,E009,161,run_python,error,debugging,8590,8590.0
+b,0,E009,163,run_python,ok,debugging,10376,10376.0
+b,0,E009,165,run_python,ok,data exploration,11053,11053.0
+b,0,E009,167,run_python,ok,data exploration,11913,11913.0
+b,0,E009,169,run_python,error,feature construction,14759,14759.0
+b,0,E009,171,run_python,ok,debugging,15894,15894.0
+b,0,E009,173,run_python,ok,feature construction,16627,16627.0
+b,0,E009,175,experiment,ok,evaluation,16963,16963.0
+b,0,E010,177,run_python,ok,data exploration,12338,12338.0
+b,0,E010,179,run_python,ok,model engineering,8572,8572.0
+b,0,E010,181,run_python,error,feature construction,8572,8572.0
+b,0,E010,183,run_python,rejected,debugging,7422,7422.0
+b,0,E010,185,run_python,error,debugging,7518,7518.0
+b,0,E010,187,run_python,ok,debugging,7702,7702.0
+b,0,E010,189,run_python,ok,feature construction,8737,8737.0
+b,0,E010,191,run_python,error,model engineering,9533,9533.0
+b,0,E010,193,run_python,ok,debugging,10898,10898.0
+b,0,E010,195,run_python,error,model engineering,11857,11857.0
+b,0,E010,197,run_python,ok,debugging,12357,12357.0
+b,0,E010,199,run_python,ok,feature construction,12897,12897.0
+b,0,E010,201,run_python,ok,feature construction,12961,12961.0
+b,0,E010,203,experiment,ok,evaluation,13116,13116.0
+b,0,E011,205,run_python,ok,data exploration,6384,2128.0
+b,0,E011,206,inspect,ok,data exploration,6384,2128.0
+b,0,E011,207,inspect,ok,data exploration,6384,2128.0
+b,0,E011,209,run_python,ok,model engineering,6869,6869.0
+b,0,E011,211,run_python,ok,preprocessing,7123,7123.0
+b,0,E011,213,run_python,ok,data exploration,9374,9374.0
+b,0,E011,215,run_python,error,preprocessing,10641,10641.0
+b,0,E011,217,run_python,error,debugging,9063,9063.0
+b,0,E011,219,run_python,rejected,debugging,9207,9207.0
+b,0,E011,221,run_python,error,debugging,9287,9287.0
+b,0,E011,223,run_python,error,debugging,9454,9454.0
+b,0,E011,225,run_python,error,debugging,10228,10228.0
+b,0,E011,227,run_python,ok,debugging,11095,11095.0
+b,0,E011,229,run_python,ok,feature construction,15051,15051.0
+b,0,E011,231,experiment,ok,evaluation,12967,12967.0
+b,0,E012,234,run_python,rejected,feature construction,16679,16679.0
+b,0,E012,236,run_python,rejected,debugging,7317,7317.0
+b,0,E012,238,run_python,ok,debugging,9204,9204.0
+b,0,E012,240,experiment,ok,evaluation,10186,10186.0
+b,0,E013,242,run_python,ok,preprocessing,16037,8018.5
+b,0,E013,243,run_python,error,model engineering,16037,8018.5
+b,0,E013,245,run_python,ok,debugging,6681,6681.0
+b,0,E013,247,run_python,ok,preprocessing,15328,15328.0
+b,0,E013,249,run_python,error,feature construction,8504,8504.0
+b,0,E013,251,run_python,ok,debugging,9342,9342.0
+b,0,E013,253,experiment,ok,evaluation,9616,9616.0
+b,0,E014,255,run_python,rejected,data exploration,16342,16342.0
+b,0,E014,257,run_python,error,debugging,4104,4104.0
+b,0,E014,259,run_python,ok,debugging,4752,4752.0
+b,0,E014,261,run_python,rejected,feature construction,11982,11982.0
+b,0,E014,263,run_python,ok,debugging,7163,7163.0
+b,0,E014,265,run_python,rejected,data exploration,9825,9825.0
+b,0,E014,267,run_python,error,debugging,8296,8296.0
+b,0,E014,269,run_python,error,debugging,11072,11072.0
+b,0,E014,271,run_python,ok,debugging,20642,20642.0
+b,0,E014,273,experiment,error,evaluation,12907,12907.0
+b,0,E015,275,run_python,ok,data exploration,11103,11103.0
+b,0,E015,277,run_python,rejected,feature construction,13494,13494.0
+b,0,E015,279,run_python,rejected,debugging,8631,8631.0
+b,0,E015,281,run_python,error,debugging,9703,9703.0
+b,0,E015,283,run_python,ok,debugging,10256,10256.0
+b,0,E015,285,run_python,ok,feature construction,11039,11039.0
+b,0,E015,287,experiment,ok,evaluation,13471,13471.0
+b,0,E016,290,run_python,ok,preprocessing,13199,13199.0
+b,0,E016,292,run_python,rejected,data exploration,5145,5145.0
+b,0,E016,294,run_python,ok,debugging,5090,5090.0
+b,0,E016,296,run_python,error,feature construction,12360,12360.0
+b,0,E016,298,run_python,error,debugging,9581,9581.0
+b,0,E016,300,run_python,ok,debugging,13166,13166.0
+b,0,E016,302,experiment,ok,evaluation,13441,13441.0
+b,0,E017,304,run_python,ok,data exploration,15511,15511.0
+b,0,E017,306,run_python,ok,data exploration,6654,6654.0
+b,0,E017,308,run_python,ok,model engineering,11892,11892.0
+b,0,E017,310,run_python,ok,model engineering,19828,19828.0
+b,0,E017,312,run_python,ok,model engineering,15255,15255.0
+b,0,E017,314,run_python,error,model engineering,16098,16098.0
+b,0,E017,316,run_python,ok,debugging,17071,17071.0
+b,0,E017,318,run_python,ok,model engineering,22400,22400.0
+b,0,E017,320,run_python,ok,model engineering,20521,20521.0
+b,0,E017,322,run_python,ok,model engineering,21666,21666.0
+b,0,E017,324,run_python,error,model engineering,24908,24908.0
+b,0,E017,326,run_python,ok,debugging,31599,31599.0
+b,0,E017,328,run_python,ok,model engineering,30272,30272.0
+b,0,E017,330,experiment,ok,evaluation,28482,28482.0
+b,0,E018,332,run_python,error,model engineering,19309,19309.0
+b,0,E018,334,run_python,ok,debugging,7559,7559.0
+b,0,E018,336,run_python,ok,model engineering,10542,10542.0
+b,0,E018,338,run_python,ok,model engineering,11980,11980.0
+b,0,E018,340,run_python,rejected,model engineering,17757,17757.0
+b,0,E018,342,run_python,ok,debugging,13854,13854.0
+b,0,E018,344,run_python,error,model engineering,15343,15343.0
+b,0,E018,346,run_python,error,debugging,16472,16472.0
+b,0,E018,348,run_python,ok,debugging,16719,16719.0
+b,0,E018,350,run_python,ok,preprocessing,16361,16361.0
+b,0,E018,352,run_python,error,model engineering,18205,18205.0
+b,0,E018,354,run_python,ok,debugging,21773,21773.0
+b,0,E018,356,run_python,ok,feature construction,31288,31288.0
+b,0,E018,358,experiment,ok,evaluation,21881,21881.0
+b,0,E019,360,run_python,ok,data exploration,18684,18684.0
+b,0,E019,362,run_python,ok,data exploration,10050,10050.0
+b,0,E019,364,run_python,ok,model engineering,12275,12275.0
+b,0,E019,366,run_python,ok,model engineering,11337,11337.0
+b,0,E019,368,run_python,ok,model engineering,13009,13009.0
+b,0,E019,370,run_python,ok,model engineering,14699,14699.0
+b,0,E019,372,run_python,ok,model engineering,16909,16909.0
+b,0,E019,374,run_python,error,model engineering,22408,22408.0
+b,0,E019,376,run_python,ok,debugging,18631,18631.0
+b,0,E019,378,run_python,ok,data exploration,22151,22151.0
+b,0,E019,380,run_python,ok,model engineering,21929,21929.0
+b,0,E019,382,run_python,ok,model engineering,23121,23121.0
+b,0,E019,384,run_python,error,model engineering,25825,25825.0
+b,0,E019,386,run_python,ok,debugging,25586,25586.0
+b,0,E019,388,run_python,error,feature construction,35505,35505.0
+b,0,E020,392,run_python,error,data exploration,19110,19110.0
+b,0,E020,394,run_python,ok,debugging,7407,7407.0
+b,0,E020,396,run_python,ok,data exploration,13031,13031.0
+b,0,E020,399,run_python,ok,feature construction,15127,15127.0
+b,0,E020,401,experiment,ok,evaluation,10542,10542.0
+b,1,E001,2,run_python,error,data exploration,8770,8770.0
+b,1,E001,4,run_python,ok,debugging,3387,3387.0
+b,1,E001,6,run_python,ok,feature construction,3846,3846.0
+b,1,E001,8,run_python,ok,feature construction,3954,3954.0
+b,1,E001,10,run_python,error,feature construction,5968,5968.0
+b,1,E001,12,run_python,ok,debugging,5888,5888.0
+b,1,E001,14,experiment,ok,evaluation,6280,6280.0
+b,1,E002,16,run_python,ok,data exploration,3454,1151.3333333333333
+b,1,E002,17,inspect,ok,data exploration,3454,1151.3333333333333
+b,1,E002,18,inspect,ok,data exploration,3454,1151.3333333333333
+b,1,E002,20,run_python,ok,feature construction,4226,4226.0
+b,1,E002,22,experiment,ok,evaluation,4501,4501.0
+b,1,E003,24,run_python,error,data exploration,9211,9211.0
+b,1,E003,26,run_python,ok,debugging,3332,3332.0
+b,1,E003,28,run_python,ok,data exploration,5758,5758.0
+b,1,E003,30,run_python,error,preprocessing,10778,10778.0
+b,1,E003,32,run_python,ok,debugging,8238,8238.0
+b,1,E003,34,run_python,error,feature construction,10232,10232.0
+b,1,E003,36,run_python,error,debugging,12726,12726.0
+b,1,E003,38,run_python,error,debugging,13670,13670.0
+b,1,E003,40,run_python,ok,debugging,15747,15747.0
+b,1,E003,42,experiment,ok,evaluation,16590,16590.0
+b,1,E004,44,run_python,ok,data exploration,6064,6064.0
+b,1,E004,46,run_python,error,feature construction,4288,4288.0
+b,1,E004,48,run_python,ok,debugging,4968,4968.0
+b,1,E004,50,experiment,ok,evaluation,5186,5186.0
+b,1,E005,52,run_python,ok,preprocessing,13498,13498.0
+b,1,E005,54,run_python,ok,model engineering,9687,9687.0
+b,1,E005,56,run_python,rejected,model engineering,7820,7820.0
+b,1,E005,58,run_python,error,debugging,8656,8656.0
+b,1,E005,60,run_python,error,debugging,10521,10521.0
+b,1,E005,62,run_python,error,debugging,14990,14990.0
+b,1,E005,64,run_python,ok,debugging,14484,14484.0
+b,1,E005,66,run_python,error,model engineering,17712,17712.0
+b,1,E005,68,run_python,ok,debugging,17191,17191.0
+b,1,E005,70,run_python,ok,model engineering,19073,19073.0
+b,1,E005,72,run_python,error,model engineering,20985,20985.0
+b,1,E005,74,run_python,ok,debugging,22143,22143.0
+b,1,E005,76,run_python,ok,feature construction,24912,24912.0
+b,1,E005,78,experiment,ok,evaluation,23261,23261.0
+b,1,E006,80,run_python,ok,model engineering,8841,4420.5
+b,1,E006,81,inspect,ok,data exploration,8841,4420.5
+b,1,E006,83,run_python,rejected,model engineering,9881,9881.0
+b,1,E006,85,run_python,ok,debugging,7626,7626.0
+b,1,E006,87,run_python,error,model engineering,12340,12340.0
+b,1,E006,89,run_python,ok,debugging,12081,12081.0
+b,1,E006,91,run_python,ok,model engineering,13527,13527.0
+b,1,E006,93,run_python,ok,model engineering,14382,14382.0
+b,1,E006,95,run_python,ok,preprocessing,15626,15626.0
+b,1,E006,97,run_python,error,data exploration,17335,17335.0
+b,1,E006,99,run_python,ok,debugging,18203,18203.0
+b,1,E006,101,run_python,ok,model engineering,18853,18853.0
+b,1,E006,103,run_python,error,feature construction,25956,25956.0
+b,1,E006,105,run_python,rejected,debugging,22687,22687.0
+b,1,E006,107,run_python,ok,debugging,23659,23659.0
+b,1,E006,109,experiment,ok,evaluation,23536,23536.0
+b,1,E007,112,run_python,ok,data exploration,6685,6685.0
+b,1,E007,114,run_python,ok,data exploration,7821,7821.0
+b,1,E007,116,run_python,ok,model engineering,5431,5431.0
+b,1,E007,118,run_python,rejected,data exploration,9122,9122.0
+b,1,E007,120,run_python,error,debugging,5786,5786.0
+b,1,E007,122,run_python,ok,debugging,6033,6033.0
+b,1,E007,124,run_python,ok,model engineering,8069,8069.0
+b,1,E007,126,run_python,error,preprocessing,12416,12416.0
+b,1,E007,128,run_python,ok,debugging,9099,9099.0
+b,1,E007,130,run_python,rejected,feature construction,15515,15515.0
+b,1,E007,132,run_python,error,debugging,11799,11799.0
+b,1,E007,134,run_python,ok,debugging,13069,13069.0
+b,1,E007,136,experiment,ok,evaluation,13413,13413.0
+b,1,E008,138,run_python,ok,data exploration,6614,6614.0
+b,1,E008,140,run_python,ok,model engineering,13531,13531.0
+b,1,E008,142,run_python,ok,feature construction,8754,8754.0
+b,1,E008,144,experiment,ok,evaluation,8709,8709.0
+b,1,E009,146,run_python,ok,model engineering,7840,7840.0
+b,1,E009,148,run_python,ok,model engineering,7642,7642.0
+b,1,E009,150,run_python,error,model engineering,20090,20090.0
+b,1,E009,152,run_python,ok,debugging,12084,12084.0
+b,1,E009,154,run_python,rejected,model engineering,14215,14215.0
+b,1,E009,156,run_python,error,debugging,13482,13482.0
+b,1,E009,158,run_python,error,debugging,15093,15093.0
+b,1,E009,160,run_python,error,debugging,16842,16842.0
+b,1,E009,162,run_python,error,debugging,18368,18368.0
+b,1,E009,164,run_python,ok,debugging,20409,20409.0
+b,1,E009,166,run_python,ok,model engineering,29888,29888.0
+b,1,E009,168,run_python,error,model engineering,28310,28310.0
+b,1,E009,170,run_python,error,debugging,27565,27565.0
+b,1,E009,172,run_python,ok,debugging,36502,36502.0
+b,1,E009,174,experiment,ok,evaluation,28742,28742.0
+b,1,E010,176,run_python,ok,data exploration,13031,4343.666666666667
+b,1,E010,177,inspect,ok,data exploration,13031,4343.666666666667
+b,1,E010,178,inspect,ok,data exploration,13031,4343.666666666667
+b,1,E010,180,run_python,ok,data exploration,11721,11721.0
+b,1,E010,182,run_python,error,feature construction,12535,12535.0
+b,1,E010,184,run_python,ok,debugging,8453,8453.0
+b,1,E010,186,experiment,ok,evaluation,9620,9620.0
+b,1,E011,188,run_python,ok,data exploration,10145,10145.0
+b,1,E011,190,run_python,ok,data exploration,9096,4548.0
+b,1,E011,191,experiment,ok,evaluation,9096,4548.0
+b,1,E012,193,run_python,ok,data exploration,13887,13887.0
+b,1,E012,195,run_python,rejected,model engineering,22523,22523.0
+b,1,E012,197,run_python,error,debugging,12499,12499.0
+b,1,E012,199,run_python,ok,debugging,13029,13029.0
+b,1,E012,201,run_python,ok,data exploration,13105,13105.0
+b,1,E012,203,run_python,error,model engineering,16660,16660.0
+b,1,E012,205,run_python,rejected,debugging,19436,19436.0
+b,1,E012,207,run_python,ok,debugging,17374,17374.0
+b,1,E012,209,run_python,ok,model engineering,21532,21532.0
+b,1,E012,211,run_python,error,model engineering,28100,28100.0
+b,1,E012,213,run_python,error,debugging,23884,23884.0
+b,1,E012,215,run_python,ok,debugging,25871,25871.0
+b,1,E012,217,run_python,rejected,model engineering,29187,29187.0
+b,1,E012,219,run_python,error,debugging,31721,31721.0
+b,1,E012,221,run_python,error,debugging,31432,31432.0
+b,1,E012,223,experiment,ok,evaluation,34293,34293.0
+b,1,E013,225,run_python,ok,data exploration,6282,6282.0
+b,1,E013,227,run_python,error,data exploration,5412,5412.0
+b,1,E013,229,run_python,error,debugging,6474,6474.0
+b,1,E013,231,run_python,error,debugging,7474,7474.0
+b,1,E013,233,run_python,ok,debugging,8715,8715.0
+b,1,E013,235,run_python,ok,feature construction,12093,12093.0
+b,1,E013,237,experiment,ok,evaluation,8825,8825.0
+b,1,E014,239,run_python,ok,feature construction,12731,12731.0
+b,1,E014,241,experiment,ok,evaluation,5974,5974.0
+b,1,E015,243,run_python,ok,preprocessing,15002,15002.0
+b,1,E015,245,run_python,ok,preprocessing,11049,11049.0
+b,1,E015,247,run_python,ok,model engineering,8647,8647.0
+b,1,E015,249,run_python,rejected,model engineering,17499,17499.0
+b,1,E015,251,run_python,ok,debugging,12790,12790.0
+b,1,E015,253,run_python,ok,model engineering,14628,14628.0
+b,1,E015,255,run_python,ok,model engineering,16219,16219.0
+b,1,E015,257,run_python,ok,data exploration,17281,17281.0
+b,1,E015,259,run_python,ok,model engineering,19014,19014.0
+b,1,E015,261,run_python,error,model engineering,20287,20287.0
+b,1,E015,263,run_python,ok,debugging,22004,22004.0
+b,1,E015,265,run_python,ok,model engineering,26711,26711.0
+b,1,E015,267,run_python,ok,model engineering,25121,25121.0
+b,1,E015,269,run_python,ok,model engineering,28038,28038.0
+b,1,E015,271,run_python,ok,feature construction,29464,29464.0
+b,1,E015,273,experiment,ok,evaluation,27546,27546.0
+b,1,E016,276,run_python,ok,data exploration,10911,10911.0
+b,1,E016,278,run_python,ok,data exploration,8841,4420.5
+b,1,E016,279,run_python,ok,data exploration,8841,4420.5
+b,1,E016,281,run_python,error,model engineering,14085,14085.0
+b,1,E016,283,run_python,error,debugging,10168,10168.0
+b,1,E016,285,run_python,ok,debugging,11520,11520.0
+b,1,E016,287,run_python,ok,model engineering,12514,12514.0
+b,1,E016,289,run_python,ok,model engineering,18535,18535.0
+b,1,E016,291,run_python,rejected,model engineering,19972,19972.0
+b,1,E016,293,run_python,error,debugging,16230,16230.0
+b,1,E016,295,run_python,rejected,debugging,17496,17496.0
+b,1,E016,297,run_python,ok,debugging,18645,18645.0
+b,1,E016,299,run_python,error,model engineering,20738,20738.0
+b,1,E016,301,run_python,rejected,debugging,21615,21615.0
+b,1,E016,303,run_python,ok,debugging,23193,23193.0
+b,1,E016,305,experiment,error,evaluation,26837,26837.0
+b,1,E017,309,run_python,ok,data exploration,15117,15117.0
+b,1,E017,311,run_python,error,data exploration,11777,11777.0
+b,1,E017,313,run_python,ok,debugging,10644,10644.0
+b,1,E017,315,run_python,ok,model engineering,14187,14187.0
+b,1,E017,317,run_python,ok,model engineering,17301,17301.0
+b,1,E017,319,experiment,error,evaluation,14533,14533.0
+b,1,E018,321,run_python,ok,feature construction,11829,11829.0
+b,1,E018,323,experiment,ok,evaluation,6923,6923.0
+b,1,E019,326,run_python,ok,data exploration,4152,4152.0
+b,1,E019,328,run_python,ok,preprocessing,6737,6737.0
+b,1,E019,330,run_python,error,model engineering,14874,14874.0
+b,1,E019,332,run_python,error,debugging,7753,7753.0
+b,1,E019,334,run_python,ok,debugging,9096,9096.0
+b,1,E019,336,run_python,ok,data exploration,11099,11099.0
+b,1,E019,338,run_python,ok,model engineering,10365,10365.0
+b,1,E019,340,run_python,ok,model engineering,11484,11484.0
+b,1,E019,342,run_python,error,model engineering,16849,16849.0
+b,1,E019,344,run_python,error,debugging,16310,16310.0
+b,1,E019,346,run_python,error,debugging,15030,15030.0
+b,1,E019,348,run_python,ok,debugging,15319,15319.0
+b,1,E019,350,run_python,ok,model engineering,16624,16624.0
+b,1,E019,352,run_python,ok,model engineering,17480,17480.0
+b,1,E019,354,experiment,error,evaluation,17769,17769.0
+b,1,E020,356,run_python,ok,data exploration,9354,9354.0
+b,1,E020,358,run_python,rejected,feature construction,4857,4857.0
+b,1,E020,360,run_python,rejected,debugging,5128,5128.0
+b,1,E020,362,run_python,ok,debugging,5379,5379.0
+b,1,E020,364,experiment,ok,evaluation,6449,6449.0
+b,2,E001,2,inspect,ok,data exploration,3346,1673.0
+b,2,E001,3,inspect,ok,data exploration,3346,1673.0
+b,2,E001,5,run_python,ok,feature construction,4057,4057.0
+b,2,E001,7,experiment,ok,evaluation,3878,3878.0
+b,2,E002,9,run_python,ok,data exploration,3968,3968.0
+b,2,E002,11,run_python,ok,data exploration,4581,4581.0
+b,2,E002,13,run_python,ok,feature construction,5591,5591.0
+b,2,E002,15,run_python,ok,feature construction,5931,5931.0
+b,2,E002,17,experiment,ok,evaluation,6713,6713.0
+b,2,E003,19,run_python,ok,data exploration,10024,10024.0
+b,2,E003,21,run_python,ok,data exploration,4401,4401.0
+b,2,E003,23,run_python,ok,data exploration,3729,3729.0
+b,2,E003,25,run_python,error,feature construction,6225,6225.0
+b,2,E003,27,run_python,error,debugging,7459,7459.0
+b,2,E003,29,run_python,error,debugging,8852,8852.0
+b,2,E003,31,run_python,ok,debugging,9194,9194.0
+b,2,E003,33,experiment,ok,evaluation,9519,9519.0
+b,2,E004,35,run_python,error,feature construction,9743,9743.0
+b,2,E004,37,run_python,ok,debugging,3274,3274.0
+b,2,E004,39,run_python,rejected,feature construction,5438,5438.0
+b,2,E004,41,run_python,ok,debugging,4452,4452.0
+b,2,E004,43,run_python,ok,feature construction,4786,4786.0
+b,2,E004,45,run_python,ok,feature construction,5174,5174.0
+b,2,E004,47,run_python,ok,feature construction,5477,5477.0
+b,2,E004,49,run_python,rejected,feature construction,19563,19563.0
+b,2,E004,51,run_python,ok,debugging,8956,8956.0
+b,2,E004,53,experiment,ok,evaluation,10209,10209.0
+b,2,E005,55,run_python,ok,feature construction,14956,14956.0
+b,2,E005,57,experiment,ok,evaluation,5757,5757.0
+b,2,E006,59,run_python,rejected,feature construction,14630,14630.0
+b,2,E006,61,run_python,error,debugging,4598,4598.0
+b,2,E006,63,run_python,ok,debugging,5055,5055.0
+b,2,E006,65,run_python,ok,feature construction,8807,8807.0
+b,2,E006,67,experiment,ok,evaluation,7420,7420.0
+b,2,E007,69,run_python,ok,data exploration,15046,15046.0
+b,2,E007,71,run_python,ok,feature construction,16291,16291.0
+b,2,E007,73,experiment,ok,evaluation,7076,7076.0
+b,2,E008,75,run_python,ok,data exploration,10826,10826.0
+b,2,E008,77,run_python,ok,model engineering,10919,10919.0
+b,2,E008,79,run_python,ok,data exploration,9459,9459.0
+b,2,E008,81,run_python,ok,data exploration,7973,7973.0
+b,2,E008,83,run_python,error,model engineering,8635,8635.0
+b,2,E008,85,run_python,ok,debugging,9221,9221.0
+b,2,E008,87,run_python,ok,model engineering,10140,10140.0
+b,2,E008,89,run_python,ok,model engineering,11843,11843.0
+b,2,E008,91,run_python,rejected,model engineering,11462,11462.0
+b,2,E008,93,run_python,error,debugging,11783,11783.0
+b,2,E008,95,run_python,ok,debugging,12169,12169.0
+b,2,E008,97,run_python,error,model engineering,12951,12951.0
+b,2,E008,99,run_python,error,debugging,13579,13579.0
+b,2,E008,101,run_python,error,debugging,14439,14439.0
+b,2,E008,103,run_python,ok,debugging,14916,14916.0
+b,2,E008,105,experiment,ok,evaluation,15034,15034.0
+b,2,E009,107,run_python,ok,data exploration,9340,9340.0
+b,2,E009,109,run_python,error,model engineering,11493,11493.0
+b,2,E009,111,run_python,ok,debugging,9816,9816.0
+b,2,E009,113,run_python,ok,model engineering,10181,10181.0
+b,2,E009,115,run_python,error,model engineering,13727,13727.0
+b,2,E009,117,run_python,error,debugging,15307,15307.0
+b,2,E009,119,run_python,error,debugging,15841,15841.0
+b,2,E009,121,run_python,ok,debugging,17843,17843.0
+b,2,E009,123,run_python,ok,model engineering,21450,21450.0
+b,2,E009,125,run_python,ok,model engineering,23259,23259.0
+b,2,E009,127,run_python,error,model engineering,25355,25355.0
+b,2,E009,129,run_python,ok,debugging,31203,31203.0
+b,2,E009,131,run_python,error,model engineering,27728,27728.0
+b,2,E009,133,run_python,ok,debugging,29284,29284.0
+b,2,E009,135,experiment,ok,evaluation,29531,29531.0
+b,2,E010,137,run_python,ok,data exploration,7338,7338.0
+b,2,E010,139,run_python,ok,data exploration,6615,6615.0
+b,2,E010,141,run_python,error,model engineering,9016,9016.0
+b,2,E010,143,run_python,error,debugging,8918,8918.0
+b,2,E010,145,run_python,ok,debugging,10115,10115.0
+b,2,E010,147,run_python,error,model engineering,10632,10632.0
+b,2,E010,149,run_python,error,debugging,12170,12170.0
+b,2,E010,151,run_python,error,debugging,12974,12974.0
+b,2,E010,153,run_python,error,debugging,14321,14321.0
+b,2,E010,155,run_python,ok,debugging,16338,16338.0
+b,2,E010,157,run_python,ok,model engineering,18061,18061.0
+b,2,E010,159,run_python,ok,model engineering,20220,20220.0
+b,2,E010,161,run_python,ok,model engineering,19715,19715.0
+b,2,E010,163,run_python,error,model engineering,24234,24234.0
+b,2,E010,165,experiment,ok,evaluation,22356,22356.0
+b,2,E011,167,run_python,ok,data exploration,15598,15598.0
+b,2,E011,169,run_python,error,feature construction,8402,8402.0
+b,2,E011,171,run_python,ok,debugging,8322,8322.0
+b,2,E011,173,experiment,ok,evaluation,9454,9454.0
+b,2,E012,175,run_python,ok,data exploration,9921,9921.0
+b,2,E012,177,run_python,error,feature construction,9828,9828.0
+b,2,E012,179,run_python,ok,debugging,7415,7415.0
+b,2,E012,181,run_python,error,feature construction,7972,7972.0
+b,2,E012,183,run_python,ok,debugging,8823,8823.0
+b,2,E012,185,experiment,ok,evaluation,9020,9020.0
+b,2,E013,187,run_python,ok,data exploration,17053,17053.0
+b,2,E013,189,run_python,ok,model engineering,8357,8357.0
+b,2,E013,191,run_python,ok,model engineering,10473,10473.0
+b,2,E013,193,run_python,error,feature construction,11417,11417.0
+b,2,E013,195,run_python,error,debugging,12326,12326.0
+b,2,E013,197,run_python,ok,debugging,14259,14259.0
+b,2,E013,199,run_python,ok,model engineering,14881,14881.0
+b,2,E013,201,run_python,error,model engineering,18367,18367.0
+b,2,E013,203,run_python,ok,debugging,16408,16408.0
+b,2,E013,205,run_python,ok,model engineering,17486,17486.0
+b,2,E013,207,run_python,ok,model engineering,21762,21762.0
+b,2,E013,209,run_python,ok,model engineering,21433,21433.0
+b,2,E013,211,run_python,error,model engineering,24129,24129.0
+b,2,E013,213,run_python,error,debugging,24630,24630.0
+b,2,E013,215,run_python,ok,debugging,24235,24235.0
+b,2,E013,217,experiment,ok,evaluation,24791,24791.0
+b,2,E014,219,run_python,ok,data exploration,10794,10794.0
+b,2,E014,221,run_python,rejected,model engineering,18005,18005.0
+b,2,E014,223,run_python,error,debugging,8842,8842.0
+b,2,E014,225,run_python,ok,debugging,10922,10922.0
+b,2,E014,227,run_python,ok,model engineering,13642,13642.0
+b,2,E014,229,run_python,error,model engineering,16321,16321.0
+b,2,E014,231,run_python,ok,debugging,16924,16924.0
+b,2,E014,233,run_python,ok,model engineering,19267,19267.0
+b,2,E014,235,run_python,ok,model engineering,22256,22256.0
+b,2,E014,237,run_python,ok,model engineering,33543,33543.0
+b,2,E014,239,run_python,ok,model engineering,23783,23783.0
+b,2,E014,241,run_python,ok,model engineering,26684,26684.0
+b,2,E014,243,run_python,ok,model engineering,36111,36111.0
+b,2,E014,245,run_python,ok,model engineering,39777,39777.0
+b,2,E015,251,run_python,ok,data exploration,18805,18805.0
+b,2,E015,253,run_python,ok,model engineering,14239,14239.0
+b,2,E015,255,run_python,ok,model engineering,12946,12946.0
+b,2,E015,257,run_python,ok,data exploration,11632,11632.0
+b,2,E015,259,run_python,error,model engineering,10959,10959.0
+b,2,E015,261,run_python,ok,debugging,11426,11426.0
+b,2,E015,263,run_python,error,model engineering,13662,13662.0
+b,2,E015,265,run_python,error,debugging,13261,13261.0
+b,2,E015,267,run_python,ok,debugging,15894,15894.0
+b,2,E015,269,run_python,error,model engineering,28188,28188.0
+b,2,E015,271,run_python,ok,debugging,20299,20299.0
+b,2,E015,273,run_python,ok,model engineering,22019,22019.0
+b,2,E015,275,run_python,error,model engineering,24847,24847.0
+b,2,E015,277,run_python,ok,debugging,23711,23711.0
+b,2,E015,279,experiment,ok,evaluation,24066,24066.0
+b,2,E016,281,run_python,ok,data exploration,6235,6235.0
+b,2,E016,283,run_python,ok,data exploration,5833,5833.0
+b,2,E016,285,run_python,ok,data exploration,6430,6430.0
+b,2,E016,287,run_python,ok,data exploration,6802,6802.0
+b,2,E016,289,run_python,rejected,model engineering,8791,8791.0
+b,2,E016,291,run_python,error,debugging,8827,8827.0
+b,2,E016,293,run_python,ok,debugging,10150,10150.0
+b,2,E016,295,run_python,ok,model engineering,10850,10850.0
+b,2,E016,297,experiment,error,evaluation,10839,10839.0
+b,2,E017,299,run_python,ok,data exploration,5585,5585.0
+b,2,E017,301,run_python,ok,data exploration,6935,6935.0
+b,2,E017,303,run_python,ok,model engineering,8634,8634.0
+b,2,E017,305,run_python,ok,model engineering,8311,8311.0
+b,2,E017,307,run_python,ok,model engineering,8778,8778.0
+b,2,E017,309,run_python,ok,model engineering,9300,9300.0
+b,2,E017,311,run_python,ok,model engineering,11089,11089.0
+b,2,E017,313,run_python,error,feature construction,10562,10562.0
+b,2,E017,315,run_python,ok,debugging,10837,10837.0
+b,2,E017,317,experiment,ok,evaluation,11259,11259.0
+b,2,E018,319,run_python,ok,data exploration,12656,12656.0
+b,2,E018,321,run_python,error,model engineering,12504,12504.0
+b,2,E018,323,run_python,ok,debugging,8123,8123.0
+b,2,E018,325,run_python,ok,model engineering,10820,10820.0
+b,2,E018,327,run_python,rejected,model engineering,17736,17736.0
+b,2,E018,329,run_python,rejected,debugging,12916,12916.0
+b,2,E018,331,run_python,error,debugging,14644,14644.0
+b,2,E018,333,run_python,error,debugging,16284,16284.0
+b,2,E018,335,run_python,ok,debugging,18121,18121.0
+b,2,E018,337,run_python,ok,model engineering,22512,22512.0
+b,2,E018,339,run_python,ok,model engineering,22037,22037.0
+b,2,E018,341,run_python,ok,model engineering,28324,28324.0
+b,2,E018,343,run_python,error,model engineering,29120,29120.0
+b,2,E018,345,run_python,ok,debugging,29318,29318.0
+b,2,E018,347,run_python,ok,feature construction,28605,28605.0
+b,2,E018,349,experiment,ok,evaluation,28878,28878.0
+b,2,E019,351,run_python,ok,data exploration,13609,13609.0
+b,2,E019,353,run_python,rejected,model engineering,17475,17475.0
+b,2,E019,355,run_python,error,debugging,7444,7444.0
+b,2,E019,357,run_python,ok,debugging,8284,8284.0
+b,2,E019,359,run_python,rejected,feature construction,11550,11550.0
+b,2,E019,361,run_python,rejected,debugging,9002,9002.0
+b,2,E019,363,run_python,rejected,debugging,9360,9360.0
+b,2,E019,365,run_python,ok,debugging,9656,9656.0
+b,2,E019,367,run_python,ok,model engineering,13541,13541.0
+b,2,E019,369,run_python,error,model engineering,19451,19451.0
+b,2,E019,371,run_python,error,debugging,15906,15906.0
+b,2,E019,373,run_python,error,debugging,16602,16602.0
+b,2,E019,375,run_python,ok,debugging,17358,17358.0
+b,2,E019,377,run_python,error,model engineering,22178,22178.0
+b,2,E019,379,run_python,ok,debugging,21757,21757.0
+b,2,E019,381,experiment,ok,evaluation,24409,24409.0
+b,2,E020,383,run_python,ok,data exploration,11760,11760.0
+b,2,E020,385,run_python,ok,model engineering,6160,6160.0
+b,2,E020,387,run_python,ok,model engineering,11021,11021.0
+b,2,E020,389,run_python,ok,model engineering,9743,9743.0
+b,2,E020,391,run_python,ok,model engineering,11818,11818.0
+b,2,E020,393,run_python,ok,model engineering,12907,12907.0
+b,2,E020,395,run_python,error,model engineering,10935,10935.0
+b,2,E020,397,run_python,ok,debugging,11236,11236.0
+b,2,E020,399,run_python,ok,model engineering,13549,13549.0
+b,2,E020,401,run_python,ok,model engineering,13255,13255.0
+b,2,E020,403,run_python,ok,model engineering,13911,13911.0
+b,2,E020,405,run_python,ok,model engineering,16979,16979.0
+b,2,E020,407,run_python,ok,model engineering,16830,16830.0
+b,2,E020,409,run_python,ok,feature construction,16527,16527.0
+b,2,E020,411,experiment,ok,evaluation,15833,15833.0
+a_prime,0,E001,2,run_python,rejected,data exploration,6607,6607.0
+a_prime,0,E001,4,run_python,ok,debugging,2998,2998.0
+a_prime,0,E001,6,run_python,ok,feature construction,4337,4337.0
+a_prime,0,E001,8,experiment,ok,evaluation,4635,4635.0
+a_prime,0,E002,10,run_python,error,feature construction,8554,8554.0
+a_prime,0,E002,12,run_python,ok,debugging,5545,5545.0
+a_prime,0,E002,14,experiment,ok,evaluation,5858,5858.0
+a_prime,0,E003,16,run_python,ok,data exploration,6566,6566.0
+a_prime,0,E003,18,run_python,error,feature construction,7377,7377.0
+a_prime,0,E003,20,run_python,ok,debugging,6557,6557.0
+a_prime,0,E003,22,run_python,ok,feature construction,6689,6689.0
+a_prime,0,E003,24,experiment,ok,evaluation,6913,6913.0
+a_prime,0,E004,26,inspect,ok,data exploration,10386,5193.0
+a_prime,0,E004,27,run_python,ok,preprocessing,10386,5193.0
+a_prime,0,E004,29,run_python,ok,preprocessing,6863,6863.0
+a_prime,0,E004,31,run_python,ok,preprocessing,5804,5804.0
+a_prime,0,E004,33,run_python,error,model engineering,10241,10241.0
+a_prime,0,E004,35,run_python,ok,debugging,8986,8986.0
+a_prime,0,E004,37,run_python,ok,model engineering,13943,13943.0
+a_prime,0,E004,39,run_python,error,feature construction,11827,11827.0
+a_prime,0,E004,41,run_python,error,debugging,12540,12540.0
+a_prime,0,E004,43,run_python,error,debugging,13317,13317.0
+a_prime,0,E004,45,run_python,ok,debugging,14466,14466.0
+a_prime,0,E004,47,experiment,ok,evaluation,14799,14799.0
+a_prime,0,E005,49,run_python,ok,feature construction,5986,5986.0
+a_prime,0,E005,51,experiment,ok,evaluation,4132,4132.0
+a_prime,0,E006,53,run_python,ok,data exploration,7515,7515.0
+a_prime,0,E006,55,run_python,rejected,model engineering,20236,20236.0
+a_prime,0,E006,57,run_python,ok,debugging,9540,9540.0
+a_prime,0,E006,59,run_python,ok,data exploration,10233,10233.0
+a_prime,0,E006,61,run_python,error,model engineering,12210,12210.0
+a_prime,0,E006,63,run_python,ok,debugging,13734,13734.0
+a_prime,0,E006,65,run_python,error,model engineering,13852,13852.0
+a_prime,0,E006,67,run_python,ok,debugging,15016,15016.0
+a_prime,0,E006,69,run_python,ok,model engineering,17563,17563.0
+a_prime,0,E006,71,run_python,ok,feature construction,17574,17574.0
+a_prime,0,E006,73,experiment,ok,evaluation,17229,17229.0
+a_prime,0,E007,75,run_python,ok,preprocessing,12993,12993.0
+a_prime,0,E007,77,run_python,ok,model engineering,7375,7375.0
+a_prime,0,E007,79,run_python,rejected,feature construction,9983,9983.0
+a_prime,0,E007,81,run_python,ok,debugging,9119,9119.0
+a_prime,0,E007,83,run_python,error,model engineering,10372,10372.0
+a_prime,0,E007,85,run_python,ok,debugging,11478,11478.0
+a_prime,0,E007,87,run_python,ok,model engineering,15202,15202.0
+a_prime,0,E007,89,run_python,rejected,model engineering,17998,17998.0
+a_prime,0,E007,91,run_python,ok,debugging,16698,16698.0
+a_prime,0,E007,93,run_python,ok,preprocessing,19663,19663.0
+a_prime,0,E007,95,run_python,ok,model engineering,20633,20633.0
+a_prime,0,E007,97,run_python,error,data exploration,23372,23372.0
+a_prime,0,E007,99,run_python,error,debugging,29013,29013.0
+a_prime,0,E007,101,run_python,ok,debugging,27589,27589.0
+a_prime,0,E007,103,run_python,ok,feature construction,35343,35343.0
+a_prime,0,E007,105,experiment,ok,evaluation,27110,27110.0
+a_prime,0,E008,107,run_python,ok,data exploration,11899,2974.75
+a_prime,0,E008,108,inspect,ok,data exploration,11899,2974.75
+a_prime,0,E008,109,inspect,ok,data exploration,11899,2974.75
+a_prime,0,E008,110,inspect,ok,data exploration,11899,2974.75
+a_prime,0,E008,112,run_python,error,model engineering,10855,10855.0
+a_prime,0,E008,114,run_python,ok,debugging,8802,8802.0
+a_prime,0,E008,116,run_python,error,model engineering,14103,14103.0
+a_prime,0,E008,118,run_python,error,debugging,11163,11163.0
+a_prime,0,E008,120,run_python,ok,debugging,11749,11749.0
+a_prime,0,E008,122,run_python,ok,model engineering,15573,15573.0
+a_prime,0,E008,124,run_python,rejected,model engineering,19766,19766.0
+a_prime,0,E008,126,run_python,error,debugging,17007,17007.0
+a_prime,0,E008,128,run_python,ok,debugging,19062,19062.0
+a_prime,0,E008,130,run_python,ok,model engineering,24613,24613.0
+a_prime,0,E008,132,run_python,ok,model engineering,28593,28593.0
+a_prime,0,E008,134,experiment,ok,evaluation,27082,27082.0
+a_prime,0,E009,136,run_python,ok,data exploration,7711,7711.0
+a_prime,0,E009,138,run_python,ok,model engineering,10282,10282.0
+a_prime,0,E009,140,run_python,error,model engineering,10425,10425.0
+a_prime,0,E009,142,run_python,rejected,debugging,7532,7532.0
+a_prime,0,E009,144,run_python,error,debugging,7827,7827.0
+a_prime,0,E009,146,run_python,error,debugging,8301,8301.0
+a_prime,0,E009,148,run_python,error,debugging,8846,8846.0
+a_prime,0,E009,150,run_python,error,debugging,9329,9329.0
+a_prime,0,E009,152,run_python,ok,debugging,10542,10542.0
+a_prime,0,E009,154,run_python,ok,data exploration,11033,11033.0
+a_prime,0,E009,156,run_python,ok,data exploration,11312,11312.0
+a_prime,0,E009,158,run_python,ok,model engineering,11626,11626.0
+a_prime,0,E009,160,run_python,ok,preprocessing,12817,12817.0
+a_prime,0,E009,162,run_python,ok,model engineering,12802,12802.0
+a_prime,0,E009,164,run_python,ok,feature construction,13249,13249.0
+a_prime,0,E009,166,experiment,ok,evaluation,13312,13312.0
+a_prime,0,E010,168,run_python,ok,data exploration,13395,13395.0
+a_prime,0,E010,170,run_python,error,feature construction,14010,14010.0
+a_prime,0,E010,172,run_python,error,debugging,9586,9586.0
+a_prime,0,E010,174,run_python,ok,debugging,10964,10964.0
+a_prime,0,E010,176,run_python,ok,feature construction,11429,11429.0
+a_prime,0,E010,178,experiment,ok,evaluation,11654,11654.0
+a_prime,0,E011,180,run_python,error,data exploration,12026,12026.0
+a_prime,0,E011,182,run_python,ok,debugging,12727,6363.5
+a_prime,0,E011,183,run_python,rejected,feature construction,12727,6363.5
+a_prime,0,E011,185,run_python,error,debugging,8787,8787.0
+a_prime,0,E011,187,run_python,ok,debugging,9366,9366.0
+a_prime,0,E011,189,run_python,ok,feature construction,9857,9857.0
+a_prime,0,E011,191,run_python,ok,feature construction,10728,10728.0
+a_prime,0,E011,193,run_python,ok,feature construction,19686,19686.0
+a_prime,0,E011,195,experiment,ok,evaluation,12334,12334.0
+a_prime,0,E012,197,run_python,ok,model engineering,13879,13879.0
+a_prime,0,E012,199,run_python,rejected,model engineering,8816,8816.0
+a_prime,0,E012,201,run_python,error,debugging,9972,9972.0
+a_prime,0,E012,203,run_python,error,debugging,11653,11653.0
+a_prime,0,E012,205,run_python,ok,debugging,13633,13633.0
+a_prime,0,E012,207,run_python,error,model engineering,14927,14927.0
+a_prime,0,E012,209,run_python,error,debugging,15132,15132.0
+a_prime,0,E012,211,run_python,ok,debugging,16897,16897.0
+a_prime,0,E012,213,run_python,rejected,model engineering,21431,21431.0
+a_prime,0,E012,215,run_python,error,debugging,18640,18640.0
+a_prime,0,E012,217,run_python,ok,debugging,19479,19479.0
+a_prime,0,E012,219,run_python,ok,model engineering,24877,24877.0
+a_prime,0,E012,221,experiment,ok,evaluation,21832,21832.0
+a_prime,0,E013,223,run_python,ok,data exploration,13837,13837.0
+a_prime,0,E013,225,run_python,error,model engineering,5554,5554.0
+a_prime,0,E013,227,run_python,ok,debugging,6702,6702.0
+a_prime,0,E013,229,run_python,rejected,model engineering,8052,8052.0
+a_prime,0,E013,231,run_python,ok,debugging,8778,8778.0
+a_prime,0,E013,233,run_python,error,feature construction,12123,12123.0
+a_prime,0,E013,235,run_python,ok,debugging,11012,11012.0
+a_prime,0,E013,237,run_python,ok,feature construction,11724,11724.0
+a_prime,0,E013,239,experiment,ok,evaluation,12054,12054.0
+a_prime,0,E014,241,run_python,error,data exploration,19273,19273.0
+a_prime,0,E014,243,run_python,ok,debugging,13220,13220.0
+a_prime,0,E014,245,experiment,ok,evaluation,8564,8564.0
+a_prime,0,E015,247,inspect,ok,data exploration,7606,3803.0
+a_prime,0,E015,248,run_python,ok,data exploration,7606,3803.0
+a_prime,0,E015,250,run_python,ok,data exploration,6816,6816.0
+a_prime,0,E015,252,run_python,ok,model engineering,9391,9391.0
+a_prime,0,E015,254,run_python,error,data exploration,7079,7079.0
+a_prime,0,E015,256,run_python,ok,debugging,7698,7698.0
+a_prime,0,E015,258,run_python,ok,model engineering,11694,11694.0
+a_prime,0,E015,260,run_python,ok,data exploration,9227,9227.0
+a_prime,0,E015,262,run_python,rejected,model engineering,10518,10518.0
+a_prime,0,E015,264,run_python,ok,debugging,11329,11329.0
+a_prime,0,E015,266,run_python,ok,data exploration,14758,14758.0
+a_prime,0,E015,268,run_python,error,model engineering,12726,12726.0
+a_prime,0,E015,270,run_python,ok,debugging,13773,13773.0
+a_prime,0,E015,272,run_python,error,model engineering,17829,17829.0
+a_prime,0,E015,274,run_python,ok,debugging,16405,16405.0
+a_prime,0,E016,277,run_python,ok,data exploration,10780,10780.0
+a_prime,0,E016,279,run_python,ok,model engineering,14895,14895.0
+a_prime,0,E016,281,run_python,ok,model engineering,12132,12132.0
+a_prime,0,E016,283,run_python,ok,model engineering,15198,15198.0
+a_prime,0,E016,285,run_python,ok,feature construction,16234,16234.0
+a_prime,0,E016,287,run_python,ok,model engineering,14295,14295.0
+a_prime,0,E016,289,run_python,ok,model engineering,16078,16078.0
+a_prime,0,E016,291,run_python,error,model engineering,19643,19643.0
+a_prime,0,E016,293,run_python,ok,debugging,19341,19341.0
+a_prime,0,E016,295,run_python,ok,model engineering,23699,23699.0
+a_prime,0,E016,297,run_python,error,model engineering,25439,25439.0
+a_prime,0,E016,299,run_python,error,debugging,24689,24689.0
+a_prime,0,E016,301,run_python,ok,debugging,32557,32557.0
+a_prime,0,E016,303,run_python,ok,model engineering,31740,31740.0
+a_prime,0,E016,305,run_python,ok,feature construction,36817,36817.0
+a_prime,0,E016,307,experiment,ok,evaluation,33317,33317.0
+a_prime,0,E017,309,run_python,ok,data exploration,11629,11629.0
+a_prime,0,E017,312,run_python,error,model engineering,10615,10615.0
+a_prime,0,E017,314,run_python,error,debugging,12421,12421.0
+a_prime,0,E017,316,run_python,ok,debugging,12179,12179.0
+a_prime,0,E017,318,run_python,ok,data exploration,12677,12677.0
+a_prime,0,E017,320,run_python,ok,data exploration,12764,12764.0
+a_prime,0,E017,322,run_python,ok,data exploration,13614,13614.0
+a_prime,0,E017,324,run_python,ok,model engineering,19442,19442.0
+a_prime,0,E017,326,run_python,ok,model engineering,15562,15562.0
+a_prime,0,E017,328,run_python,rejected,model engineering,21560,21560.0
+a_prime,0,E017,330,run_python,ok,debugging,19095,19095.0
+a_prime,0,E017,332,run_python,error,model engineering,22952,22952.0
+a_prime,0,E017,334,run_python,error,debugging,22362,22362.0
+a_prime,0,E017,336,run_python,error,debugging,25311,25311.0
+a_prime,0,E017,338,run_python,ok,debugging,25235,25235.0
+a_prime,0,E017,340,experiment,ok,evaluation,27184,27184.0
+a_prime,0,E018,342,run_python,error,model engineering,13663,13663.0
+a_prime,0,E018,344,run_python,error,debugging,6510,6510.0
+a_prime,0,E018,346,run_python,error,debugging,8361,8361.0
+a_prime,0,E018,348,run_python,ok,debugging,8490,8490.0
+a_prime,0,E018,350,run_python,error,model engineering,13804,13804.0
+a_prime,0,E018,352,run_python,ok,debugging,10887,10887.0
+a_prime,0,E018,354,run_python,rejected,model engineering,12613,12613.0
+a_prime,0,E018,356,run_python,ok,debugging,16985,16985.0
+a_prime,0,E018,358,run_python,ok,model engineering,15735,15735.0
+a_prime,0,E018,360,run_python,ok,data exploration,23900,23900.0
+a_prime,0,E018,362,run_python,rejected,data exploration,22410,22410.0
+a_prime,0,E018,364,run_python,ok,debugging,17233,17233.0
+a_prime,0,E018,366,run_python,error,feature construction,24170,24170.0
+a_prime,0,E018,368,run_python,ok,debugging,18984,18984.0
+a_prime,0,E018,370,experiment,ok,evaluation,19490,19490.0
+a_prime,0,E019,374,run_python,rejected,feature construction,11223,11223.0
+a_prime,0,E019,376,run_python,error,debugging,6168,6168.0
+a_prime,0,E019,378,run_python,ok,debugging,7784,7784.0
+a_prime,0,E019,380,experiment,ok,evaluation,8296,8296.0
+a_prime,0,E020,383,run_python,rejected,feature construction,13687,13687.0
+a_prime,0,E020,385,run_python,ok,debugging,4779,4779.0
+a_prime,0,E020,387,run_python,error,feature construction,21125,21125.0
+a_prime,0,E020,389,run_python,error,debugging,11594,11594.0
+a_prime,0,E020,391,run_python,ok,debugging,13765,13765.0
+a_prime,0,E020,393,experiment,ok,evaluation,14551,14551.0
+a_prime,1,E001,2,inspect,ok,data exploration,2695,1347.5
+a_prime,1,E001,3,inspect,ok,data exploration,2695,1347.5
+a_prime,1,E001,5,run_python,ok,data exploration,3072,3072.0
+a_prime,1,E001,7,run_python,error,feature construction,6693,6693.0
+a_prime,1,E001,9,run_python,error,debugging,5108,5108.0
+a_prime,1,E001,11,run_python,ok,debugging,5353,5353.0
+a_prime,1,E001,13,run_python,ok,feature construction,5809,5809.0
+a_prime,1,E001,15,run_python,error,feature construction,6831,6831.0
+a_prime,1,E001,17,run_python,ok,debugging,8140,8140.0
+a_prime,1,E001,19,experiment,ok,evaluation,8433,8433.0
+a_prime,1,E002,21,run_python,ok,data exploration,3060,3060.0
+a_prime,1,E002,23,run_python,ok,data exploration,4979,4979.0
+a_prime,1,E002,25,run_python,ok,feature construction,5114,5114.0
+a_prime,1,E002,27,experiment,ok,evaluation,5667,5667.0
+a_prime,1,E003,29,run_python,ok,feature construction,17904,17904.0
+a_prime,1,E003,31,run_python,error,feature construction,7303,7303.0
+a_prime,1,E003,33,run_python,ok,debugging,6769,6769.0
+a_prime,1,E003,35,run_python,ok,feature construction,6701,6701.0
+a_prime,1,E003,37,experiment,ok,evaluation,6804,6804.0
+a_prime,1,E004,39,inspect,ok,data exploration,3951,987.75
+a_prime,1,E004,40,inspect,ok,data exploration,3951,987.75
+a_prime,1,E004,41,inspect,ok,data exploration,3951,987.75
+a_prime,1,E004,42,inspect,ok,data exploration,3951,987.75
+a_prime,1,E004,44,inspect,ok,data exploration,3419,1139.6666666666667
+a_prime,1,E004,45,inspect,ok,data exploration,3419,1139.6666666666667
+a_prime,1,E004,46,run_python,error,data exploration,3419,1139.6666666666667
+a_prime,1,E004,48,run_python,ok,debugging,3617,3617.0
+a_prime,1,E004,50,run_python,ok,data exploration,4512,4512.0
+a_prime,1,E004,52,run_python,ok,feature construction,8786,8786.0
+a_prime,1,E004,54,run_python,error,feature construction,5911,5911.0
+a_prime,1,E004,56,run_python,ok,debugging,6452,6452.0
+a_prime,1,E004,58,experiment,ok,evaluation,6733,6733.0
+a_prime,1,E005,60,run_python,error,data exploration,15442,7721.0
+a_prime,1,E005,61,inspect,ok,data exploration,15442,7721.0
+a_prime,1,E005,63,run_python,error,model engineering,9381,9381.0
+a_prime,1,E005,65,run_python,ok,debugging,8517,8517.0
+a_prime,1,E005,67,run_python,ok,model engineering,9715,9715.0
+a_prime,1,E005,69,run_python,ok,model engineering,20186,20186.0
+a_prime,1,E005,71,run_python,ok,model engineering,14843,14843.0
+a_prime,1,E005,73,run_python,rejected,model engineering,15100,15100.0
+a_prime,1,E005,75,run_python,error,debugging,13969,13969.0
+a_prime,1,E005,77,run_python,error,debugging,16058,16058.0
+a_prime,1,E005,79,run_python,rejected,debugging,16740,16740.0
+a_prime,1,E005,81,run_python,error,debugging,18164,18164.0
+a_prime,1,E005,83,run_python,error,debugging,19787,19787.0
+a_prime,1,E005,85,run_python,ok,debugging,21652,21652.0
+a_prime,1,E005,87,run_python,rejected,feature construction,33511,33511.0
+a_prime,1,E005,89,experiment,ok,evaluation,25409,25409.0
+a_prime,1,E006,91,run_python,ok,feature construction,5239,5239.0
+a_prime,1,E006,93,experiment,ok,evaluation,3320,3320.0
+a_prime,1,E007,95,run_python,ok,model engineering,9482,9482.0
+a_prime,1,E007,97,run_python,ok,model engineering,5400,5400.0
+a_prime,1,E007,99,run_python,ok,feature construction,9980,9980.0
+a_prime,1,E007,101,experiment,ok,evaluation,8099,8099.0
+a_prime,1,E008,103,run_python,ok,model engineering,16309,16309.0
+a_prime,1,E008,105,run_python,ok,model engineering,11631,11631.0
+a_prime,1,E008,107,run_python,ok,model engineering,10545,10545.0
+a_prime,1,E008,110,run_python,ok,feature construction,13999,13999.0
+a_prime,1,E008,112,run_python,ok,model engineering,11792,11792.0
+a_prime,1,E008,114,run_python,ok,model engineering,15191,15191.0
+a_prime,1,E008,116,run_python,ok,model engineering,16403,16403.0
+a_prime,1,E008,118,run_python,ok,feature construction,18431,18431.0
+a_prime,1,E008,120,run_python,ok,model engineering,18851,18851.0
+a_prime,1,E008,122,run_python,ok,model engineering,20179,20179.0
+a_prime,1,E008,124,run_python,error,feature construction,20750,20750.0
+a_prime,1,E008,126,run_python,error,debugging,20799,20799.0
+a_prime,1,E008,128,run_python,ok,debugging,21351,21351.0
+a_prime,1,E008,130,experiment,ok,evaluation,21570,21570.0
+a_prime,1,E009,132,run_python,ok,data exploration,15334,15334.0
+a_prime,1,E009,134,run_python,ok,model engineering,6651,6651.0
+a_prime,1,E009,136,run_python,rejected,model engineering,15419,15419.0
+a_prime,1,E009,138,run_python,ok,debugging,8183,8183.0
+a_prime,1,E009,140,run_python,ok,model engineering,10383,10383.0
+a_prime,1,E009,142,run_python,ok,feature construction,17079,17079.0
+a_prime,1,E009,144,run_python,ok,model engineering,13387,13387.0
+a_prime,1,E009,146,run_python,ok,model engineering,17896,17896.0
+a_prime,1,E009,148,run_python,ok,model engineering,20480,20480.0
+a_prime,1,E009,150,run_python,rejected,model engineering,28596,28596.0
+a_prime,1,E009,152,run_python,ok,debugging,20535,20535.0
+a_prime,1,E009,154,run_python,error,model engineering,27302,27302.0
+a_prime,1,E009,156,run_python,error,debugging,24994,24994.0
+a_prime,1,E009,158,run_python,ok,debugging,24168,24168.0
+a_prime,1,E009,160,experiment,ok,evaluation,24324,24324.0
+a_prime,1,E010,163,run_python,ok,model engineering,11292,11292.0
+a_prime,1,E010,165,run_python,ok,model engineering,8468,8468.0
+a_prime,1,E010,167,run_python,ok,data exploration,12816,12816.0
+a_prime,1,E010,169,run_python,error,model engineering,8426,8426.0
+a_prime,1,E010,171,run_python,ok,debugging,9203,9203.0
+a_prime,1,E010,173,run_python,ok,model engineering,10589,10589.0
+a_prime,1,E010,175,run_python,ok,feature construction,20507,20507.0
+a_prime,1,E010,177,run_python,ok,model engineering,13830,13830.0
+a_prime,1,E010,179,run_python,ok,feature construction,17059,17059.0
+a_prime,1,E010,181,run_python,ok,model engineering,15923,15923.0
+a_prime,1,E010,183,run_python,error,model engineering,16867,16867.0
+a_prime,1,E010,185,run_python,ok,debugging,17926,17926.0
+a_prime,1,E010,187,experiment,ok,evaluation,18452,18452.0
+a_prime,1,E011,189,run_python,ok,data exploration,13644,13644.0
+a_prime,1,E011,191,run_python,ok,model engineering,10196,10196.0
+a_prime,1,E011,193,run_python,ok,model engineering,6432,6432.0
+a_prime,1,E011,195,run_python,ok,preprocessing,10941,10941.0
+a_prime,1,E011,197,run_python,ok,feature construction,14565,14565.0
+a_prime,1,E011,199,run_python,error,feature construction,10537,10537.0
+a_prime,1,E011,201,run_python,ok,debugging,11610,11610.0
+a_prime,1,E011,203,run_python,ok,feature construction,12735,12735.0
+a_prime,1,E011,205,experiment,ok,evaluation,14157,14157.0
+a_prime,1,E012,207,run_python,ok,data exploration,6990,6990.0
+a_prime,1,E012,209,run_python,ok,data exploration,6195,6195.0
+a_prime,1,E012,211,run_python,ok,preprocessing,9934,9934.0
+a_prime,1,E012,213,run_python,ok,data exploration,11160,11160.0
+a_prime,1,E012,215,run_python,ok,model engineering,15669,15669.0
+a_prime,1,E012,217,run_python,ok,data exploration,16166,16166.0
+a_prime,1,E012,219,run_python,ok,feature construction,13685,13685.0
+a_prime,1,E012,221,experiment,ok,evaluation,13932,13932.0
+a_prime,1,E013,224,run_python,ok,data exploration,4162,4162.0
+a_prime,1,E013,226,run_python,ok,data exploration,5095,5095.0
+a_prime,1,E013,228,run_python,ok,feature construction,5355,5355.0
+a_prime,1,E013,230,experiment,ok,evaluation,5624,5624.0
+a_prime,1,E014,232,run_python,ok,data exploration,12419,12419.0
+a_prime,1,E014,234,run_python,ok,data exploration,6233,6233.0
+a_prime,1,E014,236,run_python,ok,data exploration,7820,7820.0
+a_prime,1,E014,238,run_python,ok,feature construction,9960,9960.0
+a_prime,1,E014,240,experiment,ok,evaluation,8955,8955.0
+a_prime,1,E015,242,run_python,ok,preprocessing,13212,13212.0
+a_prime,1,E015,244,run_python,ok,preprocessing,9307,9307.0
+a_prime,1,E015,246,run_python,ok,feature construction,8565,8565.0
+a_prime,1,E015,248,run_python,ok,feature construction,8463,8463.0
+a_prime,1,E015,250,run_python,ok,feature construction,8912,8912.0
+a_prime,1,E015,252,experiment,ok,evaluation,8910,8910.0
+a_prime,1,E016,254,run_python,ok,feature construction,13659,13659.0
+a_prime,1,E016,256,run_python,ok,data exploration,6633,6633.0
+a_prime,1,E016,258,run_python,ok,feature construction,10813,10813.0
+a_prime,1,E016,260,experiment,ok,evaluation,9717,9717.0
+a_prime,1,E017,263,run_python,ok,data exploration,8545,8545.0
+a_prime,1,E017,265,run_python,ok,data exploration,10401,10401.0
+a_prime,1,E017,267,run_python,ok,data exploration,9730,9730.0
+a_prime,1,E017,269,run_python,ok,feature construction,9279,9279.0
+a_prime,1,E017,271,run_python,ok,model engineering,9489,9489.0
+a_prime,1,E017,273,run_python,ok,preprocessing,10044,10044.0
+a_prime,1,E017,275,run_python,ok,data exploration,10492,10492.0
+a_prime,1,E017,277,run_python,rejected,feature construction,11306,11306.0
+a_prime,1,E017,279,run_python,ok,debugging,11768,11768.0
+a_prime,1,E017,281,run_python,ok,preprocessing,12124,12124.0
+a_prime,1,E017,283,experiment,ok,evaluation,12946,12946.0
+a_prime,1,E018,286,run_python,ok,data exploration,5724,5724.0
+a_prime,1,E018,288,run_python,ok,data exploration,7302,7302.0
+a_prime,1,E018,290,run_python,ok,preprocessing,12169,12169.0
+a_prime,1,E018,292,run_python,ok,data exploration,13190,13190.0
+a_prime,1,E018,294,run_python,ok,model engineering,11130,11130.0
+a_prime,1,E018,296,run_python,ok,data exploration,16175,16175.0
+a_prime,1,E018,298,run_python,ok,data exploration,12853,12853.0
+a_prime,1,E018,300,run_python,ok,data exploration,13777,13777.0
+a_prime,1,E018,302,run_python,error,preprocessing,14238,14238.0
+a_prime,1,E018,304,run_python,ok,debugging,15317,15317.0
+a_prime,1,E018,306,run_python,ok,model engineering,22757,22757.0
+a_prime,1,E018,308,run_python,ok,model engineering,17455,17455.0
+a_prime,1,E018,310,run_python,ok,model engineering,18006,18006.0
+a_prime,1,E018,312,experiment,ok,evaluation,19707,19707.0
+a_prime,1,E019,314,run_python,ok,data exploration,7018,7018.0
+a_prime,1,E019,316,run_python,ok,data exploration,6471,3235.5
+a_prime,1,E019,317,run_python,ok,data exploration,6471,3235.5
+a_prime,1,E019,319,run_python,ok,data exploration,8335,4167.5
+a_prime,1,E019,320,run_python,ok,data exploration,8335,4167.5
+a_prime,1,E019,322,run_python,ok,data exploration,19813,9906.5
+a_prime,1,E019,323,run_python,ok,data exploration,19813,9906.5
+a_prime,1,E019,325,run_python,ok,data exploration,20144,10072.0
+a_prime,1,E019,326,run_python,ok,model engineering,20144,10072.0
+a_prime,1,E019,328,run_python,ok,data exploration,13928,13928.0
+a_prime,1,E019,330,run_python,rejected,model engineering,14921,14921.0
+a_prime,1,E019,332,run_python,ok,debugging,15592,15592.0
+a_prime,1,E019,334,run_python,ok,data exploration,17952,17952.0
+a_prime,1,E019,336,run_python,ok,model engineering,17155,17155.0
+a_prime,1,E019,340,run_python,ok,feature construction,22051,22051.0
+a_prime,1,E019,342,experiment,ok,evaluation,18202,18202.0
+a_prime,1,E020,344,run_python,ok,data exploration,6941,6941.0
+a_prime,1,E020,346,run_python,ok,data exploration,9927,9927.0
+a_prime,1,E020,348,run_python,ok,data exploration,14556,14556.0
+a_prime,1,E020,350,run_python,rejected,data exploration,10594,10594.0
+a_prime,1,E020,352,run_python,ok,debugging,10880,10880.0
+a_prime,1,E020,354,run_python,error,data exploration,15689,15689.0
+a_prime,1,E020,356,run_python,ok,debugging,12820,12820.0
+a_prime,1,E020,358,run_python,ok,data exploration,13153,13153.0
+a_prime,1,E020,360,run_python,ok,model engineering,23160,23160.0
+a_prime,1,E020,362,run_python,ok,model engineering,14536,14536.0
+a_prime,1,E020,364,run_python,ok,data exploration,15339,15339.0
+a_prime,1,E020,366,run_python,error,model engineering,15323,15323.0
+a_prime,1,E020,368,run_python,ok,debugging,15870,15870.0
+a_prime,1,E020,371,run_python,ok,feature construction,18123,18123.0
+a_prime,1,E020,373,experiment,ok,evaluation,16655,16655.0
+a_prime,2,E001,2,run_python,ok,data exploration,2700,1350.0
+a_prime,2,E001,3,inspect,ok,data exploration,2700,1350.0
+a_prime,2,E001,5,run_python,error,preprocessing,3819,3819.0
+a_prime,2,E001,7,run_python,ok,debugging,4346,4346.0
+a_prime,2,E001,9,run_python,ok,feature construction,5468,5468.0
+a_prime,2,E001,11,experiment,ok,evaluation,5450,5450.0
+a_prime,2,E002,13,inspect,ok,data exploration,4032,2016.0
+a_prime,2,E002,14,inspect,ok,data exploration,4032,2016.0
+a_prime,2,E002,16,run_python,error,feature construction,8301,8301.0
+a_prime,2,E002,18,run_python,error,debugging,4854,4854.0
+a_prime,2,E002,20,run_python,ok,debugging,4432,4432.0
+a_prime,2,E002,22,run_python,ok,feature construction,4777,4777.0
+a_prime,2,E002,24,run_python,ok,feature construction,6249,6249.0
+a_prime,2,E002,26,experiment,ok,evaluation,5660,5660.0
+a_prime,2,E003,28,run_python,error,feature construction,5632,5632.0
+a_prime,2,E003,30,run_python,ok,debugging,10700,10700.0
+a_prime,2,E003,32,run_python,ok,feature construction,5306,5306.0
+a_prime,2,E003,34,experiment,ok,evaluation,5282,5282.0
+a_prime,2,E004,36,run_python,rejected,data exploration,6875,6875.0
+a_prime,2,E004,38,run_python,rejected,debugging,3269,3269.0
+a_prime,2,E004,40,run_python,ok,debugging,3574,3574.0
+a_prime,2,E004,42,run_python,error,data exploration,5215,5215.0
+a_prime,2,E004,44,run_python,ok,debugging,6042,6042.0
+a_prime,2,E004,46,run_python,ok,feature construction,7925,7925.0
+a_prime,2,E004,48,run_python,error,model engineering,7601,7601.0
+a_prime,2,E004,50,run_python,ok,debugging,7631,7631.0
+a_prime,2,E004,52,run_python,rejected,model engineering,8770,8770.0
+a_prime,2,E004,54,run_python,error,debugging,9710,9710.0
+a_prime,2,E004,56,run_python,error,debugging,10985,10985.0
+a_prime,2,E004,58,run_python,ok,debugging,12332,12332.0
+a_prime,2,E004,60,run_python,error,model engineering,15742,15742.0
+a_prime,2,E004,62,run_python,error,debugging,15411,15411.0
+a_prime,2,E004,64,run_python,ok,debugging,16612,16612.0
+a_prime,2,E004,66,experiment,ok,evaluation,19457,19457.0
+a_prime,2,E005,68,run_python,ok,feature construction,9824,9824.0
+a_prime,2,E005,70,experiment,ok,evaluation,4361,4361.0
+a_prime,2,E006,72,run_python,error,data exploration,14176,14176.0
+a_prime,2,E006,74,run_python,error,debugging,10851,10851.0
+a_prime,2,E006,76,run_python,error,debugging,7729,7729.0
+a_prime,2,E006,78,run_python,error,debugging,9343,9343.0
+a_prime,2,E006,80,run_python,ok,debugging,10478,10478.0
+a_prime,2,E006,82,experiment,ok,evaluation,11033,11033.0
+a_prime,2,E007,85,run_python,ok,data exploration,4591,4591.0
+a_prime,2,E007,87,run_python,ok,data exploration,5638,5638.0
+a_prime,2,E007,89,run_python,ok,data exploration,10080,10080.0
+a_prime,2,E007,91,run_python,error,data exploration,14373,14373.0
+a_prime,2,E007,93,run_python,ok,debugging,9776,9776.0
+a_prime,2,E007,95,run_python,ok,feature construction,16032,16032.0
+a_prime,2,E007,97,run_python,ok,data exploration,11656,11656.0
+a_prime,2,E007,99,experiment,ok,evaluation,12327,12327.0
+a_prime,2,E008,101,run_python,rejected,data exploration,13660,13660.0
+a_prime,2,E008,103,run_python,rejected,debugging,3841,3841.0
+a_prime,2,E008,105,run_python,error,debugging,4237,4237.0
+a_prime,2,E008,107,run_python,error,debugging,8824,8824.0
+a_prime,2,E008,109,run_python,ok,debugging,8751,8751.0
+a_prime,2,E008,111,run_python,ok,model engineering,13902,13902.0
+a_prime,2,E008,113,run_python,ok,model engineering,13893,13893.0
+a_prime,2,E008,115,run_python,ok,model engineering,13102,13102.0
+a_prime,2,E008,117,run_python,error,model engineering,13715,13715.0
+a_prime,2,E008,119,run_python,ok,debugging,14691,14691.0
+a_prime,2,E008,121,run_python,ok,model engineering,17830,17830.0
+a_prime,2,E008,123,run_python,rejected,data exploration,20718,20718.0
+a_prime,2,E008,125,run_python,ok,debugging,16907,16907.0
+a_prime,2,E008,127,run_python,rejected,feature construction,18135,18135.0
+a_prime,2,E008,129,run_python,ok,debugging,17955,17955.0
+a_prime,2,E008,131,experiment,ok,evaluation,18324,18324.0
+a_prime,2,E009,133,run_python,ok,model engineering,17787,17787.0
+a_prime,2,E009,135,run_python,ok,data exploration,8199,8199.0
+a_prime,2,E009,137,run_python,ok,feature construction,19624,19624.0
+a_prime,2,E009,139,experiment,ok,evaluation,11127,11127.0
+a_prime,2,E010,141,run_python,ok,data exploration,11500,3833.3333333333335
+a_prime,2,E010,142,inspect,ok,data exploration,11500,3833.3333333333335
+a_prime,2,E010,143,inspect,ok,data exploration,11500,3833.3333333333335
+a_prime,2,E010,145,run_python,ok,data exploration,6650,6650.0
+a_prime,2,E010,147,run_python,error,feature construction,15512,15512.0
+a_prime,2,E010,149,run_python,ok,debugging,9736,9736.0
+a_prime,2,E010,151,run_python,ok,feature construction,9740,9740.0
+a_prime,2,E010,153,run_python,ok,feature construction,11308,11308.0
+a_prime,2,E010,155,run_python,error,feature construction,15533,15533.0
+a_prime,2,E010,157,run_python,ok,debugging,15186,15186.0
+a_prime,2,E010,159,experiment,ok,evaluation,15865,15865.0
+a_prime,2,E011,161,run_python,ok,model engineering,13828,13828.0
+a_prime,2,E011,163,run_python,error,model engineering,7940,7940.0
+a_prime,2,E011,165,run_python,ok,debugging,7972,7972.0
+a_prime,2,E011,167,run_python,ok,model engineering,9091,9091.0
+a_prime,2,E011,169,run_python,ok,data exploration,10150,10150.0
+a_prime,2,E011,171,run_python,ok,data exploration,10534,10534.0
+a_prime,2,E011,173,run_python,ok,model engineering,15054,15054.0
+a_prime,2,E011,175,run_python,ok,model engineering,16784,16784.0
+a_prime,2,E011,177,run_python,rejected,model engineering,21431,21431.0
+a_prime,2,E011,179,run_python,error,debugging,18256,18256.0
+a_prime,2,E011,181,run_python,ok,debugging,19776,19776.0
+a_prime,2,E011,183,run_python,ok,model engineering,22039,22039.0
+a_prime,2,E011,185,run_python,ok,data exploration,22209,22209.0
+a_prime,2,E011,187,run_python,error,model engineering,26799,26799.0
+a_prime,2,E011,190,run_python,ok,debugging,39452,39452.0
+a_prime,2,E011,192,experiment,ok,evaluation,25881,25881.0
+a_prime,2,E012,195,run_python,ok,data exploration,3864,3864.0
+a_prime,2,E012,197,run_python,ok,data exploration,4562,4562.0
+a_prime,2,E012,199,run_python,ok,data exploration,19279,19279.0
+a_prime,2,E012,201,run_python,ok,data exploration,7966,7966.0
+a_prime,2,E012,203,run_python,rejected,model engineering,8892,8892.0
+a_prime,2,E012,205,run_python,ok,debugging,9469,9469.0
+a_prime,2,E012,207,run_python,ok,model engineering,12970,12970.0
+a_prime,2,E012,209,run_python,ok,model engineering,13874,13874.0
+a_prime,2,E012,211,run_python,ok,model engineering,11978,11978.0
+a_prime,2,E012,213,run_python,ok,feature construction,17172,17172.0
+a_prime,2,E012,215,run_python,ok,feature construction,12713,12713.0
+a_prime,2,E012,217,run_python,ok,feature construction,12893,12893.0
+a_prime,2,E012,219,experiment,error,evaluation,13122,13122.0
+a_prime,2,E013,222,run_python,ok,data exploration,5611,5611.0
+a_prime,2,E013,224,run_python,error,data exploration,21897,21897.0
+a_prime,2,E013,226,run_python,ok,debugging,7239,7239.0
+a_prime,2,E013,228,run_python,ok,feature construction,9590,9590.0
+a_prime,2,E013,230,run_python,error,feature construction,9458,9458.0
+a_prime,2,E013,232,run_python,ok,debugging,10040,10040.0
+a_prime,2,E013,234,experiment,ok,evaluation,10260,10260.0
+a_prime,2,E014,237,run_python,ok,data exploration,7557,7557.0
+a_prime,2,E014,239,run_python,ok,data exploration,7959,7959.0
+a_prime,2,E014,241,run_python,ok,feature construction,7980,7980.0
+a_prime,2,E014,243,run_python,ok,preprocessing,7847,7847.0
+a_prime,2,E014,245,experiment,ok,evaluation,9168,9168.0
+a_prime,2,E015,247,run_python,ok,data exploration,19391,19391.0
+a_prime,2,E015,249,run_python,rejected,model engineering,7945,7945.0
+a_prime,2,E015,251,run_python,ok,debugging,6015,6015.0
+a_prime,2,E015,253,run_python,ok,model engineering,7270,7270.0
+a_prime,2,E015,255,run_python,ok,preprocessing,7712,7712.0
+a_prime,2,E015,257,run_python,ok,preprocessing,8732,8732.0
+a_prime,2,E015,259,run_python,ok,model engineering,8858,8858.0
+a_prime,2,E015,261,run_python,ok,model engineering,10761,10761.0
+a_prime,2,E015,263,run_python,ok,model engineering,12324,12324.0
+a_prime,2,E015,265,run_python,rejected,model engineering,16964,16964.0
+a_prime,2,E015,267,run_python,ok,debugging,12047,12047.0
+a_prime,2,E015,269,run_python,ok,feature construction,14517,14517.0
+a_prime,2,E015,271,experiment,ok,evaluation,12826,12826.0
+a_prime,2,E016,274,run_python,error,model engineering,14755,14755.0
+a_prime,2,E016,276,run_python,rejected,debugging,7490,7490.0
+a_prime,2,E016,278,run_python,ok,debugging,8042,8042.0
+a_prime,2,E016,280,run_python,ok,model engineering,11105,11105.0
+a_prime,2,E016,282,run_python,error,model engineering,17310,17310.0
+a_prime,2,E016,284,run_python,ok,debugging,16446,16446.0
+a_prime,2,E016,287,run_python,ok,model engineering,16044,16044.0
+a_prime,2,E016,289,run_python,ok,model engineering,19961,19961.0
+a_prime,2,E016,291,run_python,error,model engineering,24922,24922.0
+a_prime,2,E016,293,run_python,ok,debugging,20068,20068.0
+a_prime,2,E016,295,run_python,error,model engineering,22568,22568.0
+a_prime,2,E016,297,run_python,error,debugging,23937,23937.0
+a_prime,2,E016,299,run_python,ok,debugging,25259,25259.0
+a_prime,2,E016,301,experiment,ok,evaluation,25545,25545.0
+a_prime,2,E017,304,run_python,ok,model engineering,17270,8635.0
+a_prime,2,E017,305,run_python,error,model engineering,17270,8635.0
+a_prime,2,E017,307,run_python,error,debugging,7699,7699.0
+a_prime,2,E017,309,run_python,ok,debugging,9259,9259.0
+a_prime,2,E017,311,run_python,ok,model engineering,13250,13250.0
+a_prime,2,E017,313,run_python,ok,data exploration,15303,15303.0
+a_prime,2,E017,315,run_python,error,model engineering,14721,14721.0
+a_prime,2,E017,317,run_python,ok,debugging,14864,14864.0
+a_prime,2,E017,319,run_python,ok,model engineering,17829,17829.0
+a_prime,2,E017,321,run_python,ok,model engineering,19053,19053.0
+a_prime,2,E017,323,experiment,ok,evaluation,19150,19150.0
+a_prime,2,E018,326,run_python,rejected,preprocessing,16920,16920.0
+a_prime,2,E018,328,run_python,rejected,debugging,5092,5092.0
+a_prime,2,E018,330,run_python,error,debugging,5616,5616.0
+a_prime,2,E018,332,run_python,rejected,debugging,6328,6328.0
+a_prime,2,E018,334,run_python,error,debugging,6828,6828.0
+a_prime,2,E018,336,run_python,ok,debugging,10296,10296.0
+a_prime,2,E018,338,run_python,ok,feature construction,13325,13325.0
+a_prime,2,E018,340,experiment,ok,evaluation,10800,10800.0
+a_prime,2,E019,342,run_python,ok,data exploration,19667,19667.0
+a_prime,2,E019,345,run_python,ok,feature construction,7899,7899.0
+a_prime,2,E019,347,run_python,ok,feature construction,11299,11299.0
+a_prime,2,E019,349,run_python,ok,feature construction,11670,11670.0
+a_prime,2,E019,351,experiment,ok,evaluation,11851,11851.0
+a_prime,2,E020,353,run_python,ok,data exploration,12073,12073.0
+a_prime,2,E020,355,run_python,rejected,model engineering,11570,11570.0
+a_prime,2,E020,357,run_python,error,debugging,8516,8516.0
+a_prime,2,E020,359,run_python,ok,debugging,10350,10350.0
+a_prime,2,E020,361,run_python,ok,data exploration,10861,10861.0
+a_prime,2,E020,363,run_python,ok,model engineering,12451,12451.0
+a_prime,2,E020,365,run_python,ok,model engineering,13752,13752.0
+a_prime,2,E020,367,run_python,rejected,model engineering,14986,14986.0
+a_prime,2,E020,369,run_python,ok,debugging,15835,15835.0
+a_prime,2,E020,371,run_python,ok,model engineering,17755,17755.0
+a_prime,2,E020,373,run_python,ok,model engineering,23708,23708.0
+a_prime,2,E020,375,run_python,ok,model engineering,21879,21879.0
+a_prime,2,E020,377,run_python,ok,feature construction,21324,21324.0
+a_prime,2,E020,379,experiment,ok,evaluation,21110,21110.0

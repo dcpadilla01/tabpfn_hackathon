@@ -1,0 +1,5 @@
+,arm,data exploration,feature construction,preprocessing,model engineering,debugging,evaluation
+share of tool calls,a_prime,0.21,0.147,0.033,0.248,0.259,0.103
+share of tool calls,b,0.164,0.128,0.026,0.271,0.313,0.099
+share of tokens,a_prime,0.153,0.147,0.028,0.297,0.26,0.114
+share of tokens,b,0.11,0.108,0.022,0.34,0.313,0.106
