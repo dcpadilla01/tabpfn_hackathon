@@ -24,3 +24,6 @@ experiments/results/**/reasoning.jsonl
 experiments/results/*/9[0-9][0-9]/
 experiments/logs/
 experiments/analysis/frozen_test/*/
+# keep label-free prediction files so bootstraps regenerate from a clone (small)
+!experiments/results/*/*/E*/predictions.parquet
+!experiments/analysis/frozen_test/*_test_predictions*.parquet
