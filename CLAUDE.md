@@ -521,6 +521,20 @@ README: thesis, architecture (three arms, accessor, evaluator), dataset instruct
 - **LLM reasoning:** no reasoning cap (no effort or reasoning-token limit); `max_tokens: 16000` per call so reasoning is not truncated. Runs are slow (~12 min/experiment in smoke tests), so MVP runs execute in parallel overnight.
 - **Access control:** no separate OS user. `run_python` subprocess gets a stripped env (`env={"PATH": ...}` only). Primary check: AST **import allowlist** (pandas, numpy, the accessor module; + sklearn/xgboost in Arm A only). Secondary tripwire: string-pattern denylist. Post-run audit. Disclosed as "static enforcement plus audit, not a sandbox."
 
+# Environments and primary results (2026-10-04)
+
+- **Env-1 (primary):** the overnight MVP runs, Arms B and A′, seeds 0–2. Phases 11 and 12 and the README are written against Env-1, whatever else happens.
+- **Env-2 (bonus, optional):** the harness after the audit fixes (run path scrubbed; prints inside `fn` visible at train snapshots, suppressed at validation snapshots; validation-snapshot errors reduced to type + line). Arm A runs **only** in Env-2, and only together with B and A′ reruns in the same environment. Added as a second, fully controlled table if complete by Monday noon.
+- **Never mix runs from different environments in one table.** Don't switch primary results late.
+
+# README must include (from the 2026-10-04 audit)
+
+- A **paragraph** (not a footnote) on the `fn` output gap: the route existed (validation snapshots see earlier validation label windows), nothing used it (prints never flushed; all 33 `fn` errors at train snapshots), closed by design with tests. See `docs/audit_label_access.md`.
+- **Behaviour findings**, alongside the numpy modelling: four agents filtered `train_targets()` for validation days and got zero rows (most likely a wrong assumption, not intent; the protection held, and that's only known because it was checked); one agent deliberately mapped what works inside `fn`.
+- One sentence: `gbm_pred` (b/2 E017) was fitted on train rows and predicted back onto them; not a leak, not a best table.
+- **Effort relocation, quantified:** 380/923 executed cells (41%) fit the agent's own model on train labels in arms whose model was fixed; 607/923 (66%) touch labels at all.
+- **Failure attribution:** 3 of B's 8 failures come from b/1 reusing the leaked run path (a harness bug, now fixed); valid experiments B 52/60, A′ 58/60; the remaining agent failures (5 vs 2) are too few to call an arm difference.
+
 # Execution Order
 
 ```text
