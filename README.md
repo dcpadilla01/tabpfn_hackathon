@@ -13,7 +13,7 @@ untuned **XGBoost** (Arm A′). Then we measure what it finds, what it costs, an
 |---|---:|---:|
 | Best validation MAE (mean ± sd over runs) | **60.72 ± 0.04** | 62.24 ± 0.24 |
 | Paired, household-clustered bootstrap, B − A′ | **−1.52** MAE, 95% CI [−2.19, −1.02] | |
-| Experiments to reach A′'s mean final MAE (62.24), per run | **3, 8, 1** | 17 (1 of 3 runs; 2 never) |
+| Experiments / hours to reach A′'s mean best (62.24)³, per run | **3, 8, 1 / 0.11, 0.87, 0.02 h** | 17 / 2.17 h (1 of 3 runs; 2 never) |
 | **Frozen test MAE** (fit train+val), mean ± sd | **64.09 ± 0.12** | 65.03 ± 0.18 |
 | Paired bootstrap on test, B − A′ | **−0.94** MAE, 95% CI [−1.28, −0.61] | |
 | Valid experiments / 60 | 52 | 58 |
@@ -26,10 +26,14 @@ What the evidence supports:
 1. **TabPFN makes the researcher better, fast — and it holds on the frozen test.** Every B run beats every A′
    run on validation, and B reaches the level A′ ends at within a median of 3 experiments (minutes), a level
    two of three A′ runs never reach. On the held-out test period the gap shrinks from 1.52 to **0.94 MAE**
-   (selection on validation is optimistic) but stays clear: all 9 run pairings favour B.
-2. **Mostly a better fit, partly better features.** The representation-transfer check (each run's best
-   feature table on the other backend) puts roughly **¾ of B's edge on the model** — TabPFN fits A′'s own
-   tables 1.13 MAE better than XGBoost does — and **¼ on the features B found** (0.39 MAE on a common backend).
+   (selection on validation is optimistic) but stays clear: all 9 run pairings favour B. "Fast" holds in
+   both units: B runs reach 62.24 after 1–8 experiments and 0.02–0.87 hours from run start; one A′ run
+   reaches it after 17 experiments and 2.17 hours, two never do.
+2. **TabPFN fits either arm's features better; the features themselves co-adapted to their backend.** In the
+   representation-transfer 2×2 the model effect favours TabPFN in every seed pair and in both orderings. But
+   how much of B's edge is "model" versus "features" depends on the ordering — 74% holding A′'s features,
+   238% holding B's — because B's tables were tuned to TabPFN and lose 2.09 MAE on XGBoost (one by 5.6). We
+   therefore do not report a single model/feature split.
 3. **TabPFN did *not* make individual hypotheses cheaper, and did *not* move effort away from plumbing.**
    Per experiment, both arms cost the same tokens and time; B tests slightly *fewer* valid hypotheses per
    hour and per token. Agents in *both* fixed-model arms rebuilt the plumbing they were spared: **41% of all
@@ -41,6 +45,41 @@ reusable primitive raises the quality ceiling and the speed to a good answer, bu
 score to minimise will re-create model engineering around any fixed primitive.*
 
 ![Best-so-far validation MAE per run](experiments/analysis/trajectories.png)
+
+### Phase 11 details
+
+**Time to threshold** — first experiment whose validation MAE ≤ 62.24³; hours are wall-clock from run start
+(E000 record) to the end of that experiment's evaluation.
+
+| Run | First experiment ≤ 62.24 | Experiments | Hours from start | Run length (h) |
+|---|---|---:|---:|---:|
+| B/0 | E003 | 3 | 0.11 | 2.92 |
+| B/1 | E008 | 8 | 0.87 | 2.97 |
+| B/2 | E001 | 1 | 0.02 | 3.65 |
+| A′/0 | never | — | — | 3.34 |
+| A′/1 | E017 | 17 | 2.17 | 3.05 |
+| A′/2 | never | — | — | 3.70 |
+
+³ The threshold (62.24 = A′'s mean best validation MAE) was chosen after the runs, from their results; it
+is a descriptive reference point, not a pre-registered target.
+
+**Representation transfer 2×2** — each run's best feature table on both backends (validation MAE; seeds
+paired by index, which carries no meaning since the LLM is unseeded). Total gap = B features on TabPFN − A′
+features on XGBoost. Negative = favours B / TabPFN.
+
+| Pair | A′ feat · XGB | A′ feat · TabPFN | B feat · XGB | B feat · TabPFN | Total gap | Ordering 1: model (A′ feat) / feature (TabPFN) | Ordering 2: feature (XGB) / model (B feat) |
+|---|---:|---:|---:|---:|---:|---|---|
+| 0 | 62.45 | 60.93 | 62.52 | 60.67 | −1.78 | −1.52 / −0.26 (model 86%) | +0.07 / −1.85 (model 104%) |
+| 1 | 61.98 | 60.71 | 62.54 | 60.76 | −1.22 | −1.26 / +0.05 (model 104%) | +0.56 / −1.78 (model 146%) |
+| 2 | 62.29 | 61.69 | 67.93 | 60.73 | −1.56 | −0.60 / −0.96 (model 39%) | +5.64 / −7.20 (model 461%) |
+| **mean** | 62.24 | 61.11 | 64.33 | 60.72 | **−1.52** | **−1.13 / −0.39 (model 74%)** | **+2.09 / −3.61 (model 238%)** |
+
+- The **model effect is negative in all six cells** (both orderings, every pair): TabPFN fits either arm's
+  features better.
+- The **feature effect changes sign with the backend**: on TabPFN, B's features are better on average
+  (−0.39; mixed by pair); on XGBoost, A′'s are (+2.09; +0.32 without pair 2). The interaction (−2.48 on
+  average) is as large as the total gap: each arm's tables are co-adapted to the backend they were selected
+  on. An earlier draft reported "≈¾ model, ¼ features"; that holds only in ordering 1 and is withdrawn.
 
 ### Frozen test (Phase 12)
 

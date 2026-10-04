@@ -1,0 +1,7 @@
+arm,seed,first_experiment,experiments,hours_from_start,run_hours
+a_prime,0,never,,,3.34
+a_prime,1,E017,17.0,2.17,3.05
+a_prime,2,never,,,3.7
+b,0,E003,3.0,0.11,2.92
+b,1,E008,8.0,0.87,2.97
+b,2,E001,1.0,0.02,3.65

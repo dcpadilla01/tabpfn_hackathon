@@ -29,3 +29,15 @@ Earlier locked decisions are in `CLAUDE.md` ("Locked Decisions", "Environments a
   B − A′ = −0.88 (all runs: −0.94).
 - **Regenerate:** `uv run python -m src.analysis.frozen_test` →
   `experiments/analysis/frozen_test_sensitivity_exact.csv`.
+
+## 2026-10-04 — Phase 11 claim checks (from existing logs; no new runs or fits)
+
+- **"Faster" — kept.** Time to validation MAE ≤ 62.24 (post-hoc threshold = A′'s mean best) agrees in both
+  units: B runs 1–8 experiments / 0.02–0.87 h from run start; A′ one run at 17 / 2.17 h, two never.
+  Timestamp-based hours match the cumulative-duration figures to within 0.06 h.
+- **"≈¾ model, ¼ features" — withdrawn.** The transfer 2×2 (all four cells already existed in
+  `transfer.csv`) gives a model share of 74% holding A′'s features but 238% holding B's (per pair: 86/104,
+  104/146, 39/461). Criterion was agreement within ~10 percentage points; it fails, also without pair 2.
+  Replaced by: the model effect favours TabPFN in all six cells; features are co-adapted to their backend
+  (mean interaction −2.48 ≈ the total gap).
+- **Regenerate:** `uv run python -m src.analysis.phase11_extra` → `time_to_threshold.csv`, `transfer_2x2.csv`.
