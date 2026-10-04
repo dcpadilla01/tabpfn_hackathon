@@ -60,10 +60,8 @@ train+validation rows reproduce the logged feature table before scoring. The age
 | A′/1 | E020 | 61.98 | 64.86 | 65.12 | exact |
 | A′/2 | E009 | 62.29 | 65.00 | 65.04 | approximate¹ |
 
-¹ Same rows and columns; values differ only through statistics the agent computed over the whole table,
-which in the replay includes test-period **feature** values (never labels): B/2's hinge knots are feature
-quantiles (29 columns, max relative difference 0.068); A′/2 submitted a row-number column `index` left over
-from `reset_index()`. Restricted to the four exact reproductions the means are B 64.16 vs A′ 65.04.
+¹ Same rows and columns; some values differ because the agent's code computes them over the whole table.
+See *Replay exceptions* below.
 
 **Fitting regime × arm** (means over 3 runs; Δ = test − validation; E000 = the demographics + calendar
 root on the same backend and regime):
@@ -89,6 +87,38 @@ root on the same backend and regime):
 - **"Evaluate once."** Each final candidate was scored in both regimes, once each. To save per-row predictions
   for the bootstrap, the identical deterministic scoring was re-run; every re-run reproduced the same numbers.
   No choice (candidate, features, regime) was made on test.
+
+#### Replay exceptions
+
+**B/2 (E019, val 60.73).** 29 hinge features `hg_{spend_84, spend_28, fwd28_mean, wk_avg_84, spend_56}_j =
+max(log1p(x) − q_j, 0)` differ between the logged and replayed tables (max relative difference 0.068). The knots
+`q_j` are quantiles of the feature computed over every row of the table the agent was working on
+(cell b/2 step 347, E018: `lv = np.log1p(...T[src]...)`; `qs = np.quantile(lv, [0.15, …, 0.9])`; that table
+printed `base shape (36426, 186)` = 26,437 train + 9,989 validation rows). So at research time the knots were
+already fit on train + validation covariates; in the replay the same code also sees test-period covariates,
+which moves the knots slightly. Only feature values (spend aggregates) enter the quantiles — no labels. The
+original numbers are kept and the run is flagged *approximate*.
+
+**A′/2 (E009, val 62.29).** The agent submitted a column `index` left over from `reset_index()`. It is the row
+position in a table sorted by (household_key, snapshot_day): 0…36,425 at research time, 0…48,915 in the
+replay, so values shift once test rows are interleaved. It is a recoding of the keys (Spearman 1.0 with
+household_key; increasing with snapshot_day within every household) and carries no label or future
+information; snapshot order was already a feature (`snapshot_day_index`). Because rows are household-major,
+test rows interleave with training rows: only 5 of 12,490 test rows fall outside the primary regime's training
+range of `index`. The original numbers are kept and the run is flagged *approximate*.
+
+#### Replay-fidelity sensitivity
+
+The four exact replays only (B/0, B/1, A′/0, A′/1), primary regime (fit train + validation). **n = 2 per arm**;
+no confidence interval is reported for this subset.
+
+| Arm | n | Validation | Test | Δ |
+|---|---:|---:|---:|---:|
+| B — TabPFN | 2 | 60.72 | 64.16 | +3.44 |
+| A′ — XGBoost | 2 | 62.21 | 65.04 | +2.83 |
+| **B − A′** | | −1.49 | **−0.88** | |
+
+The test gap on exact replays (−0.88) is within 0.06 of the all-runs primary result (−0.94).
 
 ---
 

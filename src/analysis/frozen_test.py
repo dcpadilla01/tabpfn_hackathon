@@ -60,6 +60,15 @@ def main() -> None:
         boots[regime] = {"arm_mean_abs_error_test": cluster_bootstrap(d, test["household_key"]),
                          "pairs": {f"b{sb}-a'{sa}": cluster_bootstrap(pd.Series(errs[("b", sb)] - errs[("a_prime", sa)]),
                                                                       test["household_key"]) for sb in SEEDS for sa in SEEDS}}
+    # Replay-fidelity sensitivity: exact replays only, primary regime, n=2 per arm, no CI.
+    ex = df[df["reproduction_kind"] == "exact"]
+    sens = ex.groupby("arm").agg(n=("seed", "size"), val_mae=("val_mae", "mean"), test_mae=("test_mae_fit_train_val", "mean"))
+    sens["delta"] = sens["test_mae"] - sens["val_mae"]
+    sens = sens.round(2)
+    sens.loc["B − A′"] = [None, round(sens.loc["b", "val_mae"] - sens.loc["a_prime", "val_mae"], 2),
+                          round(sens.loc["b", "test_mae"] - sens.loc["a_prime", "test_mae"], 2), None]
+    sens.to_csv(DIR.parent / "frozen_test_sensitivity_exact.csv")
+    print("\nreplay-fidelity sensitivity (exact replays only, train+validation fit):\n", sens.to_string())
     tbl = pd.DataFrame(table)
     tbl.to_csv(DIR.parent / "frozen_test_2x2.csv", index=False)
     (DIR.parent / "bootstrap_test.json").write_text(json.dumps(boots, indent=2))
