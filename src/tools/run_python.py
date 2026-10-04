@@ -126,7 +126,7 @@ def _scrub(text: str, workspace: Path) -> str:
 
 
 def run_python(code: str, workspace: Path, harness_dir: Path, allow_modelling: bool = False,
-               timeout: int = TIMEOUT_SECONDS) -> RunResult:
+               timeout: int = TIMEOUT_SECONDS, extra_env: dict | None = None) -> RunResult:
     problems = check_code(code, allow_modelling)
     if problems:
         return RunResult("rejected", "REJECTED (code was not run):\n- " + "\n- ".join(problems), "; ".join(problems))
@@ -139,7 +139,7 @@ def run_python(code: str, workspace: Path, harness_dir: Path, allow_modelling: b
     try:
         proc = subprocess.run(
             [sys.executable, "-I", str(runner_path)],
-            cwd=workspace, env={"PATH": "/usr/bin:/bin", "OMP_NUM_THREADS": "1"},
+            cwd=workspace, env={"PATH": "/usr/bin:/bin", "OMP_NUM_THREADS": "1"} | (extra_env or {}),
             capture_output=True, text=True, timeout=timeout,
         )
     except subprocess.TimeoutExpired:

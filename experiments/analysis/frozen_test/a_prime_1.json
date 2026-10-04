@@ -1,0 +1,262 @@
+{
+  "arm": "a_prime",
+  "seed": 1,
+  "experiment_id": "E020",
+  "val_mae": 61.976,
+  "replay": {
+    "cells_replayed": 38,
+    "replay_seconds": 237.6,
+    "cells": [
+      {
+        "step": 7,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "nv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 527, in __new__\n    raise cls._raise_scalar_data_error(data)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 5299, in _raise_scalar_data_error\n    raise TypeError(\nTypeError: Index(...) must be called with a collection of some kind, None was passed"
+      },
+      {
+        "step": 15,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "supported operand type(s) for -: 'int' and 'method'\nTraceback (most recent call last):\n  File \"<harness>/src/researcher/agent_api.py\", line 106, in _run_isolated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 30, in fn\nTypeError: unsupported operand type(s) for -: 'int' and 'method'"
+      },
+      {
+        "step": 17,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 25,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 31,
+        "orig_status": "error",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 35,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 52,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 54,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": " File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/reshape/merge.py\", line 1298, in _get_merge_keys\n    right_keys.append(right._get_label_or_level_values(rk))\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 1914, in _get_label_or_level_values\n    raise KeyError(key)\nKeyError: 'household_key'"
+      },
+      {
+        "step": 56,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 91,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 99,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 105,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 110,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 118,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 124,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 10, in <module>\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 6321, in __getattr__\n    return object.__getattribute__(self, name)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'DataFrame' object has no attribute 'spend_l123_mean'. Did you mean: 'spend_l123_mean_x'?"
+      },
+      {
+        "step": 126,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "<module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 11, in <module>\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 6321, in __getattr__\n    return object.__getattribute__(self, name)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'DataFrame' object has no attribute 'zero_recent'. Did you mean: 'zero_recent_x'?"
+      },
+      {
+        "step": 128,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 142,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 156,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "s>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 6212, in _get_indexer_strict\n    self._raise_if_missing(keyarr, indexer, axis_name)\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 6264, in _raise_if_missing\n    raise KeyError(f\"{not_found} not in index\")\nKeyError: \"['nf_pow90_ewm4', 'nspend7', 'spend28_DELI', 'nwmax12'] not in index\""
+      },
+      {
+        "step": 158,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 175,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 179,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 197,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 199,
+        "orig_status": "error",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 201,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 203,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 219,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 228,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 238,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 246,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 248,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 250,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 258,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 269,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 279,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 306,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 340,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 371,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      }
+    ],
+    "table_path": "e020_final.parquet"
+  },
+  "reproduction": {
+    "n_logged_rows": 36426,
+    "rows_found": 36426,
+    "missing_columns": [],
+    "mismatched_columns": [],
+    "max_rel_diff": 0.0,
+    "reproduced": true
+  },
+  "test_rows_in_table": 12490,
+  "status": "ok",
+  "backend": "xgb",
+  "test_mae_fit_train_val": 64.8596,
+  "test_r2_fit_train_val": 0.6882,
+  "test_mae_fit_train": 65.1212,
+  "test_r2_fit_train": 0.6836,
+  "val_to_test_degradation_same_fit": 3.1452,
+  "model_meta": {
+    "train_val": null,
+    "n_train_rows": 36426,
+    "n_test_rows": 12490
+  }
+}

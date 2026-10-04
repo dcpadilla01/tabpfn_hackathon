@@ -24,6 +24,8 @@ from src.data.splits import research_visible_day as _visible_day
 from src.data.targets import KEYS, TARGET, load_targets as _load_targets
 
 RESEARCH_VISIBLE_DAY = _visible_day()
+# Phase 12 replay only: build_features also emits test-snapshot rows (still as-of per snapshot).
+_FROZEN_TEST = os.environ.get("AGENT_API_MODE") == "frozen_test"
 _WORKSPACE = os.getcwd()
 _IN_CHILD = False
 
@@ -141,6 +143,8 @@ def build_features(fn, splits=("train", "validation")) -> pd.DataFrame:
         raise AccessDenied("build_features cannot be called inside fn")
     if not set(splits) <= {"train", "validation"}:
         raise AccessDenied("only train and validation snapshots are available during research")
+    if _FROZEN_TEST and "test" not in splits:
+        splits = tuple(splits) + ("test",)
     _preload()
     keys = _acc.target_keys(tuple(splits))
     parts = []

@@ -104,7 +104,8 @@ def feature_table_hash(ft: pd.DataFrame) -> str:
 
 
 def _fit_and_score(ft, backend, fit_splits, eval_split):
-    features, cats = validate_feature_table(ft, splits=tuple(fit_splits) + (eval_split,))
+    table_splits = ("train", "validation") if eval_split == "validation" else ("train", "validation", "test")
+    features, cats = validate_feature_table(ft, splits=table_splits)
     t = load_targets()
     data = t.merge(ft.astype({HOUSEHOLD_KEY: "int32", "snapshot_day": "int16"}), on=KEYS, how="inner")
     train = data[data["split"].isin(fit_splits)].sort_values(KEYS)
@@ -200,7 +201,8 @@ def evaluate(
     }
 
 
-def evaluate_frozen_test(feature_table: pd.DataFrame, backend: str) -> dict:
-    """Phase 12 only: fit on train+validation, score once on test. Not exposed to agents."""
-    res = _fit_and_score(feature_table, backend, ("train", "validation"), "test")
+def evaluate_frozen_test(feature_table: pd.DataFrame, backend: str,
+                         fit_splits: tuple[str, ...] = ("train", "validation")) -> dict:
+    """Phase 12 only: fit on `fit_splits`, score once on test. Not exposed to agents."""
+    res = _fit_and_score(feature_table, backend, tuple(fit_splits), "test")
     return {k: v for k, v in res.items() if not k.startswith("_")} | {"meta": res["_meta"]}
