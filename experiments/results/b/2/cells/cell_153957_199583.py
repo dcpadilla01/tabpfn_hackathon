@@ -1,0 +1,5 @@
+base = load_saved('e009_demo.parquet')
+merged = base.merge(feats, on=['household_key','snapshot_day'], how='left')
+print(merged.shape)
+p = save_table(merged, 'e012_basket_shape')
+print(p)

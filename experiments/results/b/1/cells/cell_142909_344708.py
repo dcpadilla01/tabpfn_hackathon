@@ -1,0 +1,8 @@
+v = agent_api.snapshot(95)
+print([a for a in dir(v) if not a.startswith('_')])
+print('households:', v.households)
+print('day', v.day, 'week', v.week)
+h = agent_api.history(1)
+print(h.shape, h.columns.tolist())
+print(h.head(3))
+print(agent_api.KEYS, agent_api.TARGET)

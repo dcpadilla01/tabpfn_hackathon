@@ -1,0 +1,11 @@
+import pandas as pd, numpy as np
+s = agent_api.load_saved("season_v1.parquet")
+print(s.dtypes)
+print(s.head(3))
+print(s.snapshot_day.value_counts().head(20))
+tt = agent_api.train_targets()
+print(tt.dtypes)
+print(tt.head(3))
+print("tt snaps:", sorted(tt.snapshot_day.unique()))
+mkt = agent_api.load_saved("mkt_v2.parquet")
+print(mkt.dtypes.head(3)); print(mkt.head(2))

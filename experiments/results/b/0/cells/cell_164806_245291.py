@@ -1,0 +1,10 @@
+import agent_api, pandas as pd, numpy as np
+print('start', flush=True)
+df = agent_api.load_saved('e011_price.parquet')
+print('loaded', df.shape, flush=True)
+tt = agent_api.train_targets()
+print('targets', tt.shape, flush=True)
+m = df.merge(tt, on=['household_key','snapshot_day'])
+print('merged', m.shape, flush=True)
+x = m.spend28.values.astype(float)
+print('col ok', np.nanmean(x), flush=True)

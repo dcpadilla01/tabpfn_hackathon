@@ -1,0 +1,5 @@
+base = load_saved('e009_demo.parquet')
+print(base.shape)
+print(list(base.columns))
+e8 = load_saved('e008_fwd_calendar.parquet')
+print('E008 cols:', list(e8.columns))

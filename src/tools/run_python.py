@@ -115,7 +115,9 @@ exec(compile(_code, "<your code>", "exec"), _ns)
 
 
 def _scrub(text: str, workspace: Path) -> str:
-    for p, repl in ((str(workspace), "."), (str(ROOT), "<harness>"), (sys.prefix, "<python>")):
+    # run dir before ROOT: its path names the arm and seed, which the agent must not see
+    for p, repl in ((str(workspace), "."), (str(workspace.parent), "<run>"), (str(ROOT), "<harness>"),
+                    (sys.prefix, "<python>")):
         text = text.replace(p, repl)
     if len(text) > MAX_OUTPUT_CHARS:
         half = MAX_OUTPUT_CHARS // 2

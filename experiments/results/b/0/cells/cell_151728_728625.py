@@ -1,0 +1,6 @@
+df = load_saved('e010_decay.parquet')
+print('e010 shape:', df.shape)
+print(list(df.columns))
+print()
+print('snapshot days:', snapshot_days())
+print('KEYS:', KEYS, 'TARGET:', TARGET)

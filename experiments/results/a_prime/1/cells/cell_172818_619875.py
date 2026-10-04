@@ -1,0 +1,10 @@
+import agent_api as A, pandas as pd, numpy as np
+base = A.load_saved("e018_union_full.parquet")
+tt = A.train_targets()
+tr = base.merge(tt, on=["household_key","snapshot_day"], how="inner").sort_values(["snapshot_day","household_key"]).reset_index(drop=True)
+y = tr.future_spend_4w.values.astype(float)
+print("mean y", y.mean())
+days = sorted(tr.snapshot_day.unique())
+print(days)
+te = (tr.snapshot_day.values==days[0])
+print("te sum", te.sum(), "dtype", tr.snapshot_day.dtype)

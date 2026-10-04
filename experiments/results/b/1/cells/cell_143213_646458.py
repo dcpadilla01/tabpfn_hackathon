@@ -1,0 +1,12 @@
+import agent_api as A
+print(A.describe_tables())
+v = A.snapshot(459)
+print(type(v), dir(v))
+print('households =', repr(v.households))
+print('day =', repr(v.day), 'week =', repr(v.week))
+h = A.history('HH001')
+print(type(h), h.shape)
+print(h.head())
+print(h.columns.tolist())
+tt = A.train_targets()
+print(tt.shape, tt.future_spend_4w.describe())

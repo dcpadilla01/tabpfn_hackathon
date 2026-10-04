@@ -1,0 +1,10 @@
+t = agent_api.load_saved('e009_macro.parquet')
+print('E009 shape:', t.shape)
+print('E009 columns:')
+for c in t.columns: print('  ', c)
+tt = agent_api.train_targets()
+y = tt['future_spend_4w']
+print('\ntarget rows:', len(tt))
+print(y.describe())
+print('zero share:', (y==0).mean(), '  quantiles:', y.quantile([.5,.75,.9,.95]).to_dict())
+print(agent_api.snapshot_days())

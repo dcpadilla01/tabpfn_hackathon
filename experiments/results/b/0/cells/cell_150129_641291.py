@@ -1,0 +1,12 @@
+t = load_saved('e007_lagseq.parquet')
+d = [c for c in t.columns if c.startswith('dsp_')]
+print('dsp cols', len(d))
+print(t[d].notna().sum().sum(), 'non-nan total')
+print(t[d].describe().T.head(5))
+m = train_targets().merge(t, on=['household_key','snapshot_day'], how='left')
+num = m.select_dtypes(include=[np.number]).drop(columns=['dsp_ '], errors='ignore')
+cor = num.corrwith(m.future_spend_4w).drop('future_spend_4w', errors='ignore').sort_values()
+print('TOP positive:'); print(cor.tail(25).round(3))
+print('neg:'); print(cor.head(6).round(3))
+v = snapshot()
+print([a for a in dir(v) if not a.startswith('_')])

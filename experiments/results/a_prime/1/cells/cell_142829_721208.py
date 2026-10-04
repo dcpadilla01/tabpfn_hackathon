@@ -1,0 +1,10 @@
+import agent_api as api
+tt = api.train_targets()
+print(tt.head())
+print(tt.future_spend_4w.describe())
+print(tt.groupby('snapshot_day').future_spend_4w.mean())
+b = api.baseline_features()
+print(b.columns.tolist())
+print(b.head())
+print(api.snapshot_days())
+print(tt.shape)

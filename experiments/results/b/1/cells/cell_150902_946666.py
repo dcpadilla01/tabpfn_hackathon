@@ -1,0 +1,11 @@
+import agent_api, pandas as pd, numpy as np
+t = agent_api.load_saved('e001_history.parquet')
+print('shape', t.shape)
+print('cols', t.columns.tolist())
+print(t.dtypes.to_string())
+tt = agent_api.train_targets()
+print('targets', tt.shape)
+print(tt['future_spend_4w'].describe())
+print('zero share', (tt.future_spend_4w==0).mean())
+print('rows per snapshot (train):')
+print(tt.groupby('snapshot_day').size())

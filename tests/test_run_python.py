@@ -110,3 +110,10 @@ def test_save_table_accepts_parquet_suffix(ws):
     assert r.status == "ok" and "xy.parquet" in r.output and (w / "xy.parquet").exists()
     r = run_python("print(save_table(pd.DataFrame({'a': [1]}), 'e003_mix.parquet'))", w, h)
     assert "e003_mix.parquet" in r.output and (w / "e003_mix.parquet").exists()
+
+
+def test_run_dir_not_revealed(tmp_path):
+    run_dir = tmp_path / "experiments" / "results" / "b" / "1"
+    w = run_dir / "workspace"; w.mkdir(parents=True)
+    r = run_python("raise ValueError('x')", w, run_dir / "cells")
+    assert "results/b/1" not in r.output and "<run>" in r.output

@@ -1,0 +1,98 @@
+import agent_api as A
+import pandas as pd, numpy as np
+
+tt = A.train_targets()
+
+def prep_matrix(M, tr_mask, nb=64):
+    feat = [c for c in M.columns if c not in ("household_key", "snapshot_day", "future_spend_4w")]
+    num_cols = [c for c in feat if M[c].dtype.kind in "ifb"]
+    cat_cols = [c for c in feat if M[c].dtype.kind not in "ifb" and M[c].nunique() <= 25]
+    Xn = M[num_cols].astype(float).copy()
+    med = Xn[tr_mask].median()
+    Xn = Xn.fillna(med).fillna(0.0).values
+    B = np.empty(Xn.shape, dtype=np.uint8)
+    for j in range(Xn.shape[1]):
+        qs = np.unique(np.quantile(Xn[tr_mask, j], np.linspace(0, 1, nb + 1)[1:-1]))
+        B[:, j] = np.searchsorted(qs, Xn[:, j], side='right')
+    mats = [B]
+    for c in cat_cols:
+        d = pd.get_dummies(M[c].astype(str), prefix=c, dummy_na=True)
+        mats.append(d.values.astype(np.uint8))
+    return np.hstack(mats)
+
+def gbm_fit(B, y, snap, tr_snap_max, n_trees=150, lr=0.08, depth=4, nb=64,
+            rowsample=0.8, colsample=0.7, min_leaf=20, reg=1.0, seed=0):
+    rng = np.random.RandomState(seed)
+    trm = snap <= tr_snap_max
+    n, k = B.shape
+    pred = np.zeros(n)
+    tr_idx_all = np.where(trm)[0]
+    pred[trm] = y[trm].mean()
+    colsel = max(8, int(k * colsample))
+    for t in range(n_trees):
+        rows = rng.choice(tr_idx_all, size=int(len(tr_idx_all) * rowsample), replace=False)
+        feats = rng.choice(k, size=colsel, replace=False)
+        res = y - pred
+        # nodes: (train_idx, all_idx, dc, f, b)
+        nodes = [(rows, np.arange(n), 0, None, None)]
+        for d in range(depth):
+            new_nodes = []
+            for nd in nodes:
+                tidx, aidx, dc, f, b = nd
+                if f is None and len(tidx) >= 2 * min_leaf and dc < depth:
+                    G = res[tidx].sum(); N = len(tidx)
+                    best = (0.0, None, None)
+                    Bsub = B[tidx][:, feats]
+                    rsub = res[tidx]
+                    for fi in range(len(feats)):
+                        h = np.bincount(Bsub[:, fi], weights=rsub, minlength=nb)
+                        c = np.bincount(Bsub[:, fi], minlength=nb)
+                        gl = np.cumsum(h); cl = np.cumsum(c)
+                        gr = G - gl; cr = N - cl
+                        gain = gl*gl/(cl+reg) + gr*gr/(cr+reg) - G*G/(N+reg)
+                        valid = (cl >= min_leaf) & (cr >= min_leaf)
+                        gain = np.where(valid, gain, -1e18)
+                        bi = int(np.argmax(gain))
+                        if gain[bi] > best[0]:
+                            best = (gain[bi], fi, bi)
+                    if best[1] is None:
+                        new_nodes.append(nd); continue
+                    _, fi, bi = best
+                    f = feats[fi]
+                    m_t = B[tidx, f] <= bi
+                    m_a = B[aidx, f] <= bi
+                    new_nodes += [(tidx[m_t], aidx[m_a], dc+1, f, bi, True),
+                                  (tidx[~m_t], aidx[~m_a], dc+1, f, bi, False)]
+                else:
+                    new_nodes.append(nd)
+            nodes = new_nodes
+        for nd in nodes:
+            tidx, aidx, dc, f, b, isl = nd
+            if len(tidx):
+                val = lr * res[tidx].mean()
+                pred[aidx] += val
+    return pred
+
+def local_eval(df, n_trees=150):
+    M = df.merge(tt, on=["household_key","snapshot_day"], how="inner")
+    trm = (M.snapshot_day <= 375).values
+    B = prep_matrix(M, trm)
+    y = np.log1p(M.future_spend_4w.values)
+    snap = M.snapshot_day.values
+    pred = gbm_fit(B, y, snap, 375, n_trees=n_trees)
+    va = snap >= 403
+    p = np.expm1(pred[va])
+    return np.mean(np.abs(p - M.future_spend_4w.values[va]))
+
+harness = {"e015_base":60.761,"e013_union":61.337,"e009_macro":61.647,"e011_display":61.680,
+           "e012_full":61.471,"e008_decomp2":61.711,"e007_new":62.794,"e001_history":63.025,
+           "e014_base":63.242,"e010_composite":63.939,"e004_long_hist":63.982,"e006_seq_gaps":64.050,
+           "e003_dept_mix":64.175,"e002_marketing":64.676,"e005_seasonal_peer":67.852}
+res = {}
+for nm in harness:
+    df = A.load_saved(nm + ".parquet")
+    m = local_eval(df)
+    res[nm] = m
+    print(f"{nm:22s} local={m:7.3f} harness={harness[nm]:7.3f}")
+lv = pd.Series({n:res[n] for n in harness}); hv = pd.Series(harness)
+print("rank corr:", lv.rank().corr(hv.rank()), "| pearson:", lv.corr(hv))
