@@ -1,0 +1,131 @@
+{
+  "arm": "b",
+  "seed": 1,
+  "experiment_id": "E008",
+  "val_mae": 60.6968,
+  "replay": {
+    "cells_replayed": 16,
+    "replay_seconds": 169.8,
+    "cells": [
+      {
+        "step": 6,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 18,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "isolated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 76, in full_fn\n  File \"<harness>/src/researcher/agent_api.py\", line 185, in load_saved\n    raise AccessDenied(\"load_saved cannot be called inside fn\")\nsrc.researcher.agent_api.AccessDenied: load_saved cannot be called inside fn"
+      },
+      {
+        "step": 20,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 50,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 52,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 56,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 60,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": ">\", \"exec\"), _ns)\n  File \"<your code>\", line 86, in <module>\n  File \"<harness>/src/researcher/agent_api.py\", line 153, in build_features\n    out = _run_isolated(fn, int(day), hh)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/src/researcher/agent_api.py\", line 127, in _run_isolated\n    status, value = pickle.loads(data)\n                    ^^^^^^^^^^^^^^^^^^\nEOFError: Ran out of input"
+      },
+      {
+        "step": 62,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "^^^^^^^^^\n  File \"<your code>\", line 82, in fn\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/frame.py\", line 4113, in __getitem__\n    indexer = self.columns.get_loc(key)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 3819, in get_loc\n    raise KeyError(key) from err\nKeyError: ('sales_value', 'mean')"
+      },
+      {
+        "step": 64,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": ">\", \"exec\"), _ns)\n  File \"<your code>\", line 85, in <module>\n  File \"<harness>/src/researcher/agent_api.py\", line 153, in build_features\n    out = _run_isolated(fn, int(day), hh)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/src/researcher/agent_api.py\", line 127, in _run_isolated\n    status, value = pickle.loads(data)\n                    ^^^^^^^^^^^^^^^^^^\nEOFError: Ran out of input"
+      },
+      {
+        "step": 70,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": ">\", \"exec\"), _ns)\n  File \"<your code>\", line 88, in <module>\n  File \"<harness>/src/researcher/agent_api.py\", line 153, in build_features\n    out = _run_isolated(fn, int(day), hh)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/src/researcher/agent_api.py\", line 127, in _run_isolated\n    status, value = pickle.loads(data)\n                    ^^^^^^^^^^^^^^^^^^\nEOFError: Ran out of input"
+      },
+      {
+        "step": 84,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": ">\", \"exec\"), _ns)\n  File \"<your code>\", line 90, in <module>\n  File \"<harness>/src/researcher/agent_api.py\", line 153, in build_features\n    out = _run_isolated(fn, int(day), hh)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/src/researcher/agent_api.py\", line 127, in _run_isolated\n    status, value = pickle.loads(data)\n                    ^^^^^^^^^^^^^^^^^^\nEOFError: Ran out of input"
+      },
+      {
+        "step": 86,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": ">\", \"exec\"), _ns)\n  File \"<your code>\", line 97, in <module>\n  File \"<harness>/src/researcher/agent_api.py\", line 153, in build_features\n    out = _run_isolated(fn, int(day), hh)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/src/researcher/agent_api.py\", line 127, in _run_isolated\n    status, value = pickle.loads(data)\n                    ^^^^^^^^^^^^^^^^^^\nEOFError: Ran out of input"
+      },
+      {
+        "step": 93,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 97,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "_run_isolated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 44, in fn\n  File \"<harness>/src/researcher/agent_api.py\", line 185, in load_saved\n    raise AccessDenied(\"load_saved cannot be called inside fn\")\nsrc.researcher.agent_api.AccessDenied: load_saved cannot be called inside fn"
+      },
+      {
+        "step": 99,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 104,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      }
+    ],
+    "table_path": "e008_level_shape.parquet"
+  },
+  "reproduction": {
+    "n_logged_rows": 36426,
+    "rows_found": 36426,
+    "missing_columns": [],
+    "mismatched_columns": [],
+    "max_rel_diff": 0.0,
+    "reproduced": true
+  },
+  "test_rows_in_table": 12490,
+  "reproduction_kind": "exact",
+  "status": "ok",
+  "backend": "tabpfn",
+  "test_mae_fit_train_val": 64.3102,
+  "test_r2_fit_train_val": 0.6846,
+  "test_mae_fit_train": 64.1187,
+  "test_r2_fit_train": 0.6878,
+  "val_to_test_degradation_same_fit": 3.4219,
+  "model_meta": {
+    "train_val": "/app/tabpfn_models/tabpfn-v3.5-20260909.safetensors",
+    "n_train_rows": 36426,
+    "n_test_rows": 12490
+  }
+}

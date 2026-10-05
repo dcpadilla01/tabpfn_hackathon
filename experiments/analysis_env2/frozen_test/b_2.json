@@ -1,0 +1,137 @@
+{
+  "arm": "b",
+  "seed": 2,
+  "experiment_id": "E011",
+  "val_mae": 60.6352,
+  "replay": {
+    "cells_replayed": 17,
+    "replay_seconds": 183.7,
+    "cells": [
+      {
+        "step": 6,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "ex' object has no attribute 'index'\nTraceback (most recent call last):\n  File \"<harness>/src/researcher/agent_api.py\", line 106, in _run_isolated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 7, in fn\nAttributeError: 'Index' object has no attribute 'index'. Did you mean: 'reindex'?"
+      },
+      {
+        "step": 8,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 12,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 16,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 6212, in _get_indexer_strict\n    self._raise_if_missing(keyarr, indexer, axis_name)\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 6264, in _raise_if_missing\n    raise KeyError(f\"{not_found} not in index\")\nKeyError: \"['usual_4w', 'ratio_recent_usual'] not in index\""
+      },
+      {
+        "step": 18,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 35,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "RCH_VISIBLE_DAY if as_of_day is None else as_of_day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/src/researcher/agent_api.py\", line 49, in _cap\n    raise AccessDenied(\nsrc.researcher.agent_api.AccessDenied: as_of_day=487 is beyond the research horizon (day 459). Data after that day is only reachable inside build_features(fn), per snapshot."
+      },
+      {
+        "step": 37,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 62,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 93,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 97,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 108,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 115,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 119,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 6212, in _get_indexer_strict\n    self._raise_if_missing(keyarr, indexer, axis_name)\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 6264, in _raise_if_missing\n    raise KeyError(f\"{not_found} not in index\")\nKeyError: \"['household_key', 'snapshot_day'] not in index\""
+      },
+      {
+        "step": 121,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 125,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 133,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 135,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      }
+    ],
+    "table_path": "e011_table.parquet"
+  },
+  "reproduction": {
+    "n_logged_rows": 36426,
+    "rows_found": 36426,
+    "missing_columns": [],
+    "mismatched_columns": [],
+    "max_rel_diff": 0.0,
+    "reproduced": true
+  },
+  "test_rows_in_table": 12490,
+  "reproduction_kind": "exact",
+  "status": "ok",
+  "backend": "tabpfn",
+  "test_mae_fit_train_val": 64.0746,
+  "test_r2_fit_train_val": 0.6878,
+  "test_mae_fit_train": 63.8172,
+  "test_r2_fit_train": 0.6919,
+  "val_to_test_degradation_same_fit": 3.182,
+  "model_meta": {
+    "train_val": "/app/tabpfn_models/tabpfn-v3.5-20260909.safetensors",
+    "n_train_rows": 36426,
+    "n_test_rows": 12490
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "arm": "a",
+  "seed": 0,
+  "experiment_id": "E013",
+  "val_mae": 61.5172,
+  "replay": {
+    "cells_replayed": 23,
+    "replay_seconds": 257.6,
+    "cells": [
+      {
+        "step": 8,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 10,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "runner_055527_697375.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 2, in <module>\n  File \"<harness>/src/researcher/agent_api.py\", line 188, in load_saved\n    raise AccessDenied(\"load_saved only reads .parquet files saved in your workspace\")\nsrc.researcher.agent_api.AccessDenied: load_saved only reads .parquet files saved in your workspace"
+      },
+      {
+        "step": 12,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 19,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "oost.dylib                    0x0000000116370028 xgboost::data::DMatrixProxy::SetColumnar(xgboost::StringView) + 72\n  [bt] (6) 7   libxgboost.dylib                    0x0000000116154e18 XGProxyDMatrixSetDataColumnar + 136\n  [bt] (7) 8   libpython3.12.dylib                 0x000000010432c050 ffi_call_SYSV + 80\n  [bt] (8) 9   libpython3.12.dylib                 0x000000010432a2b8 ffi_call_int + 1452"
+      },
+      {
+        "step": 21,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "s>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 4852, in _drop_axis\n    new_axis = axis.drop(labels, errors=errors)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 7136, in drop\n    raise KeyError(f\"{labels[mask].tolist()} not found in axis\")\nKeyError: \"['future_spend_4w'] not found in axis\""
+      },
+      {
+        "step": 23,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "s>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 4852, in _drop_axis\n    new_axis = axis.drop(labels, errors=errors)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 7136, in drop\n    raise KeyError(f\"{labels[mask].tolist()} not found in axis\")\nKeyError: \"['future_spend_4w'] not found in axis\""
+      },
+      {
+        "step": 25,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 31,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 37,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "26437 val rows 9989 nan target 0\nobjective: reg:absoluteerror\nbest_iter 135 MAE@431(es) 63.69\n\n[stderr]\nTraceback (most recent call last):\n  File \"<run>/cells/runner_055654_644083.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 112, in <module>\nTypeError: xgboost.sklearn.XGBRegressor() got multiple values for keyword argument 'n_estimators'"
+      },
+      {
+        "step": 39,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 57,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 109,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 131,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "yload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 11, in feats_v4\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 5383, in __setitem__\n    raise TypeError(\"Index does not support mutable operations\")\nTypeError: Index does not support mutable operations"
+      },
+      {
+        "step": 133,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "**kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py\", line 2407, in fillna\n    new_values = self.values.fillna(value=value, method=None, limit=limit)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: Cannot setitem on a Categorical with a new category (UNK), set the categories first"
+      },
+      {
+        "step": 135,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "eral\n    values, mutated = self._grouper.apply_groupwise(f, data, self.axis)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/groupby/ops.py\", line 928, in apply_groupwise\n    res = f(group)\n          ^^^^^^^^\n  File \"<your code>\", line 71, in <lambda>\nZeroDivisionError: Weights sum to zero, can't be normalized"
+      },
+      {
+        "step": 137,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 78, in feats_v4\n  File \"<your code>\", line 5, in wmean_by\n  File \"<harness>/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py\", line 107, in _clip\n    return um.positive(a, out=out, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: positive() got an unexpected keyword argument 'lower'"
+      },
+      {
+        "step": 139,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 141,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "7, in <module>\n  File \"<your code>\", line 14, in prep\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/frame.py\", line 4113, in __getitem__\n    indexer = self.columns.get_loc(key)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 3819, in get_loc\n    raise KeyError(key) from err\nKeyError: 'homeowner_desc'"
+      },
+      {
+        "step": 147,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 204,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 236,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 263,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "[stderr]\nTraceback (most recent call last):\n  File \"<run>/cells/runner_055841_97500.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 22, in <module>\nValueError: operands could not be broadcast together with shapes (26437,) (22479,)"
+      },
+      {
+        "step": 265,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      }
+    ],
+    "table_path": "pred_e013.parquet"
+  },
+  "regime": "train-only (agent's own fit)",
+  "reproduction": {
+    "validation_rows": 9989,
+    "rows_found": 9989,
+    "max_abs_diff": 0.0,
+    "reproduced": true
+  },
+  "test_rows_predicted": 12490,
+  "status": "ok",
+  "test_mae_fit_train": 64.4427,
+  "test_r2_fit_train": 0.6862,
+  "val_to_test_degradation_same_fit": 2.9255
+}
