@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RAW_DIR = ROOT / "data" / "raw"
 INTERIM_DIR = ROOT / "data" / "interim"
 PROCESSED_DIR = ROOT / "data" / "processed"
-RESULTS_DIR = ROOT / "experiments" / "results"
+
 
 load_dotenv(ROOT / ".env")
 # The local `tabpfn` package reads TABPFN_TOKEN for the weight-download licence check.
@@ -28,6 +28,16 @@ PINNED_PACKAGES = ("tabpfn", "tabpfn-client", "xgboost", "openai", "pandas", "sc
 def load_config(path: str | Path = ROOT / "config" / "default.yaml") -> dict:
     with open(path) as f:
         return yaml.safe_load(f)
+
+
+# Experiment environment (see CLAUDE.md "Environments and primary results"). Env-1 = the reported runs in
+# experiments/results; Env-2 = the post-audit harness, kept in experiments/results_env2. Never mixed.
+ENVIRONMENT = os.environ.get("EXPERIMENT_ENV") or load_config().get("environment", "env1")
+if ENVIRONMENT not in ("env1", "env2"):
+    raise ValueError(f"unknown environment {ENVIRONMENT!r}")
+_SUFFIX = "" if ENVIRONMENT == "env1" else "_env2"
+RESULTS_DIR = ROOT / "experiments" / f"results{_SUFFIX}"
+ANALYSIS_DIR = ROOT / "experiments" / f"analysis{_SUFFIX}"
 
 
 def package_versions() -> dict[str, str]:

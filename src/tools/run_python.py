@@ -46,7 +46,10 @@ DENY_PATTERNS = [
     r"importlib", r"__builtins__", r"\bos\.", r"\bsys\.", r"shutil", r"pickle",
 ]
 
-TIMEOUT_SECONDS = 300
+TIMEOUT_SECONDS = 300  # per cell, every arm (unchanged from Env-1)
+# Every arm, every environment: OpenMP single-threaded (as in Env-1). Env-2 adds a joblib/loky process cap,
+# which matters only where joblib is importable (Arm A's sklearn), so concurrent runs cannot starve each other.
+SUBPROCESS_ENV = {"PATH": "/usr/bin:/bin", "OMP_NUM_THREADS": "1", "LOKY_MAX_CPU_COUNT": "2"}
 MAX_OUTPUT_CHARS = 6000
 
 
@@ -139,7 +142,7 @@ def run_python(code: str, workspace: Path, harness_dir: Path, allow_modelling: b
     try:
         proc = subprocess.run(
             [sys.executable, "-I", str(runner_path)],
-            cwd=workspace, env={"PATH": "/usr/bin:/bin", "OMP_NUM_THREADS": "1"} | (extra_env or {}),
+            cwd=workspace, env=SUBPROCESS_ENV | (extra_env or {}),
             capture_output=True, text=True, timeout=timeout,
         )
     except subprocess.TimeoutExpired:

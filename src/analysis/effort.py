@@ -21,9 +21,9 @@ import re
 import pandas as pd
 
 from src.analysis.runs import ARMS, SEEDS, transcript
-from src.config import ROOT
+from src.config import ANALYSIS_DIR, ROOT
 
-OUT = ROOT / "experiments" / "analysis"
+OUT = ANALYSIS_DIR
 LABEL = re.compile(r"train_targets|future_spend_4w|\bTARGET\b")
 FIT = re.compile(r"linalg\.(solve|lstsq|pinv)|lstsq|def \w*(fit|gbm|boost|tree|ridge)\w*\(|\bridge\b|boost|build_tree")
 LOCAL_SCORE = re.compile(r"np\.abs\([^)]*-[^)]*\)\.mean\(\)|\bmae\b", re.I)

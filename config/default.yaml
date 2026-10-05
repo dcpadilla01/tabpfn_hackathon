@@ -1,3 +1,7 @@
+# Experiment environment: env1 = reported runs (experiments/results); env2 = post-audit harness
+# (experiments/results_env2). Override with EXPERIMENT_ENV=env1|env2.
+environment: env2
+
 # Single source of run configuration. Seeds are fixed everywhere.
 seed: 0
 

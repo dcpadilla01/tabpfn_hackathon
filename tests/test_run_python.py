@@ -61,7 +61,8 @@ def test_subprocess_env_is_stripped():
 
     from src.tools import run_python as rp
 
-    assert 'env={"PATH": "/usr/bin:/bin", "OMP_NUM_THREADS": "1"}' in inspect.getsource(rp.run_python)
+    assert rp.SUBPROCESS_ENV == {"PATH": "/usr/bin:/bin", "OMP_NUM_THREADS": "1", "LOKY_MAX_CPU_COUNT": "2"}
+    assert "env=SUBPROCESS_ENV" in inspect.getsource(rp.run_python)
 
 
 def test_stash_across_snapshots_does_not_leak(ws):

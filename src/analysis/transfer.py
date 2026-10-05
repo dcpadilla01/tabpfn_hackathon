@@ -11,10 +11,10 @@ import json
 import pandas as pd
 
 from src.analysis.runs import best_experiments
-from src.config import RESULTS_DIR, ROOT
+from src.config import ANALYSIS_DIR, RESULTS_DIR, ROOT
 from src.evaluation.evaluator import evaluate
 
-OUT = ROOT / "experiments" / "analysis" / "transfer.csv"
+OUT = ANALYSIS_DIR / "transfer.csv"
 BACKEND = {"b": "tabpfn", "a_prime": "xgb"}
 
 

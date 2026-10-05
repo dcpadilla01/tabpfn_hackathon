@@ -12,10 +12,10 @@ import pandas as pd
 
 from src.analysis.compare_runs import cluster_bootstrap
 from src.analysis.runs import ARMS, SEEDS
-from src.config import ROOT
+from src.config import ANALYSIS_DIR, ROOT
 from src.data.targets import KEYS, TARGET, load_targets
 
-DIR = ROOT / "experiments" / "analysis" / "frozen_test"
+DIR = ANALYSIS_DIR / "frozen_test"
 
 
 def main() -> None:

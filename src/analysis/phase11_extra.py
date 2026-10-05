@@ -14,9 +14,9 @@ from __future__ import annotations
 import pandas as pd
 
 from src.analysis.runs import SEEDS, experiments
-from src.config import ROOT
+from src.config import ANALYSIS_DIR, ROOT
 
-OUT = ROOT / "experiments" / "analysis"
+OUT = ANALYSIS_DIR
 THRESHOLD = 62.24
 
 

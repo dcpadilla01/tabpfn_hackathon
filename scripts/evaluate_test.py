@@ -25,13 +25,13 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src.analysis.runs import best_experiments, transcript  # noqa: E402
-from src.config import RESULTS_DIR, ROOT  # noqa: E402
+from src.config import ANALYSIS_DIR, RESULTS_DIR, ROOT  # noqa: E402
 from src.data.targets import KEYS  # noqa: E402
 from src.evaluation.evaluator import evaluate_frozen_test  # noqa: E402
 from src.researcher.arms import arm_config  # noqa: E402
 from src.tools.run_python import run_python  # noqa: E402
 
-OUT = ROOT / "experiments" / "analysis" / "frozen_test"
+OUT = ANALYSIS_DIR / "frozen_test"
 BACKEND = {"b": "tabpfn", "a_prime": "xgb"}
 
 

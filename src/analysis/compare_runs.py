@@ -16,10 +16,10 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
 from src.analysis.runs import ARM_LABEL, ARMS, SEEDS, best_experiments, calls, experiments, predictions  # noqa: E402
-from src.config import ROOT  # noqa: E402
+from src.config import ANALYSIS_DIR, ROOT  # noqa: E402
 from src.data.targets import KEYS, TARGET, load_targets  # noqa: E402
 
-OUT = ROOT / "experiments" / "analysis"
+OUT = ANALYSIS_DIR
 COLORS = {"b": "#2a6fdb", "a_prime": "#d1495b"}
 
 
