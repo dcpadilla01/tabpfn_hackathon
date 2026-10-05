@@ -7,6 +7,11 @@ untuned **XGBoost** (Arm A′). Then we measure what it finds, what it costs, an
 > **Working thesis.** TabPFN reduces the cost of autonomous predictive experimentation by collapsing
 > preprocessing, model selection and tuning into a reusable prediction primitive.
 
+> **Pinned results.** Every number, table and figure in this document was produced from the code and stored
+> results at commit [`1fb5872`](https://github.com/dcpadilla01/tabpfn_hackathon/tree/1fb5872); later commits
+> change documentation only. Reproducibility from a fresh public clone was checked end to end on 2026-10-04
+> (at `d7bcbbf`; `1fb5872` only updated the repository URL, and the new artifact URL was verified).
+
 ## Quickstart
 
 **Requirements:** macOS or Linux (the harness uses `os.fork`; Windows is not supported), `git`, `make`, and
