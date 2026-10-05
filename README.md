@@ -16,7 +16,7 @@ untuned **XGBoost** (Arm A′). Then we measure what it finds, what it costs, an
 [`data/README.md`](data/README.md).
 
 ```bash
-git clone https://github.com/dcpadilla01/tabpfn3.5_hackathon.git && cd tabpfn3.5_hackathon
+git clone https://github.com/dcpadilla01/tabpfn_hackathon.git && cd tabpfn_hackathon
 uv sync                                     # environment from uv.lock
 cp .env.example .env                        # then paste TABPFN_API_KEY and OPENROUTER_API_KEY
 # copy the eight dunnhumby CSVs into data/raw/
