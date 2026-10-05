@@ -7,6 +7,32 @@ untuned **XGBoost** (Arm A′). Then we measure what it finds, what it costs, an
 > **Working thesis.** TabPFN reduces the cost of autonomous predictive experimentation by collapsing
 > preprocessing, model selection and tuning into a reusable prediction primitive.
 
+## Quickstart
+
+**Requirements:** macOS or Linux (the harness uses `os.fork`; Windows is not supported), `git`, `make`, and
+[`uv`](https://docs.astral.sh/uv/getting-started/installation/) (it installs Python 3.12). Two API keys:
+**TabPFN** from the [Prior Labs platform](https://platform.priorlabs.ai) and **OpenRouter** from
+[openrouter.ai/keys](https://openrouter.ai/keys). The **dunnhumby Complete Journey** CSVs — see
+[`data/README.md`](data/README.md).
+
+```bash
+git clone https://github.com/dcpadilla01/tabpfn3.5_hackathon.git && cd tabpfn3.5_hackathon
+uv sync                                     # environment from uv.lock
+cp .env.example .env                        # then paste TABPFN_API_KEY and OPENROUTER_API_KEY
+# copy the eight dunnhumby CSVs into data/raw/
+make data check targets test                # build + verify data, 58 tests (≈ 2 min)
+uv run python -m src.analysis.compare_runs  # regenerate the headline results from stored logs (no API calls)
+make run ARM=b SEED=3 BUDGET=3              # a short live research run with TabPFN (≈ 30–40 min)
+```
+
+| Cost of a live run | LLM (GLM 5.3 Flash) | TabPFN API credits | Wall-clock |
+|---|---|---|---|
+| `BUDGET=3` | ≈ $0.05 | ≈ 40k (B only) | ≈ 30–40 min |
+| `BUDGET=20` (as reported) | ≈ $0.35–0.40 | ≈ 200–280k (B only) | ≈ 2.9–3.7 h |
+
+Arm A′ (`ARM=a_prime`) runs XGBoost locally and uses no TabPFN credits. Full reproduction steps are under
+[Reproduce](#reproduce).
+
 ## Results at a glance (Env-1: 3 runs per arm, 20 experiments each)
 
 | | **B — TabPFN-3.5** | **A′ — XGBoost** |
@@ -233,40 +259,49 @@ environment (Env-2) and are never mixed with the results above.
 
 ## Reproduce
 
+Steps 1–3 and 5a need no research runs. Commands marked **API** spend TabPFN credits; **LLM** spends
+OpenRouter credit.
+
 ```bash
 # 1. setup
 uv sync                                    # Python 3.12; exact pins in pyproject.toml / uv.lock
 cp .env.example .env                       # TABPFN_API_KEY (Prior Labs), OPENROUTER_API_KEY
 # 2. data — see data/README.md (download from dunnhumby; md5-checked)
-make data check targets                    # typed parquet, schema checks, target table
+make data check targets                    # typed parquet, schema checks, target table (hash-checked)
 # 3. harness
 make test                                  # 58 tests: leakage, sandbox, evaluator contract, agent loop
-uv run python scripts/run_baseline.py --reproduce   # re-evaluates E000 on both backends vs the logged values
-uv run python scripts/smoke_test_tabpfn.py --backend api   # API smoke test + row-budget timing
-# 4. new research runs (≈3 h each; run in parallel). Seeds 0–2 hold the reported runs and are
-#    protected (a run refuses to overwrite an existing directory); use new seeds, e.g. 3–5.
-make run ARM=b SEED=3 BUDGET=20            # also ARM=a_prime
-make audit
-# 5. analysis
-uv run python -m src.analysis.compare_runs # trajectories, bootstrap, time-to-quality, summary.csv
-uv run python -m src.analysis.transfer     # representation transfer
+uv run python scripts/run_baseline.py --reproduce        # API: re-evaluates E000 on both backends vs the logs
+uv run python scripts/smoke_test_tabpfn.py --backend api # API: smoke test + 35k-row timing
+# 4. new research runs (≈ 3 h each at BUDGET=20; run several in parallel). Seeds 0–2 hold the reported
+#    runs and are protected (a run refuses to overwrite an existing directory); use new seeds, e.g. 3–5.
+make run ARM=b SEED=3 BUDGET=20            # API + LLM; also ARM=a_prime (LLM only)
+make audit                                 # static re-check of every code cell the agents ran
+# 5a. rebuild every reported table and figure from the stored logs (no API calls; verified byte-for-byte
+#     on a fresh clone)
+uv run python -m src.analysis.compare_runs # summary, trajectories, validation bootstrap, time-to-quality
 uv run python -m src.analysis.effort       # action-based effort shares
+uv run python -m src.analysis.phase11_extra # time-to-threshold, transfer 2×2 (from transfer.csv)
+uv run python -m src.analysis.frozen_test  # Phase 12 2×2, sensitivity, test bootstrap
 uv run python scripts/audit_labels.py      # label-access audit
-uv run python scripts/evaluate_test.py --accept-approx   # Phase 12: replay each final table (~1 h), score test
-uv run python scripts/evaluate_test_e000.py # E000 on test, both regimes
-uv run python -m src.analysis.frozen_test  # 2×2 summary + paired bootstrap per regime
+# 5b. recompute the stored inputs of 5a (optional)
+make artifacts                             # download the six best feature tables (148 MB, GitHub release)
+uv run python -m src.analysis.transfer     # API: each best table on the other backend → transfer.csv
+uv run python scripts/evaluate_test_e000.py # API: E000 on test, both regimes → frozen_test/e000.json
+uv run python scripts/evaluate_test.py --accept-approx   # API: replay each final table (≈ 1 h), score test once
 ```
 
-`tabpfn.backend: local` in `config/default.yaml` runs TabPFN on a local GPU instead of the API (the
-`tabpfn` package asks for a one-time licence acceptance at <https://ux.priorlabs.ai>; the API key in `.env`
-is passed as `TABPFN_TOKEN`).
+`scripts/evaluate_test.py` checks that each replayed table reproduces the logged one; without
+`make artifacts` it still scores test but reports that check as *unchecked*. `tabpfn.backend: local` in
+`config/default.yaml` runs TabPFN on a local GPU instead of the API (the `tabpfn` package asks for a one-time
+licence acceptance at <https://ux.priorlabs.ai>; the API key in `.env` is passed as `TABPFN_TOKEN`).
 
 **Cached results.** Everything under `experiments/results/{b,a_prime}/{0,1,2}/` and `experiments/analysis/`
 is the stored output of the reported runs (Env-1): logs, transcripts, the code the agents ran, and label-free
-prediction files. Step 5 regenerates every table and figure from these files without new LLM or TabPFN
-calls (checked byte-for-byte on a fresh clone). The agents' feature tables (1.7 GB) are not tracked:
-`transfer.csv` is a stored result, and `evaluate_test.py` rebuilds the final tables by replay. Re-running
-the researcher (step 4) produces new trajectories, because the LLM is not seeded.
+prediction files. Step 5a regenerates every table and figure from these files. The agents' feature tables
+are not in git (1.7 GB); the six that the transfer and replay checks need are a release download
+(`make artifacts`). Re-running the researcher (step 4) produces new trajectories, because the LLM is not
+seeded. The data are dunnhumby's, used for research under their terms; transcripts contain excerpts the
+agents printed while exploring.
 
 ## Compute and versions
 

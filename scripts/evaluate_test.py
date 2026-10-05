@@ -114,18 +114,31 @@ def evaluate_run(arm: str, seed: int, experiment_id: str, val_mae: float, reuse:
         res["status"] = "replay_failed: final table not produced"
         return res
     table = pd.read_parquet(path)
-    logged = pd.read_parquet(RESULTS_DIR / arm / str(seed) / experiment_id / "features.parquet")
-    res["reproduction"] = compare_to_logged(table, logged)
+    logged_path = RESULTS_DIR / arm / str(seed) / experiment_id / "features.parquet"
+    if not logged_path.exists():
+        # Fresh clone without `make artifacts`: the logged feature table is not in git. Score the replayed
+        # table on the columns the experiment logged, and mark the reproduction check as unchecked.
+        rec = next(json.loads(l) for l in (RESULTS_DIR / arm / str(seed) / "experiments.jsonl").read_text().splitlines()
+                   if json.loads(l)["experiment_id"] == experiment_id)
+        logged = table[KEYS + rec["feature_columns"]].iloc[:0]
+        res["reproduction"] = {"reproduced": None, "note": "unchecked: logged features.parquet not present (run `make artifacts`)"}
+        print("   reproduction check: UNCHECKED (logged feature table not present; run `make artifacts`)", flush=True)
+    else:
+        logged = pd.read_parquet(logged_path)
+        res["reproduction"] = compare_to_logged(table, logged)
     n_test = int((table["snapshot_day"] >= 571).sum())
     res["test_rows_in_table"] = n_test
     rep = res["reproduction"]
+    if rep["reproduced"] is None:
+        res["reproduction_kind"] = "unchecked"
+        rep = {"reproduced": True, "missing_columns": [], "rows_found": 0, "n_logged_rows": 0}
     # Approximate: same rows and columns, values differ only through statistics the agent computed over
     # the whole table (now including test-period FEATURE values; never labels). Opt-in, flagged.
     approx_ok = accept_approx and not rep["missing_columns"] and rep["rows_found"] == rep["n_logged_rows"]
     if n_test == 0 or (not rep["reproduced"] and not approx_ok):
         res["status"] = "not_reproduced" if not rep["reproduced"] else "no_test_rows"
         return res
-    res["reproduction_kind"] = "exact" if rep["reproduced"] else "approximate"
+    res.setdefault("reproduction_kind", "exact" if rep["reproduced"] else "approximate")
     table = table[[c for c in logged.columns]]  # exactly the evaluated columns
     backend = BACKEND[arm]
     tv = evaluate_frozen_test(table, backend, ("train", "validation"))
