@@ -1,0 +1,237 @@
+{
+  "arm": "a_prime",
+  "seed": 1,
+  "experiment_id": "E015",
+  "val_mae": 62.2024,
+  "replay": {
+    "cells_replayed": 33,
+    "replay_seconds": 259.6,
+    "cells": [
+      {
+        "step": 6,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 12,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "**kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py\", line 2407, in fillna\n    new_values = self.values.fillna(value=value, method=None, limit=limit)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: Cannot setitem on a Categorical with a new category (UNK), set the categories first"
+      },
+      {
+        "step": 14,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 32,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 36,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": ">\", \"exec\"), _ns)\n  File \"<your code>\", line 64, in <module>\n  File \"<harness>/src/researcher/agent_api.py\", line 153, in build_features\n    out = _run_isolated(fn, int(day), hh)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/src/researcher/agent_api.py\", line 127, in _run_isolated\n    status, value = pickle.loads(data)\n                    ^^^^^^^^^^^^^^^^^^\nEOFError: Ran out of input"
+      },
+      {
+        "step": 38,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": " _run_isolated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 4, in fn\n  File \"<harness>/src/researcher/agent_api.py\", line 185, in load_saved\n    raise AccessDenied(\"load_saved cannot be called inside fn\")\nsrc.researcher.agent_api.AccessDenied: load_saved cannot be called inside fn"
+      },
+      {
+        "step": 40,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": ">\", \"exec\"), _ns)\n  File \"<your code>\", line 53, in <module>\n  File \"<harness>/src/researcher/agent_api.py\", line 153, in build_features\n    out = _run_isolated(fn, int(day), hh)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/src/researcher/agent_api.py\", line 127, in _run_isolated\n    status, value = pickle.loads(data)\n                    ^^^^^^^^^^^^^^^^^^\nEOFError: Ran out of input"
+      },
+      {
+        "step": 44,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": ">\", line 36, in fn_full\n  File \"<harness>/.venv/lib/python3.12/site-packages/numpy/lib/_shape_base_impl.py\", line 648, in column_stack\n    return _nx.concatenate(arrays, 1)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: all the input array dimensions except for the concatenation axis must match exactly, but along dimension 0, the array at index 0 has size 199 and the array at index 4 has size 1"
+      },
+      {
+        "step": 46,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": ">\", \"exec\"), _ns)\n  File \"<your code>\", line 66, in <module>\n  File \"<harness>/src/researcher/agent_api.py\", line 153, in build_features\n    out = _run_isolated(fn, int(day), hh)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/src/researcher/agent_api.py\", line 127, in _run_isolated\n    status, value = pickle.loads(data)\n                    ^^^^^^^^^^^^^^^^^^\nEOFError: Ran out of input"
+      },
+      {
+        "step": 48,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "ay' object has no attribute 'get_indexer'\nTraceback (most recent call last):\n  File \"<harness>/src/researcher/agent_api.py\", line 106, in _run_isolated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 39, in fn_full\nAttributeError: 'numpy.ndarray' object has no attribute 'get_indexer'"
+      },
+      {
+        "step": 50,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": ">\", \"exec\"), _ns)\n  File \"<your code>\", line 87, in <module>\n  File \"<harness>/src/researcher/agent_api.py\", line 153, in build_features\n    out = _run_isolated(fn, int(day), hh)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/src/researcher/agent_api.py\", line 127, in _run_isolated\n    status, value = pickle.loads(data)\n                    ^^^^^^^^^^^^^^^^^^\nEOFError: Ran out of input"
+      },
+      {
+        "step": 55,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "turn DataFrameGroupBy(\n           ^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/groupby/groupby.py\", line 1331, in __init__\n    grouper, exclusions, obj = get_grouper(\n                               ^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/groupby/grouper.py\", line 1043, in get_grouper\n    raise KeyError(gpr)\nKeyError: 'blk'"
+      },
+      {
+        "step": 57,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": ">\", \"exec\"), _ns)\n  File \"<your code>\", line 67, in <module>\n  File \"<harness>/src/researcher/agent_api.py\", line 153, in build_features\n    out = _run_isolated(fn, int(day), hh)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/src/researcher/agent_api.py\", line 127, in _run_isolated\n    status, value = pickle.loads(data)\n                    ^^^^^^^^^^^^^^^^^^\nEOFError: Ran out of input"
+      },
+      {
+        "step": 60,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 68,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": " File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/reshape/merge.py\", line 1298, in _get_merge_keys\n    right_keys.append(right._get_label_or_level_values(rk))\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 1914, in _get_label_or_level_values\n    raise KeyError(key)\nKeyError: 'household_key'"
+      },
+      {
+        "step": 72,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "n3.12/site-packages/pandas/core/reshape/merge.py\", line 1298, in _get_merge_keys\n    right_keys.append(right._get_label_or_level_values(rk))\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 1928, in _get_label_or_level_values\n    raise ValueError(\nValueError: The column label 'household_key' is not unique."
+      },
+      {
+        "step": 76,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 80,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 100,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": " File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/reshape/merge.py\", line 1298, in _get_merge_keys\n    right_keys.append(right._get_label_or_level_values(rk))\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 1914, in _get_label_or_level_values\n    raise KeyError(key)\nKeyError: 'household_key'"
+      },
+      {
+        "step": 102,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "e>\", \"exec\"), _ns)\n  File \"<your code>\", line 100, in <module>\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/frame.py\", line 4113, in __getitem__\n    indexer = self.columns.get_loc(key)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 3819, in get_loc\n    raise KeyError(key) from err\nKeyError: 'index'"
+      },
+      {
+        "step": 106,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 112,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "ex' object has no attribute 'index'\nTraceback (most recent call last):\n  File \"<harness>/src/researcher/agent_api.py\", line 106, in _run_isolated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 9, in fn\nAttributeError: 'Index' object has no attribute 'index'. Did you mean: 'reindex'?"
+      },
+      {
+        "step": 114,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 133,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 141,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 146,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 150,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "packages/pandas/core/arrays/categorical.py\", line 1590, in _validate_setitem_value\n    return self._validate_scalar(value)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/arrays/categorical.py\", line 1615, in _validate_scalar\n    raise TypeError(\nTypeError: Cannot setitem on a Categorical with a new category (OTHER), set the categories first"
+      },
+      {
+        "step": 152,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 178,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 184,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "e.\n  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,\nTraceback (most recent call last):\n  File \"<run>/cells/runner_061256_717958.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 37, in <module>\nIndexError: boolean index did not match indexed array along axis 0; size of axis is 26437 but size of corresponding boolean axis is 48916"
+      },
+      {
+        "step": 186,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "e.\n  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,\nTraceback (most recent call last):\n  File \"<run>/cells/runner_061258_420166.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 34, in <module>\nIndexError: boolean index did not match indexed array along axis 0; size of axis is 26437 but size of corresponding boolean axis is 48916"
+      },
+      {
+        "step": 188,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "untimeWarning: Degrees of freedom <= 0 for slice.\n  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,\nTraceback (most recent call last):\n  File \"<run>/cells/runner_061300_15333.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 48, in <module>\nValueError: operands could not be broadcast together with shapes (48916,) (26437,) (48916,)"
+      },
+      {
+        "step": 190,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      }
+    ],
+    "table_path": "e015_stack.parquet"
+  },
+  "reproduction": {
+    "n_logged_rows": 36426,
+    "rows_found": 36426,
+    "missing_columns": [],
+    "mismatched_columns": [
+      "index",
+      "stack_ridge_log",
+      "stack_ridge"
+    ],
+    "max_rel_diff": 0.36585365853658536,
+    "reproduced": false
+  },
+  "test_rows_in_table": 12490,
+  "reproduction_kind": "approximate",
+  "status": "ok",
+  "backend": "xgb",
+  "test_mae_fit_train_val": 65.0033,
+  "test_r2_fit_train_val": 0.692,
+  "test_mae_fit_train": 65.5813,
+  "test_r2_fit_train": 0.6833,
+  "val_to_test_degradation_same_fit": 3.3789,
+  "model_meta": {
+    "train_val": null,
+    "n_train_rows": 36426,
+    "n_test_rows": 12490
+  }
+}

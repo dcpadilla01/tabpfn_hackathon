@@ -1,0 +1,286 @@
+{
+  "arm": "a",
+  "seed": 1,
+  "experiment_id": "E019",
+  "val_mae": 61.5657,
+  "replay": {
+    "cells_replayed": 44,
+    "replay_seconds": 1789.6,
+    "cells": [
+      {
+        "step": 9,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "ython3.12/site-packages/pandas/core/generic.py\", line 7372, in fillna\n    new_data = self._mgr.fillna(\n               ^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/base.py\", line 186, in fillna\n    return self.apply_with_block(\n           ^^^^^^^^^^^^^^^^^^^^^^\nTypeError: Cannot setitem on a Categorical with a new category (), set the categories first"
+      },
+      {
+        "step": 11,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "66f4c xgboost::DMatrix* xgboost::DMatrix::Create<void*, void*, void (void*), int (void*)>(void*, void*, std::__1::shared_ptr<xgboost::DMatrix>, void (*)(void*), int (*)(void*), float, int, int) + 140\n  [bt] (7) 8   libxgboost.dylib                    0x00000001140e6714 XGQuantileDMatrixCreateFromCallback + 416\n  [bt] (8) 9   libpython3.12.dylib                 0x0000000102374050 ffi_call_SYSV + 80"
+      },
+      {
+        "step": 13,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 34,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 60,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 68,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 60, in make_new\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/frame.py\", line 4113, in __getitem__\n    indexer = self.columns.get_loc(key)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 3819, in get_loc\n    raise KeyError(key) from err\nKeyError: 'spend_84'"
+      },
+      {
+        "step": 70,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": " \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 6212, in _get_indexer_strict\n    self._raise_if_missing(keyarr, indexer, axis_name)\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 6264, in _raise_if_missing\n    raise KeyError(f\"{not_found} not in index\")\nKeyError: \"['spend_28', 'bask_28', 'spend_84', 'bask_84'] not in index\""
+      },
+      {
+        "step": 76,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "other', 'ndeps_364', 'private_share_84', 'eve_spend_share_84', 'camp_TypeA', 'camp_TypeB', 'camp_TypeC', 'camp_any', 'redemp_total', 'redemp_84', 'redemp_recency', 'age_code', 'c2_code', 'income_code', 'hhsize_code', 'c5_code', 'homeown_code', 'kids_code', 'has_demo', 'week_of_year', 'week_sin', 'week_cos', 'spend_28', 'bask_28', 'spend_84', 'bask_84', 'spend_28', 'bask_28', 'spend_84', 'bask_84']"
+      },
+      {
+        "step": 78,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "AT', 'dep_MEAT-P', 'dep_DELI', 'dep_PASTRY', 'dep_COSMET', 'dep_NUTRIT', 'dep_other', 'ndeps_364', 'private_share_84', 'eve_spend_share_84', 'camp_TypeA', 'camp_TypeB', 'camp_TypeC', 'camp_any', 'redemp_total', 'redemp_84', 'redemp_recency', 'age_code', 'c2_code', 'income_code', 'hhsize_code', 'c5_code', 'homeown_code', 'kids_code', 'has_demo', 'week_of_year', 'week_sin', 'week_cos'] not in index\""
+      },
+      {
+        "step": 80,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 86,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "thon3.12/site-packages/pandas/core/internals/managers.py\", line 1036, in iget\n    values = block.iget(self.blklocs[i])\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py\", line 1326, in iget\n    return self.values[i]  # type: ignore[index]\n           ~~~~~~~~~~~^^^\nIndexError: index 0 is out of bounds for axis 0 with size 0"
+      },
+      {
+        "step": 88,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "12/site-packages/pandas/core/internals/construction.py\", line 114, in arrays_to_mgr\n    index = _extract_index(arrays)\n            ^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py\", line 664, in _extract_index\n    raise ValueError(\"Per-column arrays must each be 1-dimensional\")\nValueError: Per-column arrays must each be 1-dimensional"
+      },
+      {
+        "step": 90,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 92,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 109,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 120,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 177,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 186,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 198,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 204,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 206,
+        "orig_status": "error",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 208,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 225,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 237,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 261,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 268,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 298,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 321,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "/python3.12/site-packages/pandas/core/ops/common.py\", line 76, in new_method\n    return method(self, other)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/arraylike.py\", line 60, in __ge__\n    return self._cmp_method(other, operator.ge)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: Unordered Categoricals can only compare equality or not"
+      },
+      {
+        "step": 323,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": ")(**kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py\", line 2407, in fillna\n    new_values = self.values.fillna(value=value, method=None, limit=limit)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: Cannot setitem on a Categorical with a new category (0), set the categories first"
+      },
+      {
+        "step": 325,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": " self._set_item_mgr(key, value, refs)\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/frame.py\", line 4499, in _set_item_mgr\n    self._mgr.insert(len(self._info_axis), key, value, refs)\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/managers.py\", line 1389, in insert\n    raise ValueError(\nValueError: Expected a 1D array, got an array with shape (199, 4)"
+      },
+      {
+        "step": 327,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 331,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 363,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "train rows 21443 val rows 22479\nA done 85s\nB done 113s\n\n[stderr]\nTraceback (most recent call last):\n  File \"<run>/cells/runner_062253_940875.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 31, in <module>\nAttributeError: 'numpy.ndarray' object has no attribute 'median'. Did you mean: 'mean'?"
+      },
+      {
+        "step": 389,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 436,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "1::shared_ptr<xgboost::DMatrix>) + 128\n  [bt] (5) 6   libxgboost.dylib                    0x0000000114868648 XGBoosterUpdateOneIter + 144\n  [bt] (6) 7   libpython3.12.dylib                 0x0000000102914050 ffi_call_SYSV + 80\n  [bt] (7) 8   libpython3.12.dylib                 0x00000001029122b8 ffi_call_int + 1452\n  [bt] (8) 9   libpython3.12.dylib                 0x0000000102911d00 ffi_call + 52"
+      },
+      {
+        "step": 438,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 446,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "[stderr]\nTraceback (most recent call last):\n  File \"<run>/cells/runner_062622_166541.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 9, in <module>\nValueError: too many values to unpack (expected 2)"
+      },
+      {
+        "step": 448,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 452,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 454,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 456,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 489,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 515,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 523,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      }
+    ],
+    "table_path": "e019_blend_preds.parquet"
+  },
+  "regime": "train-only (agent's own fit)",
+  "reproduction": {
+    "validation_rows": 9989,
+    "rows_found": 9989,
+    "max_abs_diff": 0.0,
+    "reproduced": true
+  },
+  "test_rows_predicted": 0,
+  "status": "not replayable: 0/12490 test rows predicted"
+}

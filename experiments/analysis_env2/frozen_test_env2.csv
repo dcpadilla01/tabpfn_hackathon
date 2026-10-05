@@ -1,0 +1,6 @@
+regime,arm,n_runs,seeds,val_mae,test_mae,delta,kinds
+train-only (primary),b,3,"[0, 1, 2]",60.71,63.79,3.08,"['exact', 'exact', 'exact']"
+train-only (primary),a_prime,2,"[1, 2]",62.25,65.69,3.45,"['approximate', 'exact']"
+train-only (primary),a,2,"[0, 2]",61.58,64.65,3.06,"['exact', 'exact']"
+train+validation (replication),b,3,"[0, 1, 2]",60.71,63.96,3.25,"['exact', 'exact', 'exact']"
+train+validation (replication),a_prime,2,"[1, 2]",62.25,65.05,2.8,"['approximate', 'exact']"
