@@ -36,3 +36,7 @@ experiments/analysis_env2/frozen_test/*/
 data/raw
 data/interim
 data/processed
+
+# Env-2 label-free prediction files (bootstraps regenerate from a clone)
+!experiments/results_env2/*/*/E*/predictions.parquet
+!experiments/analysis_env2/frozen_test/*_test_predictions*.parquet
