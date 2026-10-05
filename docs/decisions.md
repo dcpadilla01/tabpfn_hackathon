@@ -92,3 +92,20 @@ library introspection. For **every arm in Env-2** (an Env-2 difference from Env-
 Re-checked against the smoke run: 3 of 11 rejections would now pass; 7 were dynamic `getattr` over table names
 (now served by `view.table`), 1 a file write (`np.save('/tmp/…')`), correctly still blocked. The 6 code errors in
 that run were ordinary pandas mistakes, not harness-induced.
+
+## 2026-10-05 05:51 CST — Env-2 frozen test: pre-declaration (no Env-2 test number computed yet)
+
+- **Scope change, stated plainly.** Env-2 was declared as a validation-and-behaviour comparison (CLAUDE.md,
+  "Environments and primary results"). A frozen test is being added **now, before any Env-2 test score has been
+  computed**: `experiments/analysis_env2/` does not exist at the time of writing. That is why this is a
+  pre-declaration, not a post-hoc choice.
+- **Primary cross-arm regime: train-only** (fit on train, score test once), for A, A′ and B. Arm A can only be
+  scored this way: its agents trained their own models on train labels.
+- **Replication of Env-1:** A′ and B are also scored with the train + validation refit, Env-1's primary regime,
+  reported as a replication, not as the Env-2 cross-arm result.
+- **Arm A replay rule.** Each A run's final candidate (chosen on validation only) is re-run from its own code with
+  test rows switched on. It must first reproduce the logged validation predictions; a run that cannot produce test
+  predictions is reported as **not replayable**. No workarounds, no hand edits. Non-replayable runs are an
+  expected, acceptable outcome (agents may hard-code snapshot-day thresholds).
+- **Order of work:** effort split (three arms), time-to-quality in hours (three arms), validation bootstrap (three
+  arms), transfer 2×2 (A′/B replication), frozen test A′/B, then Arm A frozen test as time permits.
