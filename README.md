@@ -11,7 +11,9 @@ untuned **XGBoost** (Arm A′). Then we measure what it finds, what it costs, an
 > [`1fb5872`](https://github.com/dcpadilla01/tabpfn_hackathon/tree/1fb5872), the Env-1 harness. Reproducibility
 > from a fresh public clone was checked end to end on 2026-10-04 (at `d7bcbbf`; `1fb5872` only updated the
 > repository URL). Env-2 numbers were produced at
-> [`db3810c`](https://github.com/dcpadilla01/tabpfn_hackathon/tree/db3810c). Later commits change documentation only.
+> [`db3810c`](https://github.com/dcpadilla01/tabpfn_hackathon/tree/db3810c). Later commits change documentation and the
+> artifact download only. On 2026-10-05, at `08d8e4a`, a fresh public clone re-ran every replay and recompute command for
+> both environments (step 5b): all 15 frozen-test verdicts, both transfer tables and E000 matched the committed results.
 
 ## Quickstart
 
