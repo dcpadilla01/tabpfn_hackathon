@@ -498,15 +498,15 @@ README: thesis, architecture (three arms, accessor, evaluator), dataset instruct
 
 # PHASE 18 — Submission QA
 
-- [ ] Fresh clone works; dataset instructions work.
-- [ ] No credentials committed; `.env.example` present; TabPFN API auth instructions included.
-- [ ] Seeds and TabPFN model version appear in every experiment log.
-- [ ] Baseline, researcher (each arm), evaluate_test and compare commands work.
-- [ ] Cached results clearly identified as such.
-- [ ] No fabricated numbers; figures regenerate from logs.
-- [ ] Protocol described fairly, including what was cut.
-- [ ] Attribution for dunnhumby and Prior Labs.
-- [ ] Demo link if produced.
+- [x] Fresh clone works; dataset instructions work. *(2026-10-04: anonymous GitHub clone, md5-checked data, same target hash, 58/58 tests)*
+- [x] No credentials committed; `.env.example` present; TabPFN API auth instructions included. *(keys absent from all history; Quickstart)*
+- [x] Seeds and TabPFN model version appear in every experiment log. *(134/134 records)*
+- [x] Baseline, researcher (each arm), evaluate_test and compare commands work. *(E000 reproduced; live B and A′ runs on the clone; analysis outputs identical. Arm A not built — stated in README)*
+- [x] Cached results clearly identified as such. *(README: Cached results; pinned commit)*
+- [x] No fabricated numbers; figures regenerate from logs. *(byte-identical on clone; 28 headline numbers checked against outputs)*
+- [x] Protocol described fairly, including what was cut. *(Limitations; audit; replay exceptions; withdrawn claims)*
+- [x] Attribution for dunnhumby and Prior Labs.
+- [x] Demo link if produced. *(n/a — no demo produced)*
 - [ ] Submit via Prior Labs platform before **October 6, 2026**.
 
 ---
