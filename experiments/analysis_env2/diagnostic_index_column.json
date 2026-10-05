@@ -1,0 +1,19 @@
+{
+  "note": "Diagnostic only (not a logged experiment): the two Env-2 A\u2032 best tables that scored worse on TabPFN both contain `index`, a row-number column left by reset_index() that recodes household_key. Re-fitted on TabPFN with that single column dropped; all other columns and the evaluator unchanged.",
+  "rows": [
+    {
+      "run": "a_prime/0",
+      "experiment": "E020",
+      "mae_xgb": 62.3177,
+      "mae_tabpfn_with_index": 64.62,
+      "mae_tabpfn_without_index": 60.917
+    },
+    {
+      "run": "a_prime/1",
+      "experiment": "E015",
+      "mae_xgb": 62.2024,
+      "mae_tabpfn_with_index": 64.7517,
+      "mae_tabpfn_without_index": 60.7819
+    }
+  ]
+}

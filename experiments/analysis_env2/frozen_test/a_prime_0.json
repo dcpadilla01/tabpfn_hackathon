@@ -1,0 +1,289 @@
+{
+  "arm": "a_prime",
+  "seed": 0,
+  "experiment_id": "E020",
+  "val_mae": 62.3177,
+  "replay": {
+    "cells_replayed": 44,
+    "replay_seconds": 884.2,
+    "cells": [
+      {
+        "step": 5,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 13,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": ")(**kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py\", line 2407, in fillna\n    new_values = self.values.fillna(value=value, method=None, limit=limit)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: Cannot setitem on a Categorical with a new category (?), set the categories first"
+      },
+      {
+        "step": 15,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 19,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 31,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 52,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 54,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 75,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 79,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 87,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "cols: 164 rows: 48916\n\n[stderr]\nTraceback (most recent call last):\n  File \"<run>/cells/runner_055612_490583.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 15, in <module>\nTypeError: DataFrame.any() takes 1 positional argument but 2 were given"
+      },
+      {
+        "step": 100,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 6212, in _get_indexer_strict\n    self._raise_if_missing(keyarr, indexer, axis_name)\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 6264, in _raise_if_missing\n    raise KeyError(f\"{not_found} not in index\")\nKeyError: \"['snapshot_day'] not in index\""
+      },
+      {
+        "step": 104,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "[stderr]\nTraceback (most recent call last):\n  File \"<run>/cells/runner_055615_678458.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 20, in <module>\nNameError: name 'newc' is not defined"
+      },
+      {
+        "step": 106,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 108,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 112,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": ">\", \"exec\"), _ns)\n  File \"<your code>\", line 64, in <module>\n  File \"<harness>/src/researcher/agent_api.py\", line 153, in build_features\n    out = _run_isolated(fn, int(day), hh)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/src/researcher/agent_api.py\", line 127, in _run_isolated\n    status, value = pickle.loads(data)\n                    ^^^^^^^^^^^^^^^^^^\nEOFError: Ran out of input"
+      },
+      {
+        "step": 114,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 127,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 133,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 161,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "olated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 8, in make_feats\n  File \"<harness>/src/researcher/agent_api.py\", line 185, in load_saved\n    raise AccessDenied(\"load_saved cannot be called inside fn\")\nsrc.researcher.agent_api.AccessDenied: load_saved cannot be called inside fn"
+      },
+      {
+        "step": 163,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 195,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 213,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 231,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": ">/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 5655, in _reindex_axes\n    new_index, indexer = ax.reindex(\n                         ^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 4436, in reindex\n    raise ValueError(\"cannot reindex on an axis with duplicate labels\")\nValueError: cannot reindex on an axis with duplicate labels"
+      },
+      {
+        "step": 233,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": ">/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 5655, in _reindex_axes\n    new_index, indexer = ax.reindex(\n                         ^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 4436, in reindex\n    raise ValueError(\"cannot reindex on an axis with duplicate labels\")\nValueError: cannot reindex on an axis with duplicate labels"
+      },
+      {
+        "step": 235,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "[stderr]\nTraceback (most recent call last):\n  File \"<run>/cells/runner_055751_888708.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 85, in <module>\n  File \"<your code>\", line 38, in compute_batch1\nTypeError: unsupported operand type(s) for +: 'NoneType' and 'int'"
+      },
+      {
+        "step": 237,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "exec\"), _ns)\n  File \"<your code>\", line 89, in <module>\n  File \"<your code>\", line 70, in compute_batch1\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 6321, in __getattr__\n    return object.__getattribute__(self, name)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'DataFrame' object has no attribute 'description'. Did you mean: 'description_x'?"
+      },
+      {
+        "step": 239,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "[stderr]\nTraceback (most recent call last):\n  File \"<run>/cells/runner_055756_10208.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 89, in <module>\n  File \"<your code>\", line 34, in compute_batch1\nValueError: attempt to get argmax of an empty sequence"
+      },
+      {
+        "step": 245,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 251,
+        "orig_status": "error",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 253,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/reshape/merge.py\", line 1298, in _get_merge_keys\n    right_keys.append(right._get_label_or_level_values(rk))\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 1914, in _get_label_or_level_values\n    raise KeyError(key)\nKeyError: 'snapshot_day'"
+      },
+      {
+        "step": 255,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 265,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "**kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py\", line 2407, in fillna\n    new_values = self.values.fillna(value=value, method=None, limit=limit)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: Cannot setitem on a Categorical with a new category (UNK), set the categories first"
+      },
+      {
+        "step": 267,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 269,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 275,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 277,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 293,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 295,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 299,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 307,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 318,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "s.py\", line 6138, in _cmp_method\n    res_values = ops.comparison_op(lvalues, rvalues, op)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/ops/array_ops.py\", line 330, in comparison_op\n    res_values = op(lvalues, rvalues)\n                 ^^^^^^^^^^^^^^^^^^^^\nTypeError: Unordered Categoricals can only compare equality or not"
+      },
+      {
+        "step": 320,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"pyarrow/array.pxi\", line 408, in pyarrow.lib.array\n  File \"pyarrow/array.pxi\", line 91, in pyarrow.lib._ndarray_to_array\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\npyarrow.lib.ArrowInvalid: ('Could not convert 0.0 with type float: tried to convert to boolean', 'Conversion failed for column dm_any_disp with type object')"
+      },
+      {
+        "step": 322,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"pyarrow/array.pxi\", line 408, in pyarrow.lib.array\n  File \"pyarrow/array.pxi\", line 91, in pyarrow.lib._ndarray_to_array\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\npyarrow.lib.ArrowInvalid: ('Could not convert 0.0 with type float: tried to convert to boolean', 'Conversion failed for column dm_any_disp with type object')"
+      },
+      {
+        "step": 324,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      }
+    ],
+    "table_path": "e020_dm.parquet"
+  },
+  "reproduction": {
+    "n_logged_rows": 36426,
+    "rows_found": 19128,
+    "missing_columns": [],
+    "mismatched_columns": [
+      "index"
+    ],
+    "max_rel_diff": 0.36585365853658536,
+    "reproduced": false
+  },
+  "test_rows_in_table": 12490,
+  "status": "not_reproduced"
+}
