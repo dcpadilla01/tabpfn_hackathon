@@ -1,0 +1,13 @@
+import pandas as pd, numpy as np, agent_api
+v = agent_api.snapshot()
+tx = v.table("transactions")
+print(tx[["quantity","sales_value","coupon_disc","coupon_match_disc","retail_disc","trans_time"]].describe().T)
+print()
+print("coupons:", v.table("coupons").shape, v.table("coupons").head(3).to_string())
+print()
+ct = v.table("campaign_targets")
+print("campaign_targets:", ct.shape)
+print(ct.description.value_counts())
+print("n campaigns:", ct.campaign.nunique(), "hh targeted:", ct.household_key.nunique())
+cr = v.table("coupon_redemptions")
+print("redemptions:", cr.shape, "hh:", cr.household_key.nunique())

@@ -1,0 +1,16 @@
+import agent_api as A, pandas as pd, numpy as np
+feats = A.load_saved('feats_v4.parquet')
+print('feats', feats.shape)
+print(feats.columns.tolist())
+tt = A.train_targets()
+print('targets', tt.shape)
+g = tt.groupby('snapshot_day')['future_spend_4w'].agg(count='count', mean='mean', median='median', zero_frac=lambda s:(s==0).mean())
+print(g)
+print(tt['future_spend_4w'].describe())
+val_days=[459,487,515,543]
+print('val rows in feats:', int(feats.snapshot_day.isin(val_days).sum()))
+p13 = A.load_saved('pred_e013.parquet')
+print('p13', p13.shape, p13.columns.tolist())
+m = feats[feats.snapshot_day.isin(val_days)][['household_key','snapshot_day']].merge(p13, on=['household_key','snapshot_day'], how='left')
+print('p13 merge missing:', int(m['prediction'].isna().sum()))
+print('NaNs in feats:', int(feats.isna().sum().sum()))

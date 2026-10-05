@@ -1,0 +1,108 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "inspect",
+      "description": "inspect(table, op, column=None, as_of_day=None, n=5): quick look at a table (op: columns, shape, head, describe, nunique, value_counts). No code needed.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "table": {
+            "type": "string",
+            "enum": [
+              "transactions",
+              "demographics",
+              "products",
+              "campaigns",
+              "campaign_targets",
+              "coupon_redemptions",
+              "coupons",
+              "display_mailer"
+            ]
+          },
+          "op": {
+            "type": "string",
+            "enum": [
+              "columns",
+              "shape",
+              "head",
+              "describe",
+              "nunique",
+              "value_counts"
+            ]
+          },
+          "column": {
+            "type": "string"
+          },
+          "as_of_day": {
+            "type": "integer"
+          },
+          "n": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "table",
+          "op"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "run_python",
+      "description": "run_python(code): execute Python with agent_api. Returns stdout/stderr.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "score",
+      "description": "score(predictions_path, hypothesis, parent, mutation, reasoning_summary): evaluate your own predictions with a fixed evaluation that you cannot change: it reports MAE and R\u00b2 on the validation rows. The file needs household_key, snapshot_day and prediction for exactly the validation rows (the validation-snapshot rows that build_features returns). Choosing, building and training the model is up to you; train_targets() gives the train labels. Predictions must be finite numbers.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "predictions_path": {
+            "type": "string",
+            "description": "path returned by save_table"
+          },
+          "hypothesis": {
+            "type": "string",
+            "description": "the claim about the data this experiment tests"
+          },
+          "parent": {
+            "type": "string",
+            "description": "id of the experiment you build on, e.g. E000"
+          },
+          "mutation": {
+            "type": "string",
+            "description": "what you changed relative to the parent"
+          },
+          "reasoning_summary": {
+            "type": "string",
+            "description": "one or two sentences: why you expect this to help"
+          }
+        },
+        "required": [
+          "predictions_path",
+          "hypothesis",
+          "parent",
+          "mutation",
+          "reasoning_summary"
+        ]
+      }
+    }
+  }
+]

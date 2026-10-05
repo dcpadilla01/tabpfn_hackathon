@@ -1,0 +1,15 @@
+s = agent_api.snapshot()
+t = s.transactions
+print("txn", t.shape, "hh", t.household_key.nunique(), "days", t.day.min(), t.day.max())
+print(t.head(3))
+p = s.products
+print("products", p.shape, "depts", p.department.nunique())
+print(p.department.value_counts().head(30))
+print(p.brand.value_counts(dropna=False))
+tt = agent_api.train_targets()
+print(tt.future_spend_4w.describe())
+print("rows per snapshot:")
+print(tt.snapshot_day.value_counts().sort_index())
+ct = s.table('campaign_targets')
+print(ct.description.value_counts())
+print(s.table('coupon_redemptions').shape)

@@ -1,0 +1,7 @@
+t8 = agent_api.load_saved('e008_level_shape.parquet')
+print('E008', t8.shape)
+print(sorted([c for c in t8.columns]))
+t16 = agent_api.load_saved('e016_grid.parquet')
+print('E016', t16.shape)
+print(sorted([c for c in t16.columns])[:60])
+print(agent_api.snapshot_days())

@@ -1,0 +1,12 @@
+held = load_saved("e016_held.parquet")
+e5 = load_saved("e005_preds.parquet")
+print(held.dtypes, e5.dtypes)
+print(held.household_key.head().tolist(), e5.household_key.head().tolist())
+print(held.snapshot_day.unique(), e5.snapshot_day.unique())
+m = held.merge(e5, on=["household_key","snapshot_day"])
+print(m.shape, m.prediction.isna().sum())
+# check key sets
+s5 = set(map(tuple, e5[["household_key","snapshot_day"]].values))
+sh = set(map(tuple, held[["household_key","snapshot_day"]].values))
+print("overlap:", len(s5 & sh), "held:", len(sh), "e5:", len(s5))
+print(list(sh)[:5], list(s5)[:5])

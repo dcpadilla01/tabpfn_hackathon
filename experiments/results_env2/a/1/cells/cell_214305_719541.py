@@ -1,0 +1,10 @@
+import xgboost as xgb, sklearn
+print("xgb", xgb.__version__, "sklearn", sklearn.__version__)
+prod = agent_api.snapshot().table("products")
+print(prod.department.value_counts().head(20))
+t = agent_api.train_targets()
+print("zero rate", (t.future_spend_4w==0).mean())
+print(t.groupby("snapshot_day").future_spend_4w.agg(["mean","median"]).round(1))
+tx = agent_api.snapshot(431).table("transactions")
+print(tx[['coupon_disc','retail_disc','coupon_match_disc']].describe().round(2))
+print("brands", prod.brand.value_counts(dropna=False).head())

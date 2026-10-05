@@ -1,0 +1,10 @@
+import agent_api as A
+v = A.snapshot(459)
+print("households type:", type(v.households))
+print(v.households.head(3) if hasattr(v.households, "head") else v.households[:3])
+print("day:", v.day, "week:", v.week)
+tx = v.table("transactions")
+print("tx:", tx.shape, tx.columns.tolist())
+prods = v.table("products")
+print("products:", prods.shape, prods.columns.tolist())
+print(A.snapshot_days())

@@ -1,0 +1,15 @@
+import numpy as np, pandas as pd
+T = agent_api.load_saved('e012_style.parquet')
+tt = agent_api.train_targets()
+print("T shape", T.shape)
+print("snapshot days", sorted(T.snapshot_day.unique()))
+print(T.dtypes.value_counts())
+obj_cols = [c for c in T.columns if T[c].dtype == object]
+print("object cols:", obj_cols)
+print("NaN frac (top10):")
+print(T.isna().mean().sort_values(ascending=False).head(10))
+print("tt shape", tt.shape)
+print(tt.future_spend_4w.describe())
+print("tt days", sorted(tt.snapshot_day.unique()))
+print("n feature cols:", T.shape[1]-2)
+print(list(T.columns)[:60])

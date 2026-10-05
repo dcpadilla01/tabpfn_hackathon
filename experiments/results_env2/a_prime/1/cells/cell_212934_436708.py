@@ -1,0 +1,10 @@
+
+v = api.snapshot(95)
+print("households type:", type(v.households))
+print(list(v.households)[:5] if hasattr(v.households, '__getitem__') else v.households)
+print("day/week:", v.day, v.week)
+tx = v.table("transactions"); print(tx.dtypes)
+ct = v.table("campaign_targets"); print(ct.dtypes)
+red = v.table("coupon_redemptions"); print(red.shape)
+camp = v.table("campaigns"); print(camp)
+b = api.load_saved("e002_mix.parquet"); print(b.shape); print(b.columns.tolist()[:15])

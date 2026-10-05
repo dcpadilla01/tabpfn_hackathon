@@ -1,0 +1,6 @@
+base = agent_api.load_saved("e001_recent_behavior.parquet")
+mix = agent_api.load_saved("e002_mix.parquet")
+m = base.merge(mix.drop(columns=[]), on=["household_key","snapshot_day"], how="inner")
+print(m.shape)
+path = agent_api.save_table(m, "e002_full")
+print(path)

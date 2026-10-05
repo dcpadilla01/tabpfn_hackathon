@@ -1,0 +1,10 @@
+import agent_api as A
+print(A.describe_tables())
+print(A.snapshot_days())
+print(A.KEYS, A.TARGET)
+v = A.snapshot(459)
+tx = v.table("transactions")
+print(tx.shape)
+print(tx.head())
+print("households needing row at 459:", len(v.households))
+print(v.households[:5])
