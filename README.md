@@ -456,3 +456,6 @@ terms: per-household × snapshot feature tables for the six selected runs (relea
 label-free per-row predictions, and agent transcripts that include excerpts the agents printed while
 exploring.
 Model: **TabPFN-3.5** by **Prior Labs**. Built for the Prior Labs TabPFN-3.5 Hackathon.
+
+**License:** the code in this repository is released under the [MIT License](LICENSE). The dunnhumby data and
+data derived from it are not covered by that license; they remain subject to dunnhumby's terms.
