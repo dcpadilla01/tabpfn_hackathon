@@ -7,10 +7,11 @@ untuned **XGBoost** (Arm A′). Then we measure what it finds, what it costs, an
 > **Working thesis.** TabPFN reduces the cost of autonomous predictive experimentation by collapsing
 > preprocessing, model selection and tuning into a reusable prediction primitive.
 
-> **Pinned results.** Every number, table and figure in this document was produced from the code and stored
-> results at commit [`1fb5872`](https://github.com/dcpadilla01/tabpfn_hackathon/tree/1fb5872); later commits
-> change documentation only. Reproducibility from a fresh public clone was checked end to end on 2026-10-04
-> (at `d7bcbbf`; `1fb5872` only updated the repository URL, and the new artifact URL was verified).
+> **Pinned results.** Env-1 numbers were produced from the code and stored results at commit
+> [`1fb5872`](https://github.com/dcpadilla01/tabpfn_hackathon/tree/1fb5872), the Env-1 harness. Reproducibility
+> from a fresh public clone was checked end to end on 2026-10-04 (at `d7bcbbf`; `1fb5872` only updated the
+> repository URL). Env-2 numbers were produced at
+> [`db3810c`](https://github.com/dcpadilla01/tabpfn_hackathon/tree/db3810c). Later commits change documentation only.
 
 ## Quickstart
 
@@ -26,7 +27,7 @@ uv sync                                     # environment from uv.lock
 cp .env.example .env                        # then paste TABPFN_API_KEY and OPENROUTER_API_KEY
 # copy the eight dunnhumby CSVs into data/raw/
 make data check targets test                # build + verify data, 58 tests (≈ 2 min)
-uv run python -m src.analysis.compare_runs  # regenerate the headline results from stored logs (no API calls)
+EXPERIMENT_ENV=env1 uv run python -m src.analysis.compare_runs  # regenerate Env-1 headline results (no API)
 make run ARM=b SEED=3 BUDGET=3              # a short live research run with TabPFN (≈ 30–40 min)
 ```
 
@@ -71,6 +72,9 @@ What the evidence supports:
    hour and per token. Agents in *both* fixed-model arms rebuilt the plumbing they were spared: **41% of all
    code they ran fitted their own models** (numpy ridge, least squares, two hand-written gradient-boosting
    implementations) to pre-screen features against train labels.
+
+**Env-2** (below) reruns A′ and B, which replicate their Env-1 means to within 0.03 MAE, and adds the free-form
+researcher, Arm A.
 
 The headline finding is therefore narrower and, we think, more interesting than the thesis: *a strong
 reusable primitive raises the quality ceiling and the speed to a good answer, but an autonomous agent with a
@@ -193,6 +197,83 @@ The test gap on exact replays (−0.88) is within 0.06 of the all-runs primary r
 
 ---
 
+## Env-2: adding the free-form researcher (Arm A)
+
+Env-2 reruns A′ and B and adds **Arm A**: the same researcher with no fixed model. It has sklearn, XGBoost and
+scipy, chooses and trains its own models, and submits validation predictions to `score()` (one call = one
+experiment). Env-2 uses the post-audit harness: run path scrubbed, prints inside `fn` visible at train
+snapshots only, narrower sandbox rejections. The full list is in `docs/decisions.md`. Seeds 0–2, 20 experiments,
+nine runs in parallel on one machine. **Env-2 is reported separately and never mixed with Env-1.** Wall-clock times
+are comparable across arms within Env-2, but not with Env-1 (nine concurrent runs against six).
+
+| Env-2 (3 runs per arm) | **A — free-form** | A′ — fixed XGBoost | **B — TabPFN** |
+|---|---:|---:|---:|
+| Best validation MAE (mean ± sd) | 61.58 ± 0.07 | 62.27 ± 0.06 | **60.71 ± 0.08** |
+| Hours per run | 6.33 | 3.67 | 3.76 |
+| Valid experiments per hour / per M tokens | 2.73 / 5.38 | 4.87 / 8.23 | 4.53 / 7.93 |
+| Cell timeouts (300 s) per run | 2.3 | 0.3 | 0.3 |
+| First reaches A's mean best (61.58)⁴ | 2.7 h, 7.0 h, never | never (×3) | **E001, 1–5 min (×3)** |
+| First reaches A′'s mean best (62.27)⁴ | 0.5 h, 0.3 h, 1.25 h | 2.42 h (1 run); never (×2) | **E001, 1–5 min (×3)** |
+
+Validation, paired household-clustered bootstrap (arm level): **B − A = −0.87** [−1.64, −0.37];
+B − A′ = −1.56 [−2.19, −1.09]; **A′ − A = +0.69** [+0.37, +1.01]. B and A′ replicate their Env-1 means to
+within 0.03 MAE.
+
+⁴ Post-hoc thresholds (each arm's mean best). B reaches both with its first experiment in every run.
+
+**Reading the three arms.**
+- **What the harness is worth (A vs A′):** negative here. The free-form researcher beats the fixed, untuned
+  XGBoost by 0.7 MAE. *A primitive is only as good as its backend*: A′ shows what a mediocre fixed backend
+  costs. That is also why B's lead over A′ (1.6) is larger than its lead over A (0.9).
+- **What TabPFN is worth (A′ vs B):** 1.6 MAE on validation, as in Env-1.
+- **The overall comparison (A vs B):** B beats the researcher that is free to build its own models, reaches A's
+  final level with its first experiment, and spends about 60% of A's time per run. A's lower productivity
+  includes its cell timeouts (2.3 per run against 0.3), so the gap is not purely agent behaviour.
+
+**Effort — one classifier, both environments.** Each tool call is labelled once, by the action-based rules in
+`src/analysis/effort.py`. Because one label per call puts a cell that builds features *and* fits a model under
+"model engineering", we also report the share of executed cells that contain any model fit, which is the more
+robust measure.
+
+| Env | Arm | Model engineering | Debugging | Data exploration + feature construction | **Cells with any model fit** | Cells fitting on labels |
+|---|---|---:|---:|---:|---:|---:|
+| Env-1 | B | 27.1% | 31.3% | 29.2% | **44.9%** | 43.0% |
+| Env-1 | A′ | 24.8% | 25.9% | 35.7% | **39.5%** | 39.3% |
+| Env-2 | B | 20.8% | 26.3% | 36.9% | **31.6%** | 31.6% |
+| Env-2 | A′ | 21.2% | 27.1% | 38.5% | **32.1%** | 31.6% |
+| Env-2 | **A** | **45.2%** | 26.9% | 18.0% | **56.8%** | 54.2% |
+
+- **Direction:** given the plumbing, the free-form researcher spends far more of its effort on modelling. That
+  shows on both measures (57% of cells fit a model against about 32%; 45% against about 21% by primary label).
+  A fixed primitive does move effort away from plumbing, while the harnessed arms still rebuild some of it.
+- **Between environments, the harnessed arms' model-fitting share fell** (cells with any fit: 45% → 32% for B,
+  40% → 32% for A′). This is measured; the cause is not established. Restored prints would predict fewer
+  debugging retries, but debugging fell for B (31 → 26%) and rose for A′ (26 → 27%). Rejected cells also fell
+  (16 → 6 and 14 → 6 per run) under the narrower sandbox rules, and the two changes are confounded.
+
+**Transfer (A′/B replication).** TabPFN scores lower than XGBoost on 4 of 6 best tables. The two exceptions
+(A′ seeds 0 and 1: 64.62 and 64.75 on TabPFN against 62.32 and 62.20 on XGBoost) both contain `index`, a
+row-number column left by `reset_index()` that recodes `household_key`. A diagnostic re-fit without that one
+column (`experiments/analysis_env2/diagnostic_index_column.json`) gives 60.92 and 60.78 on TabPFN. TabPFN is
+sensitive to an ID-like leftover column in a way XGBoost is not. Logged numbers are unchanged.
+
+**Frozen test (pre-declared 2026-10-05 05:51, before any Env-2 test score).** Cross-arm primary: train-only, the
+only regime Arm A can be scored in (its agents fit on train labels). Replication: train + validation for A′ and B.
+
+| Regime | Arm | Runs scored | Validation | Test | Δ | Test vs B (95% CI) |
+|---|---|---:|---:|---:|---:|---|
+| **train-only (primary)** | **B** | 3 | 60.71 | **63.79** | +3.08 | — |
+| **train-only (primary)** | A | 2 | 61.58 | 64.65 | +3.06 | B − A = −0.86 [−1.45, −0.45] |
+| **train-only (primary)** | A′ | 2 | 62.25 | 65.69 | +3.45 | B − A′ = −1.91 [−2.55, −1.41] |
+| train + validation (replication) | B | 3 | 60.71 | 63.96 | +3.25 | — |
+| train + validation (replication) | A′ | 2 | 62.25 | 65.05 | +2.80 | B − A′ = −1.09 [−1.44, −0.75] (Env-1: −0.94) |
+
+Per run: B/0–2 exact reproductions. A/0 and A/2 exact. **A/1 not replayable**: it reproduced its validation
+predictions exactly, but its code predicts validation rows only, so no test predictions were produced. A′/2 exact.
+A′/1 approximate (`index`). **A′/0 not reproduced**: a cell that failed at research time succeeded in the replay,
+and the tables diverged. Per the pre-declared rule there were no workarounds and no hand edits; the means above use
+the runs that produced a test score. A′ − A on test = +1.05 [+0.71, +1.40].
+
 ## Design
 
 ```text
@@ -278,17 +359,24 @@ make data check targets                    # typed parquet, schema checks, targe
 make test                                  # 58 tests: leakage, sandbox, evaluator contract, agent loop
 uv run python scripts/run_baseline.py --reproduce        # API: re-evaluates E000 on both backends vs the logs
 uv run python scripts/smoke_test_tabpfn.py --backend api # API: smoke test + 35k-row timing
-# 4. new research runs (≈ 3 h each at BUDGET=20; run several in parallel). Seeds 0–2 hold the reported
-#    runs and are protected (a run refuses to overwrite an existing directory); use new seeds, e.g. 3–5.
-make run ARM=b SEED=3 BUDGET=20            # API + LLM; also ARM=a_prime (LLM only)
+# 4. new research runs (≈ 3 h each at BUDGET=20, ≈ 6 h for Arm A). They use the current (Env-2) harness and
+#    write to experiments/results_env2/. Seeds 0–2 hold the reported runs and are protected; use 3 and up.
+#    To rerun the Env-1 harness exactly, check out commit 1fb5872.
+make run ARM=b SEED=3 BUDGET=20            # API + LLM; also ARM=a_prime, ARM=a (LLM only)
 make audit                                 # static re-check of every code cell the agents ran
-# 5a. rebuild every reported table and figure from the stored logs (no API calls; verified byte-for-byte
-#     on a fresh clone)
+# 5a. rebuild every Env-1 table and figure from the stored logs (no API calls; verified byte-for-byte on a
+#     fresh clone). EXPERIMENT_ENV selects the environment; the default is env2 (the current harness).
+export EXPERIMENT_ENV=env1
 uv run python -m src.analysis.compare_runs # summary, trajectories, validation bootstrap, time-to-quality
 uv run python -m src.analysis.effort       # action-based effort shares
 uv run python -m src.analysis.phase11_extra # time-to-threshold, transfer 2×2 (from transfer.csv)
 uv run python -m src.analysis.frozen_test  # Phase 12 2×2, sensitivity, test bootstrap
 uv run python scripts/audit_labels.py      # label-access audit
+# 5c. Env-2 (three arms) from its stored logs → experiments/analysis_env2/
+export EXPERIMENT_ENV=env2
+uv run python -m src.analysis.compare_runs && uv run python -m src.analysis.phase11_extra
+uv run python -m src.analysis.effort_all   # one effort table over all 15 runs (both environments)
+uv run python -m src.analysis.frozen_test_env2   # Env-2 frozen test + bootstrap per regime
 # 5b. recompute the stored inputs of 5a (optional)
 make artifacts                             # download the six best feature tables (148 MB, GitHub release)
 uv run python -m src.analysis.transfer     # API: each best table on the other backend → transfer.csv
@@ -328,9 +416,8 @@ agents printed while exploring.
   regime); the frozen test is the honest number. Two of six test numbers come from approximate replays (see the Phase 12 table).
 - **Effort classification is rule-based on actions** (code patterns, retries), checked by hand on a sample;
   its "preprocessing" class is unreliable (≈3% of calls).
-- **Arm A (free-form researcher with sklearn/XGBoost and its own model choice) was not run.** It would
-  measure what the harness itself is worth (A vs A′). It requires a rerun of all arms under the fixed
-  environment (Env-2) and is listed as future work.
+- **Arm A was run in Env-2 only,** with A′ and B rerun in the same environment; it is not comparable with Env-1
+  rows. Env-2's frozen test scores 2 of 3 runs for A and A′ (one not replayable, one not reproduced).
 - Not run: tree/best-first search over experiments; a second dataset.
 
 ## What we do not claim
