@@ -79,3 +79,16 @@ Env-2 reruns Arms B and A′ and adds Arm A, seeds 0–2, 20 experiments each, r
 Env-1), evaluator and backends, seeds 0–2, data, split, target.
 
 **Launch plan (16 GB M1):** start B and A′ (6 runs, as in Env-1), check memory, then add Arm A's 3 runs.
+
+## 2026-10-04 — Env-2 sandbox friction fix (from the Arm A smoke run)
+
+The Arm A smoke run (seed 900, budget 3) had 11 rejected cells, 8 of 14 calls in one experiment, nearly all benign
+library introspection. For **every arm in Env-2** (an Env-2 difference from Env-1):
+- `__name__`, `__version__`, `__doc__` are readable; all other dunders stay blocked.
+- `getattr(obj, "literal"[, default])` is allowed only with a string-literal name that passes the attribute rules;
+  dynamic `getattr`, `setattr`, `delattr` stay blocked. New `view.table(name)` gives dynamic table access safely,
+  and the rejection message points to it. The prompt gains one line documenting `view.table(name)`.
+- `import time` is allowed.
+Re-checked against the smoke run: 3 of 11 rejections would now pass; 7 were dynamic `getattr` over table names
+(now served by `view.table`), 1 a file write (`np.save('/tmp/…')`), correctly still blocked. The 6 code errors in
+that run were ordinary pandas mistakes, not harness-induced.

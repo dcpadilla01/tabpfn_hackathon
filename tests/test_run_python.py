@@ -8,16 +8,17 @@ from src.tools.run_python import check_code, run_python
 @pytest.mark.parametrize("code", [
     "import os", "import pyarrow.parquet as pq", "from pathlib import Path", "import sklearn",
     "open('x')", "pd.read_csv('a')", "df.to_csv('a')", "x = getattr(pd, 'read_' + 'csv')",
-    "x.__class__", "np.load('a')", "import xgboost", "__import__('os')", "import duckdb",
+    "x.__class__", "getattr(x, '__class__')", "getattr(pd, 'read_csv')", "f = getattr", "getattr(x, name)", "np.load('a')", "import xgboost", "__import__('os')", "import duckdb",
 ])
 def test_rejected(code):
     assert check_code(code)
 
 
 @pytest.mark.parametrize("code", [
-    "import pandas as pd\nprint(pd.__name__ if False else 1)" .replace("pd.__name__ if False else ", ""),
     "from agent_api import build_features", "global x\nx = 1", "spread_x = 1\nprint(spread_x)",
     "import numpy as np\nimport math\nfrom collections import Counter",
+    "import pandas as pd\nprint(pd.__version__)", "print(f.__name__)", "getattr(m, 'best_iteration', None)",
+    "import time\nt = time.time()",
 ])
 def test_allowed(code):
     assert check_code(code) == []

@@ -87,6 +87,7 @@ AGENT_API_DOC = """\
   print() inside fn is shown for train snapshots only; at validation snapshots output is
   suppressed and errors report only their type and line.
 - view.households: the households needing a row at that snapshot. view.day, view.week.
+  view.table(name) returns a table by name, e.g. view.table("transactions").
 - baseline_features() -> the E000 feature table (merge on household_key, snapshot_day).
 - train_targets() -> household_key, snapshot_day, future_spend_4w for TRAIN rows only.
 - snapshot(as_of_day=None) -> a view at as_of_day (default/max {visible_day}).
