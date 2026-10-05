@@ -25,7 +25,9 @@ from src.config import ANALYSIS_DIR, ROOT
 
 OUT = ANALYSIS_DIR
 LABEL = re.compile(r"train_targets|future_spend_4w|\bTARGET\b")
-FIT = re.compile(r"linalg\.(solve|lstsq|pinv)|lstsq|def \w*(fit|gbm|boost|tree|ridge)\w*\(|\bridge\b|boost|build_tree")
+FIT = re.compile(r"linalg\.(solve|lstsq|pinv)|lstsq|def \w*(fit|gbm|boost|tree|ridge)\w*\(|\bridge\b|boost|build_tree"
+                 # library model fitting (Arm A, Env-2); matches no Env-1 cell the line above does not
+                 r"|\.fit\(|XGB\w*\(|xgb\.train\(|sklearn|lightgbm")
 LOCAL_SCORE = re.compile(r"np\.abs\([^)]*-[^)]*\)\.mean\(\)|\bmae\b", re.I)
 FEATURE = re.compile(r"build_features\(|save_table\(")
 PREPROC = re.compile(r"get_dummies|astype\(['\"]category|fillna\(|\.clip\(|np\.log1p|\.std\(\)|/\s*sd\b|standardi|rank\(pct")

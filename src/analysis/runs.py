@@ -7,11 +7,11 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.config import RESULTS_DIR
+from src.config import ENVIRONMENT, RESULTS_DIR
 
-ARMS = ("b", "a_prime")
+ARMS = ("b", "a_prime") if ENVIRONMENT == "env1" else ("b", "a_prime", "a")
 SEEDS = (0, 1, 2)
-ARM_LABEL = {"b": "B (TabPFN)", "a_prime": "A′ (XGBoost)"}
+ARM_LABEL = {"b": "B (TabPFN)", "a_prime": "A′ (XGBoost)", "a": "A (free-form)"}
 
 
 def _jsonl(path: Path) -> list[dict]:
