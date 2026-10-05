@@ -241,22 +241,32 @@ cp .env.example .env                       # TABPFN_API_KEY (Prior Labs), OPENRO
 make data check targets                    # typed parquet, schema checks, target table
 # 3. harness
 make test                                  # 58 tests: leakage, sandbox, evaluator contract, agent loop
-make baseline manual                       # E000 and E001–E003 on both backends
+uv run python scripts/run_baseline.py --reproduce   # re-evaluates E000 on both backends vs the logged values
 uv run python scripts/smoke_test_tabpfn.py --backend api   # API smoke test + row-budget timing
-# 4. research runs (≈3 h each; run in parallel)
-make run ARM=b SEED=0 BUDGET=20            # also ARM=a_prime; SEED=0,1,2
+# 4. new research runs (≈3 h each; run in parallel). Seeds 0–2 hold the reported runs and are
+#    protected (a run refuses to overwrite an existing directory); use new seeds, e.g. 3–5.
+make run ARM=b SEED=3 BUDGET=20            # also ARM=a_prime
 make audit
 # 5. analysis
 uv run python -m src.analysis.compare_runs # trajectories, bootstrap, time-to-quality, summary.csv
 uv run python -m src.analysis.transfer     # representation transfer
 uv run python -m src.analysis.effort       # action-based effort shares
 uv run python scripts/audit_labels.py      # label-access audit
-uv run python scripts/evaluate_test.py --accept-approx   # Phase 12: replay each final table, score test once
+uv run python scripts/evaluate_test.py --accept-approx   # Phase 12: replay each final table (~1 h), score test
 uv run python scripts/evaluate_test_e000.py # E000 on test, both regimes
 uv run python -m src.analysis.frozen_test  # 2×2 summary + paired bootstrap per regime
 ```
 
-`tabpfn.backend: local` in `config/default.yaml` runs TabPFN on a local GPU instead of the API.
+`tabpfn.backend: local` in `config/default.yaml` runs TabPFN on a local GPU instead of the API (the
+`tabpfn` package asks for a one-time licence acceptance at <https://ux.priorlabs.ai>; the API key in `.env`
+is passed as `TABPFN_TOKEN`).
+
+**Cached results.** Everything under `experiments/results/{b,a_prime}/{0,1,2}/` and `experiments/analysis/`
+is the stored output of the reported runs (Env-1): logs, transcripts, the code the agents ran, and label-free
+prediction files. Step 5 regenerates every table and figure from these files without new LLM or TabPFN
+calls (checked byte-for-byte on a fresh clone). The agents' feature tables (1.7 GB) are not tracked:
+`transfer.csv` is a stored result, and `evaluate_test.py` rebuilds the final tables by replay. Re-running
+the researcher (step 4) produces new trajectories, because the LLM is not seeded.
 
 ## Compute and versions
 
