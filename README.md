@@ -377,15 +377,22 @@ export EXPERIMENT_ENV=env2
 uv run python -m src.analysis.compare_runs && uv run python -m src.analysis.phase11_extra
 uv run python -m src.analysis.effort_all   # one effort table over all 15 runs (both environments)
 uv run python -m src.analysis.frozen_test_env2   # Env-2 frozen test + bootstrap per regime
-# 5b. recompute the stored inputs of 5a (optional)
-make artifacts                             # download the six best feature tables (148 MB, GitHub release)
+# 5b. recompute the stored inputs of 5a and 5c by replay (optional; spends TabPFN credits)
+make artifacts                             # both environments' best feature tables (GitHub releases, sha256-checked)
+export EXPERIMENT_ENV=env1
 uv run python -m src.analysis.transfer     # API: each best table on the other backend → transfer.csv
 uv run python scripts/evaluate_test_e000.py # API: E000 on test, both regimes → frozen_test/e000.json
 uv run python scripts/evaluate_test.py --accept-approx   # API: replay each final table (≈ 1 h), score test once
+export EXPERIMENT_ENV=env2
+uv run python -m src.analysis.transfer     # API: A′/B best tables on the other backend
+uv run python scripts/evaluate_test.py --accept-approx --arm b         # API: replay + test, both regimes
+uv run python scripts/evaluate_test.py --accept-approx --arm a_prime
+uv run python scripts/evaluate_test_arm_a.py                           # Arm A: replay its own code; train-only
 ```
 
 `scripts/evaluate_test.py` checks that each replayed table reproduces the logged one; without
-`make artifacts` it still scores test but reports that check as *unchecked*. `tabpfn.backend: local` in
+`make artifacts` it still scores test but reports that check as *unchecked*. `evaluate_test_arm_a.py` checks
+replayed validation predictions against the logged ones, which are in git, so it needs no download. `tabpfn.backend: local` in
 `config/default.yaml` runs TabPFN on a local GPU instead of the API (the `tabpfn` package asks for a one-time
 licence acceptance at <https://ux.priorlabs.ai>; the API key in `.env` is passed as `TABPFN_TOKEN`).
 
@@ -393,7 +400,7 @@ licence acceptance at <https://ux.priorlabs.ai>; the API key in `.env` is passed
 is the stored output of the reported runs (Env-1): logs, transcripts, the code the agents ran, and label-free
 prediction files. Step 5a regenerates every table and figure from these files. The agents' feature tables
 are not in git (1.7 GB); the six that the transfer and replay checks need are a release download
-(`make artifacts`). Re-running the researcher (step 4) produces new trajectories: a seed is passed to the LLM, but the provider does not
+(`make artifacts`: one release per environment). Re-running the researcher (step 4) produces new trajectories: a seed is passed to the LLM, but the provider does not
 guarantee determinism. The data are dunnhumby's, used for research under their terms; transcripts contain excerpts the
 agents printed while exploring.
 

@@ -20,5 +20,5 @@ run:       ## make run ARM=b SEED=0 BUDGET=3
 	uv run python scripts/run_researcher.py --arm $(ARM) --seed $(SEED) --budget $(BUDGET) $(if $(OVERWRITE),--overwrite,)
 audit:
 	uv run python -m src.tools.audit
-artifacts: ## download the six best feature tables (148 MB; GitHub release) for transfer / replay checks
-	bash scripts/fetch_artifacts.sh
+artifacts: ## best feature tables from GitHub releases (env1 148 MB, env2 124 MB); make artifacts [ENV=env1|env2]
+	sh scripts/fetch_artifacts.sh $(or $(ENV),all)
