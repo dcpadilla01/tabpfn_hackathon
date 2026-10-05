@@ -21,6 +21,8 @@ BACKEND = {"b": "tabpfn", "a_prime": "xgb"}
 def main() -> None:
     rows = []
     for _, r in best_experiments().iterrows():
+        if r["arm"] not in BACKEND:  # Arm A submits predictions, not a feature table: no transfer
+            continue
         ft = pd.read_parquet(RESULTS_DIR / r["arm"] / str(r["seed"]) / r["experiment_id"] / "features.parquet")
         own = BACKEND[r["arm"]]
         other = "xgb" if own == "tabpfn" else "tabpfn"

@@ -53,7 +53,7 @@ def strip_asserts(code: str) -> str:
 
 def replay(arm: str, seed: int, experiment_id: str) -> tuple[Path, dict]:
     T = transcript(arm, seed)
-    exp_call = [t for t in T if t["event"] == "tool_call" and t["tool"] == "experiment"
+    exp_call = [t for t in T if t["event"] == "tool_call" and t["tool"] in ("experiment", "score")
                 and t["experiment_id"] == experiment_id][-1]
     cells = [t for t in T if t["event"] == "tool_call" and t["tool"] == "run_python" and t["status"] != "rejected"
              and t["step"] < exp_call["step"] and "save_table" in t["args"].get("code", "")]
@@ -70,8 +70,8 @@ def replay(arm: str, seed: int, experiment_id: str) -> tuple[Path, dict]:
                     "error": None if r.status == "ok" else r.output[-400:]})
         print(f"  {arm}/{seed} step {t['step']:4} orig={t['status']:5} replay={r.status}", flush=True)
     meta = {"cells_replayed": len(cells), "replay_seconds": round(time.perf_counter() - t0, 1), "cells": log,
-            "table_path": exp_call["args"]["table_path"]}
-    return ws / exp_call["args"]["table_path"], meta
+            "table_path": exp_call["args"].get("table_path") or exp_call["args"].get("predictions_path")}
+    return ws / meta["table_path"], meta
 
 
 def compare_to_logged(replayed: pd.DataFrame, logged: pd.DataFrame) -> dict:
