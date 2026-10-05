@@ -57,3 +57,25 @@ Earlier locked decisions are in `CLAUDE.md` ("Locked Decisions", "Environments a
 - **Decision:** publish derived data for reproducibility under dunnhumby's research terms (owner confirmed the
   terms allow it): feature tables of the six selected runs (release `env1-artifacts`, 148 MB), label-free
   per-row predictions, and agent transcripts (which include printed excerpts). Raw files stay unpublished.
+
+## 2026-10-04 — Env-2: what differs from Env-1 (branch `env-2`)
+
+Env-2 reruns Arms B and A′ and adds Arm A, seeds 0–2, 20 experiments each, results in
+`experiments/results_env2/`. Env-1 stays the primary result; the two are never mixed in one table.
+
+**Differences (agent-visible unless noted):**
+1. Run directory scrubbed from tool output (`<run>`), so the arm label is not visible (Env-1: visible in tracebacks).
+2. `print` inside `fn` is shown at train snapshots and suppressed at validation snapshots; validation-snapshot
+   errors are reduced to type + line (Env-1: prints inside `fn` never reached the agent; errors unfiltered).
+   The prompt states this in one added sentence.
+3. Shared prompt wording: `save_table` returns "a path to pass to the evaluation tool" (Env-1: "…to experiment()").
+4. Arm A exists: tools `inspect`, `run_python`, `score`; sklearn, XGBoost, scipy importable; root E000 is the
+   baseline table on the fixed XGBoost evaluator (a harness reference, identical to A′'s E000).
+5. Subprocess environment, every arm: `LOKY_MAX_CPU_COUNT=2` added (affects only joblib users, i.e. Arm A).
+6. Harness-only (not agent-visible): frozen-test replay mode; `EXPERIMENT_ENV` switch.
+
+**Unchanged:** LLM (`z-ai/glm-5.3-flash`, temperature 0.7, max 16k tokens, no reasoning cap), budget (20),
+15-call cap, 300 s per-cell timeout (already in Env-1 for every arm), `OMP_NUM_THREADS=1` (already in
+Env-1), evaluator and backends, seeds 0–2, data, split, target.
+
+**Launch plan (16 GB M1):** start B and A′ (6 runs, as in Env-1), check memory, then add Arm A's 3 runs.
