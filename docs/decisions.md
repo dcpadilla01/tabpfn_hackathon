@@ -109,3 +109,14 @@ that run were ordinary pandas mistakes, not harness-induced.
   expected, acceptable outcome (agents may hard-code snapshot-day thresholds).
 - **Order of work:** effort split (three arms), time-to-quality in hours (three arms), validation bootstrap (three
   arms), transfer 2×2 (A′/B replication), frozen test A′/B, then Arm A frozen test as time permits.
+
+## 2026-10-05 — Known rough edges left unchanged during Env-2 (same for every arm)
+
+- `save_table("x")` accepts a name without `.parquet`, but `load_saved("x")` requires the suffix; the rejection
+  message says so and agents recovered in one call. Not fixed mid-run, because each code cell reloads `agent_api`, so a
+  change would have altered the environment partway through the runs.
+- Tool output is truncated to 6,000 characters (head + tail), which can cut the middle of XGBoost's long C++ stack
+  traces. Same rule in every arm and both environments.
+- Env-2's wall-clock numbers come from nine concurrent runs on one 16 GB machine. A memory spike at 23:16
+  (four heavy cells at once; one hit the 300 s timeout) lost no run. Cross-arm time comparisons within Env-2 are
+  fair; comparisons with Env-1 (six concurrent runs) are not.
