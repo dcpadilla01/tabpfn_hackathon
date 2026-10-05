@@ -8,7 +8,7 @@ We test whether an autonomous ML researcher using TabPFN-3.5 can explore more us
 
 Prior Labs TabPFN-3.5 Hackathon.
 
-Official scope explicitly includes agents and creative applications of TabPFN-3.5. Submission requires a runnable project/repository; demo video is optional. Deadline: **Monday, October 6, 2026**. Work started Friday, October 2.
+Official scope explicitly includes agents and creative applications of TabPFN-3.5. Submission requires a runnable project/repository; demo video is optional. Deadline: **Monday, October 6, 2026**. Today is Friday, October 2.
 
 Official submission page:
 
@@ -323,8 +323,8 @@ Simplest sequential agent. No MCTS, no UCB, no multi-agent, **no agent framework
 
 ## Stack
 
-- Hand-written loop on a provider-agnostic LLM call (~200 lines, `src/researcher/agent.py`): the `openai` Python SDK against an OpenAI-compatible endpoint (`base_url` + key in config), so swapping provider/model is a config change, not a code change.
-- LLM: **GLM 5.3 Flash via OpenRouter** (`OPENROUTER_API_KEY` in `.env`), exact model string pinned in `config/default.yaml`, identical for all arms. Explicit `temperature`. The API has no sampling seed → the LLM is the one non-seeded component; this is why runs ≥3 per arm.
+- Hand-written loop on a Provider agnostic LLM call SDK (~200 lines, `src/researcher/agent.py`).
+- LLM: **GLM 5.3 Flash** from provider OpenRouter, exact model string pinned in `config/default.yaml`, identical for all arms. Explicit `temperature`. The API has no sampling seed → the LLM is the one non-seeded component; this is why runs ≥3 per arm.
 - No framework (Agent SDK, LangGraph, smolagents): their injected system prompts, tool descriptions and retry logic are uncontrolled protocol variables and defeat accessor-only access. Fallback only if the loop is not working by Saturday evening: smolagents `CodeAgent` with every template overridden and committed as a protocol artifact.
 
 ## Loop
@@ -351,19 +351,12 @@ Structured metadata is required on every `experiment`/`score` call:
 {"hypothesis": "...", "reasoning_summary": "...", "parent_experiment": "E003", "proposed_transformation": "..."}
 ```
 
-The rationale fed back to the agent and stored in experiment records is concise only. Raw model reasoning text, if the provider returns it, goes to a separate audit log (`reasoning.jsonl`) that the agent never reads and that is never used as evidence for a claim.
+Store concise rationale only, not chain-of-thought.
 
 ## Bounds and accounting
 
 - One experiment = one `experiment()` or `score()` call. Max **15 tool calls** between consecutive experiments; exceeding it logs a failed experiment and resets. Same cap in all arms so "an experiment" means the same thing.
 - Per step, log: tool name, tokens in/out, cached tokens, wall-clock. Report **uncached-equivalent tokens** as the budget metric so prompt caching cannot favour an arm.
-- Three logs per run in `experiments/results/<arm>/<seed>/`:
-  - `calls.jsonl` — one line per LLM call or tool call; the single source of truth for cost (tokens incl. cached/reasoning, OpenRouter `generation_id`, cost if returned, tool status incl. rejections).
-  - `transcript.jsonl` — full requests/responses and tool I/O, for audit and replay (reasoning text excluded).
-  - `reasoning.jsonl` — raw reasoning text keyed by run/step/generation_id; git-ignored except one or two committed example runs.
-  - `experiments.jsonl` token/tool-call fields are rollups computed from `calls.jsonl`, never counted separately.
-- Each experiment also logs the TabPFN credit cost (`estimate_cost`, no quota consumed) so Arm B's API spend is counted.
-- Phase 11 effort classification uses actions (tool calls, code, error/retry patterns), never reasoning text.
 - History is the compact table, never generated code. Code is persisted to `experiments/results/<arm>/<seed>/E###/code.py` for audit.
 
 ## Accessor enforcement (tripwires, not a jail — disclose in README)
@@ -511,30 +504,6 @@ README: thesis, architecture (three arms, accessor, evaluator), dataset instruct
 
 ---
 
-# Locked Decisions (2026-10-03)
-
-- **Environment:** `uv` + Python 3.12. Commit `uv.lock`. Pin `tabpfn`, `tabpfn-client`, `xgboost`, `openai` to exact versions; record their versions in every experiment log, not only the lockfile.
-- **Eligibility:** household's *first observed transaction* day ≤ `snapshot_day − 84`. Applied identically in train, validation and test — a property of the row, not of the split.
-- **Zero-spend windows:** kept (target = 0). Dropping them would bias the target and make the median prediction meaningless for low-activity households. Report the zero share per split in `docs/data_schema.md`.
-- **Arm A′ XGBoost:** untuned, fixed config documented in the evaluator: `objective="reg:absoluteerror"`, `n_estimators=500`, `learning_rate=0.05`, `max_depth=6`, `subsample=0.8`, `colsample_bytree=0.8`, fixed seed. **No early stopping** (it would leak validation into fitting). Categoricals: evaluator casts to `category` dtype + `enable_categorical=True` — harness plumbing, never the agent's. README states both backends are untuned; the Phase 11 transfer check answers "XGBoost was handicapped."
-- **Parquet interim:** `scripts/convert_raw.py` writes `data/interim/*.parquet`, casting to `schema.py` dtypes and asserting row counts and source md5, so interim data is provably derived from a known raw release.
-- **LLM reasoning:** no reasoning cap (no effort or reasoning-token limit); `max_tokens: 16000` per call so reasoning is not truncated. Runs are slow (~12 min/experiment in smoke tests), so MVP runs execute in parallel overnight.
-- **Access control:** no separate OS user. `run_python` subprocess gets a stripped env (`env={"PATH": ...}` only). Primary check: AST **import allowlist** (pandas, numpy, the accessor module; + sklearn/xgboost in Arm A only). Secondary tripwire: string-pattern denylist. Post-run audit. Disclosed as "static enforcement plus audit, not a sandbox."
-
-# Environments and primary results (2026-10-04)
-
-- **Env-1 (primary):** the overnight MVP runs, Arms B and A′, seeds 0–2. Phases 11 and 12 and the README are written against Env-1, whatever else happens.
-- **Env-2 (bonus, optional):** the harness after the audit fixes (run path scrubbed; prints inside `fn` visible at train snapshots, suppressed at validation snapshots; validation-snapshot errors reduced to type + line). Arm A runs **only** in Env-2, and only together with B and A′ reruns in the same environment. Added as a second, fully controlled table if complete by Monday noon.
-- **Never mix runs from different environments in one table.** Don't switch primary results late.
-
-# README must include (from the 2026-10-04 audit)
-
-- A **paragraph** (not a footnote) on the `fn` output gap: the route existed (validation snapshots see earlier validation label windows), nothing used it (prints never flushed; all 33 `fn` errors at train snapshots), closed by design with tests. See `docs/audit_label_access.md`.
-- **Behaviour findings**, alongside the numpy modelling: four agents filtered `train_targets()` for validation days and got zero rows (most likely a wrong assumption, not intent; the protection held, and that's only known because it was checked); one agent deliberately mapped what works inside `fn`.
-- One sentence: `gbm_pred` (b/2 E017) was fitted on train rows and predicted back onto them; not a leak, not a best table.
-- **Effort relocation, quantified:** 380/923 executed cells (41%) fit the agent's own model on train labels in arms whose model was fixed; 607/923 (66%) touch labels at all.
-- **Failure attribution:** 3 of B's 8 failures come from b/1 reusing the leaked run path (a harness bug, now fixed); valid experiments B 52/60, A′ 58/60; the remaining agent failures (5 vs 2) are too few to call an arm difference.
-
 # Execution Order
 
 ```text
@@ -548,4 +517,4 @@ Do not build agent infrastructure until target, split, accessor, evaluator, base
 
 # Immediate Task
 
-Start at Phase 0 and proceed through Phase 5. Run the row-budget check before fixing the snapshot cadence.
+Start at Phase 0 and proceed through Phase 5. Run the row-budget check before fixing the snapshot cadence.S
