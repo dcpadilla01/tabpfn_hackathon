@@ -25,12 +25,15 @@ from src.config import ROOT
 ALLOWED_IMPORTS = {
     "pandas", "numpy", "math", "statistics", "collections", "itertools", "functools",
     "operator", "re", "datetime", "typing", "dataclasses", "warnings", "agent_api",
+    "time",  # Env-2
 }
+# Env-2: read-only metadata dunders are allowed; every other dunder stays blocked.
+ALLOWED_DUNDERS = {"__name__", "__version__", "__doc__"}
 MODELLING_IMPORTS = {"sklearn", "xgboost", "scipy"}
 
 BLOCKED_NAMES = {
     "open", "exec", "eval", "compile", "__import__", "globals", "locals", "vars",
-    "getattr", "setattr", "delattr", "input", "breakpoint", "memoryview",
+    "setattr", "delattr", "input", "breakpoint", "memoryview",
 }
 BLOCKED_ATTR = re.compile(
     r"^(read_\w+|to_(csv|parquet|pickle|json|feather|hdf|sql|excel|orc|stata|xml|html|latex|clipboard)"
@@ -46,7 +49,10 @@ DENY_PATTERNS = [
     r"importlib", r"__builtins__", r"\bos\.", r"\bsys\.", r"shutil", r"pickle",
 ]
 
-TIMEOUT_SECONDS = 300
+TIMEOUT_SECONDS = 300  # per cell, every arm (unchanged from Env-1)
+# Every arm, every environment: OpenMP single-threaded (as in Env-1). Env-2 adds a joblib/loky process cap,
+# which matters only where joblib is importable (Arm A's sklearn), so concurrent runs cannot starve each other.
+SUBPROCESS_ENV = {"PATH": "/usr/bin:/bin", "OMP_NUM_THREADS": "1", "LOKY_MAX_CPU_COUNT": "2"}
 MAX_OUTPUT_CHARS = 6000
 
 
@@ -87,8 +93,19 @@ def check_code(code: str, allow_modelling: bool = False) -> list[str]:
                 problems.append(f"import of {m!r} is not allowed (allowed: {', '.join(sorted(allowed))})")
         if isinstance(node, ast.Name) and node.id in BLOCKED_NAMES:
             problems.append(f"use of {node.id!r} is not allowed")
+        # Env-2: getattr only with a string-literal name that would itself pass the attribute checks
+        if isinstance(node, ast.Name) and node.id == "getattr":
+            calls = [c for c in ast.walk(tree) if isinstance(c, ast.Call) and c.func is node]
+            if not calls:
+                problems.append("use of 'getattr' is only allowed as a call with a literal attribute name")
+            for c in calls:
+                name = c.args[1].value if len(c.args) >= 2 and isinstance(c.args[1], ast.Constant) and isinstance(c.args[1].value, str) else None
+                if name is None:
+                    problems.append("getattr needs a string literal attribute name (for tables by name, use view.table(name))")
+                elif (name.startswith("__") and name.endswith("__") and name not in ALLOWED_DUNDERS) or BLOCKED_ATTR.match(name):
+                    problems.append(f"getattr of {name!r} is not allowed")
         if isinstance(node, ast.Attribute):
-            if node.attr.startswith("__") and node.attr.endswith("__"):
+            if node.attr.startswith("__") and node.attr.endswith("__") and node.attr not in ALLOWED_DUNDERS:
                 problems.append(f"dunder attribute {node.attr!r} is not allowed")
             elif BLOCKED_ATTR.match(node.attr):
                 problems.append(f"file I/O via .{node.attr} is not allowed; use agent_api (save_table) instead")
@@ -139,7 +156,7 @@ def run_python(code: str, workspace: Path, harness_dir: Path, allow_modelling: b
     try:
         proc = subprocess.run(
             [sys.executable, "-I", str(runner_path)],
-            cwd=workspace, env={"PATH": "/usr/bin:/bin", "OMP_NUM_THREADS": "1"} | (extra_env or {}),
+            cwd=workspace, env=SUBPROCESS_ENV | (extra_env or {}),
             capture_output=True, text=True, timeout=timeout,
         )
     except subprocess.TimeoutExpired:

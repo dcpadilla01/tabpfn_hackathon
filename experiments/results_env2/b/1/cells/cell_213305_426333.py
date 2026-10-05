@@ -1,0 +1,5 @@
+v = agent_api.snapshot(95)
+print(type(v.households))
+print(v.households[:5] if hasattr(v.households,'__getitem__') else v.households)
+print(type(v.day), v.day, getattr(v,'week',None))
+print(type(v.table('transactions')))

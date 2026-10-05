@@ -1,0 +1,8 @@
+print(agent_api.snapshot_days())
+print(agent_api.describe_tables())
+b = agent_api.baseline_features()
+print(b.shape)
+print(b.columns.tolist())
+print(b.head())
+t = agent_api.train_targets()
+print(t.shape, t.future_spend_4w.describe())

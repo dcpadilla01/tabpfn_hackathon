@@ -16,11 +16,11 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
 from src.analysis.runs import ARM_LABEL, ARMS, SEEDS, best_experiments, calls, experiments, predictions  # noqa: E402
-from src.config import ROOT  # noqa: E402
+from src.config import ANALYSIS_DIR, ROOT  # noqa: E402
 from src.data.targets import KEYS, TARGET, load_targets  # noqa: E402
 
-OUT = ROOT / "experiments" / "analysis"
-COLORS = {"b": "#2a6fdb", "a_prime": "#d1495b"}
+OUT = ANALYSIS_DIR
+COLORS = {"b": "#2a6fdb", "a_prime": "#d1495b", "a": "#2e9e6b"}
 
 
 def per_run_summary(exp: pd.DataFrame, cl: pd.DataFrame) -> pd.DataFrame:
@@ -89,7 +89,9 @@ def trajectories(exp: pd.DataFrame, cl: pd.DataFrame) -> None:
         ax.set_xlabel(xl); ax.grid(alpha=0.25)
     axes[0].set_ylabel("best validation MAE so far")
     axes[0].legend(frameon=False)
-    fig.suptitle("Best-so-far validation MAE per run (3 runs per arm; Env-1)")
+    from src.config import ENVIRONMENT
+
+    fig.suptitle(f"Best-so-far validation MAE per run (3 runs per arm; {ENVIRONMENT.replace('env', 'Env-')})")
     fig.tight_layout(); fig.savefig(OUT / "trajectories.png", dpi=130)
 
 
@@ -106,7 +108,19 @@ def cluster_bootstrap(diff: pd.Series, households: pd.Series, n: int = 5000, see
 
 
 def paired_bootstrap(best: pd.DataFrame) -> dict:
-    """Per row: |err| of B's best minus |err| of A′'s best (negative = B better)."""
+    """Env-1: B vs A′ (kept for the published numbers). Env-2: every pair of arms (see pairwise_bootstrap)."""
+    return _pair_bootstrap(best, "b", "a_prime")
+
+
+def pairwise_bootstrap(best: pd.DataFrame) -> dict:
+    """Every ordered pair (first − second; negative = first better), arm-level mean |error| per row."""
+    from itertools import combinations
+
+    return {f"{x} − {y}": _pair_bootstrap(best, x, y)["arm_mean_abs_error"] for x, y in combinations(ARMS, 2)}
+
+
+def _pair_bootstrap(best: pd.DataFrame, first: str, second: str) -> dict:
+    """Per row: |err| of `first`'s best minus |err| of `second`'s best (negative = first better)."""
     t = load_targets()
     val = t[t["split"] == "validation"][KEYS + [TARGET]]
     errs = {}
@@ -119,10 +133,11 @@ def paired_bootstrap(best: pd.DataFrame) -> dict:
     out = {"pairs": {}}
     for sb in SEEDS:
         for sa in SEEDS:
-            d = pd.Series(errs[("b", sb)] - errs[("a_prime", sa)])
-            out["pairs"][f"b{sb}-a'{sa}"] = cluster_bootstrap(d, hh)
-    arm_b = np.mean([errs[("b", s)] for s in SEEDS], axis=0)
-    arm_a = np.mean([errs[("a_prime", s)] for s in SEEDS], axis=0)
+            d = pd.Series(errs[(first, sb)] - errs[(second, sa)])
+            short = {"a_prime": "a'"}  # keeps Env-1's published key format ("b0-a'0")
+            out["pairs"][f"{short.get(first, first)}{sb}-{short.get(second, second)}{sa}"] = cluster_bootstrap(d, hh)
+    arm_b = np.mean([errs[(first, s)] for s in SEEDS], axis=0)
+    arm_a = np.mean([errs[(second, s)] for s in SEEDS], axis=0)
     out["arm_mean_abs_error"] = cluster_bootstrap(pd.Series(arm_b - arm_a), hh)
     out["note"] = ("Household-clustered bootstrap over validation rows; captures row sampling, not LLM run-to-run "
                    "variance (3 runs per arm). Best-of-20 selected on validation, so absolute MAEs are optimistic.")
@@ -147,6 +162,11 @@ def main() -> None:
     print(ttq.pivot_table(index=["threshold", "arm"], columns="seed", values=["experiments", "hours"]).to_string())
     best = best_experiments(exp)
     boot = paired_bootstrap(best)
+    if "a" in ARMS:
+        boot["pairwise_arm_level"] = pairwise_bootstrap(best)
+        print("\npairwise arm-level bootstrap (first − second):")
+        for k, v in boot["pairwise_arm_level"].items():
+            print(f"  {k}: {v['mean']:+.3f}  CI95 [{v['ci95'][0]:+.3f}, {v['ci95'][1]:+.3f}]")
     (OUT / "bootstrap.json").write_text(json.dumps(boot, indent=2))
     print("\nbest per run:", best[["arm", "seed", "experiment_id", "mae", "n_features"]].to_dict("records"))
     print("\narm-level paired bootstrap (B − A′, MAE):", boot["arm_mean_abs_error"])

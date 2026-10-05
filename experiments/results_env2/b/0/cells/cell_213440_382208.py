@@ -1,0 +1,5 @@
+base = agent_api.load_saved("e002_mix.parquet")
+print(base.shape)
+print(base.columns.tolist())
+print(base.head(3))
+print(base.duplicated(subset=["household_key","snapshot_day"]).sum())

@@ -1,0 +1,11 @@
+import agent_api as A
+v = A.snapshot(459)
+print("households:", v.households)
+print("day:", v.day, "week:", v.week)
+tx = v.table("transactions")
+print("tx:", tx.shape)
+print("nunique hh:", tx.household_key.nunique())
+prods = v.table("products")
+print("products:", prods.shape)
+print(A.snapshot_days())
+print("KEYS:", A.KEYS, "TARGET:", A.TARGET)

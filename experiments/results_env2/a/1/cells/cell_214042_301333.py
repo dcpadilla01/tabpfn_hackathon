@@ -1,0 +1,15 @@
+def probe(view, day):
+    print("DAY", day, "n_hh", len(view.households))
+    tx = view.table("transactions")
+    print("tx", tx.shape, tx.day.min(), tx.day.max())
+    ct = view.table("campaign_targets")
+    print("ct", ct.shape, ct.description.value_counts().to_dict())
+    cr = view.table("coupon_redemptions")
+    print("cr", cr.shape)
+    dm = view.table("display_mailer")
+    print("dm", dm.shape, dm.week_no.max())
+    print("week", view.week)
+    return pd.DataFrame(index=view.households[:2])
+
+f = agent_api.build_features(probe)
+print(f.shape)

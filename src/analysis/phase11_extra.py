@@ -14,13 +14,13 @@ from __future__ import annotations
 import pandas as pd
 
 from src.analysis.runs import SEEDS, experiments
-from src.config import ROOT
+from src.config import ANALYSIS_DIR, ROOT
 
-OUT = ROOT / "experiments" / "analysis"
+OUT = ANALYSIS_DIR
 THRESHOLD = 62.24
 
 
-def time_to_threshold() -> pd.DataFrame:
+def time_to_threshold(threshold: float = THRESHOLD) -> pd.DataFrame:
     exp = experiments()
     rows = []
     for (arm, seed), g in exp.groupby(["arm", "seed"]):
@@ -28,15 +28,15 @@ def time_to_threshold() -> pd.DataFrame:
         g["ts"] = pd.to_datetime(g["timestamp"])
         start = g.loc[g["experiment_id"] == "E000", "ts"].iloc[0]
         g["done"] = g["ts"] + pd.to_timedelta(g["runtime_seconds"].fillna(0), unit="s")
-        hit = g[(g["experiment_id"] != "E000") & (g["status"] == "ok") & (g["mae"] <= THRESHOLD)]
+        hit = g[(g["experiment_id"] != "E000") & (g["status"] == "ok") & (g["mae"] <= threshold)]
         end = g["done"].max()
         if len(hit):
             h = hit.iloc[0]
-            rows.append({"arm": arm, "seed": seed, "first_experiment": h["experiment_id"], "experiments": int(h["idx"]),
+            rows.append({"threshold": threshold, "arm": arm, "seed": seed, "first_experiment": h["experiment_id"], "experiments": int(h["idx"]),
                          "hours_from_start": round((h["done"] - start).total_seconds() / 3600, 2),
                          "run_hours": round((end - start).total_seconds() / 3600, 2)})
         else:
-            rows.append({"arm": arm, "seed": seed, "first_experiment": "never", "experiments": None,
+            rows.append({"threshold": threshold, "arm": arm, "seed": seed, "first_experiment": "never", "experiments": None,
                          "hours_from_start": None, "run_hours": round((end - start).total_seconds() / 3600, 2)})
     return pd.DataFrame(rows)
 
@@ -65,8 +65,27 @@ def transfer_2x2() -> pd.DataFrame:
     return df
 
 
+def env2_thresholds() -> list[float]:
+    """Env-2: the mean best validation MAE of A and of A′ (post hoc, like Env-1's 62.24)."""
+    from src.analysis.runs import best_experiments
+
+    best = best_experiments()
+    return [round(best[best["arm"] == a]["mae"].mean(), 2) for a in ("a", "a_prime")]
+
+
 def main() -> None:
-    ttt = time_to_threshold()
+    from src.config import ENVIRONMENT
+
+    if ENVIRONMENT == "env2":
+        ttt = pd.concat([time_to_threshold(t) for t in env2_thresholds()], ignore_index=True)
+        ttt.to_csv(OUT / "time_to_threshold.csv", index=False)
+        print(ttt.to_string(index=False))
+        if (OUT / "transfer.csv").exists():
+            tr = transfer_2x2(); tr.round(3).to_csv(OUT / "transfer_2x2.csv", index=False)
+            with pd.option_context("display.width", 250):
+                print(tr.round(3).to_string(index=False))
+        return
+    ttt = time_to_threshold().drop(columns="threshold")  # Env-1 file format as published
     ttt.to_csv(OUT / "time_to_threshold.csv", index=False)
     print(f"time to validation MAE <= {THRESHOLD}:\n", ttt.to_string(index=False))
     tr = transfer_2x2()

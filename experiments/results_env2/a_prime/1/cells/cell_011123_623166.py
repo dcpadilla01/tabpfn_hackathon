@@ -1,0 +1,12 @@
+import agent_api, pandas as pd, numpy as np
+df = agent_api.load_saved('e015_stack.parquet')
+print('shape', df.shape)
+print('stack cols:', [c for c in df.columns if 'stack' in c.lower()])
+print(df.dtypes.value_counts())
+tt = agent_api.train_targets()
+print('targets:', tt.shape, tt.columns.tolist())
+print(df['snapshot_day'].value_counts().sort_index())
+m = df.merge(tt, on=['household_key','snapshot_day'], how='left')
+print('train rows:', m['future_spend_4w'].notna().sum(), '| val rows:', m['future_spend_4w'].isna().sum())
+nv = df.isna().mean()
+print('cols with NaN (top):'); print(nv[nv>0].sort_values(ascending=False).head(10))

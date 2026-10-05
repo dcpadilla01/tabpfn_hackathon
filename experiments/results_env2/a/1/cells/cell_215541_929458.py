@@ -1,0 +1,8 @@
+f = agent_api.load_saved("e002_features.parquet")
+print(f.shape)
+print(list(f.columns))
+t = agent_api.train_targets()
+print(t.shape)
+print(t.future_spend_4w.describe())
+print("zero share:", (t.future_spend_4w == 0).mean())
+print(agent_api.snapshot_days())

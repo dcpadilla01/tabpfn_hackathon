@@ -1,0 +1,227 @@
+{
+  "arm": "a_prime",
+  "seed": 2,
+  "experiment_id": "E020",
+  "val_mae": 62.2907,
+  "replay": {
+    "cells_replayed": 32,
+    "replay_seconds": 467.3,
+    "cells": [
+      {
+        "step": 5,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 13,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "x' object has no attribute 'index'\nTraceback (most recent call last):\n  File \"<harness>/src/researcher/agent_api.py\", line 106, in _run_isolated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 10, in fn\nAttributeError: 'Index' object has no attribute 'index'. Did you mean: 'reindex'?"
+      },
+      {
+        "step": 15,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 17,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 33,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "s.py\", line 6138, in _cmp_method\n    res_values = ops.comparison_op(lvalues, rvalues, op)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/ops/array_ops.py\", line 330, in comparison_op\n    res_values = op(lvalues, rvalues)\n                 ^^^^^^^^^^^^^^^^^^^^\nTypeError: Unordered Categoricals can only compare equality or not"
+      },
+      {
+        "step": 35,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 32, in fn\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/groupby/groupby.py\", line 1365, in __getattr__\n    raise AttributeError(\nAttributeError: 'SeriesGroupBy' object has no attribute 'astype'. Did you mean: 'dtype'?"
+      },
+      {
+        "step": 37,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 45,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 67,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 71,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 121,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 129,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 150,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 170,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "n3.12/site-packages/pandas/core/reshape/merge.py\", line 1298, in _get_merge_keys\n    right_keys.append(right._get_label_or_level_values(rk))\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 1928, in _get_label_or_level_values\n    raise ValueError(\nValueError: The column label 'household_key' is not unique."
+      },
+      {
+        "step": 172,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 178,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 198,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 226,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "core built (34972, 60) 1s\n\n[stderr]\nTraceback (most recent call last):\n  File \"<run>/cells/runner_061731_151541.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 145, in <module>\nNameError: name 'tt' is not defined. Did you mean: 'tx'?"
+      },
+      {
+        "step": 228,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "runner_061734_311958.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 3, in <module>\n  File \"<harness>/src/researcher/agent_api.py\", line 188, in load_saved\n    raise AccessDenied(\"load_saved only reads .parquet files saved in your workspace\")\nsrc.researcher.agent_api.AccessDenied: load_saved only reads .parquet files saved in your workspace"
+      },
+      {
+        "step": 262,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 276,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 284,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 288,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 314,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "r: 'numpy.ndarray' object has no attribute 'values'\nTraceback (most recent call last):\n  File \"<harness>/src/researcher/agent_api.py\", line 106, in _run_isolated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 19, in fn\nAttributeError: 'numpy.ndarray' object has no attribute 'values'"
+      },
+      {
+        "step": 317,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 326,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "xec\"), _ns)\n  File \"<your code>\", line 11, in <module>\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/frame.py\", line 4113, in __getitem__\n    indexer = self.columns.get_loc(key)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 3819, in get_loc\n    raise KeyError(key) from err\nKeyError: 'snap_med_ew28'"
+      },
+      {
+        "step": 328,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "exec\"), _ns)\n  File \"<your code>\", line 12, in <module>\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/frame.py\", line 4113, in __getitem__\n    indexer = self.columns.get_loc(key)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 3819, in get_loc\n    raise KeyError(key) from err\nKeyError: 'snap_med_s84'"
+      },
+      {
+        "step": 331,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 358,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/frame.py\", line 5288, in _sanitize_column\n    com.require_length_match(value, self.index)\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/common.py\", line 573, in require_length_match\n    raise ValueError(\nValueError: Length of values (179) does not match length of index (199)"
+      },
+      {
+        "step": 360,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 368,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 377,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      }
+    ],
+    "table_path": "e020_final_dims.parquet"
+  },
+  "reproduction": {
+    "n_logged_rows": 36426,
+    "rows_found": 19128,
+    "missing_columns": [],
+    "mismatched_columns": [],
+    "max_rel_diff": 0.0,
+    "reproduced": true
+  },
+  "test_rows_in_table": 12490,
+  "reproduction_kind": "exact",
+  "status": "ok",
+  "backend": "xgb",
+  "test_mae_fit_train_val": 65.0925,
+  "test_r2_fit_train_val": 0.6899,
+  "test_mae_fit_train": 65.8085,
+  "test_r2_fit_train": 0.6853,
+  "val_to_test_degradation_same_fit": 3.5178,
+  "model_meta": {
+    "train_val": null,
+    "n_train_rows": 36426,
+    "n_test_rows": 12490
+  }
+}

@@ -1,0 +1,17 @@
+import agent_api as A, pandas as pd, numpy as np
+f3 = A.load_saved("feats_v3.parquet")
+tt = A.train_targets()
+oo = A.load_saved("oof_e008.parquet")
+m = tt.merge(oo, on=["household_key","snapshot_day"]).merge(f3[["household_key","snapshot_day","spend_28","spend_84","active_28","days_since_last","baskets_28","gap_mean_112","gap_std_112","active_84"]], on=["household_key","snapshot_day"])
+y = m["future_spend_4w"].values
+def mae(p): return round(np.mean(np.abs(np.asarray(p)-y)),3)
+print("med:", mae(m.oof_med))
+print("sq:", mae(m.oof_sq))
+print("log:", mae(m.oof_log))
+print("0.5med+0.5log:", mae(0.5*m.oof_med+0.5*m.oof_log))
+print("0.5sq+0.5log:", mae(0.5*m.oof_sq+0.5*m.oof_log))
+print("0.6sq+0.4log:", mae(0.6*m.oof_sq+0.4*m.oof_log))
+print("0.33sq+0.33med+0.33log:", mae((m.oof_sq+m.oof_med+m.oof_log)/3))
+print("0.4sq+0.2med+0.4log:", mae(0.4*m.oof_sq+0.2*m.oof_med+0.4*m.oof_log))
+print("0.4sq+0.6log:", mae(0.4*m.oof_sq+0.6*m.oof_log))
+print("0.3sq+0.7log:", mae(0.3*m.oof_sq+0.7*m.oof_log))

@@ -1,0 +1,6 @@
+e6 = agent_api.load_saved('e006_dynamics.parquet')
+e9 = agent_api.load_saved('e009_momentum.parquet')
+print('E006', e6.shape)
+print(sorted([c for c in e6.columns if c not in ('household_key','snapshot_day')]))
+print()
+print('E009 extra cols:', sorted([c for c in e9.columns if c not in e6.columns]))

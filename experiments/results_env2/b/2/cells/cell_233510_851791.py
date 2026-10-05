@@ -1,0 +1,15 @@
+e011 = load_saved('e011_table.parquet')
+lvl = load_saved('lvl_v1.parquet')
+tim = load_saved('timing_v1.parquet')
+m = e011.merge(lvl.drop(columns=['household_key','snapshot_day']), left_index=True, right_index=True, how='left')
+m = m.merge(tim.drop(columns=['household_key','snapshot_day']), left_index=True, right_index=True, how='left')
+print(m.shape)
+print('keys ok:', m.household_key.notna().all(), m.snapshot_day.notna().all())
+print('n_feat:', len([c for c in m.columns if c not in ('household_key','snapshot_day')]))
+# verify identical to e011 on parent cols
+sub = m.head(50)
+e = e011.head(50)
+pc = [c for c in e011.columns]
+print('parent cols preserved:', m[pc].equals(e011[pc]))
+save_table(m, 'e014_table')
+print('saved e014_table')

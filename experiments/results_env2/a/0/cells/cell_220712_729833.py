@@ -1,0 +1,12 @@
+import pandas as pd, numpy as np, agent_api
+feats = agent_api.load_saved("feats_v3.parquet")
+print("feats_v3:", feats.shape)
+print(feats.columns.tolist())
+print(feats.head(3).T)
+pred = agent_api.load_saved("pred_e005.parquet")
+print("\npred_e005:", pred.shape)
+print(pred.head())
+print("\nsnapshot days:", agent_api.snapshot_days())
+tt = agent_api.train_targets()
+print("train_targets:", tt.shape)
+print(tt.describe())

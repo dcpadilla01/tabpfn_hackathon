@@ -1,0 +1,16 @@
+df = agent_api.load_saved("e013_stationary.parquet")
+tgt = agent_api.train_targets()
+v = agent_api.snapshot()
+dm = v.display_mailer.copy()
+tx = v.transactions.copy()
+dm["disp_any"] = dm.display.astype(str).ne("0").astype(int)
+dm["mail_any"] = dm.mailer.astype(str).ne("0").astype(int)
+txw = tx.merge(dm[["product_id","store_id","week_no","disp_any","mail_any"]], on=["product_id","store_id","week_no"], how="inner")
+
+m = tgt.merge(txw[["household_key","week_no","disp_any","mail_any"]], on="household_key", how="left").fillna({"disp_any":0,"mail_any":0})
+m["snap_week"] = (m.snapshot_day + 8) // 7
+m["recent"] = (m.week_no >= m.snap_week - 4) & (m.week_no <= m.snap_week)
+mm = m[m.recent].groupby(["household_key","snapshot_day"]).agg(disp_r=("disp_any","sum"), mail_r=("mail_any","sum")).reset_index()
+mm = mm.merge(tgt, on=["household_key","snapshot_day"])
+print(mm[["future_spend_4w","disp_r","mail_r"]].corr().round(3))
+print(len(mm))

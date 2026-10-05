@@ -206,3 +206,85 @@ def evaluate_frozen_test(feature_table: pd.DataFrame, backend: str,
     """Phase 12 only: fit on `fit_splits`, score once on test. Not exposed to agents."""
     res = _fit_and_score(feature_table, backend, tuple(fit_splits), "test")
     return {k: v for k, v in res.items() if not k.startswith("_")} | {"meta": res["_meta"], "predictions": res["_predictions"]}
+
+
+# --------------------------------------------------------------------------- Arm A: score(predictions)
+PRED_COL = "prediction"
+
+
+def validate_predictions(preds: pd.DataFrame) -> pd.DataFrame:
+    """Arm A contract: exactly the validation keys, one finite numeric prediction each. Never reveals labels."""
+    if not isinstance(preds, pd.DataFrame):
+        raise FeatureTableError(f"predictions must be a pandas DataFrame, got {type(preds).__name__}")
+    need = KEYS + [PRED_COL]
+    missing = [c for c in need if c not in preds.columns]
+    if missing:
+        raise FeatureTableError(f"missing columns {missing}; required: {need}")
+    p = preds[need].copy()
+    if p.duplicated(KEYS).any():
+        raise FeatureTableError(f"{int(p.duplicated(KEYS).sum())} duplicate (household_key, snapshot_day) rows")
+    if not pd.api.types.is_numeric_dtype(p[PRED_COL]):
+        raise FeatureTableError(f"column {PRED_COL!r} must be numeric")
+    vals = p[PRED_COL].to_numpy(dtype=float, na_value=np.nan)
+    if not np.isfinite(vals).all():
+        raise FeatureTableError(f"{int((~np.isfinite(vals)).sum())} predictions are NaN or infinite")
+    t = load_targets()
+    expected = t.loc[t["split"] == "validation", KEYS].astype("int64")
+    got = p[KEYS].astype("int64")
+    m = expected.merge(got, on=KEYS, how="outer", indicator=True)
+    n_missing, n_extra = int((m["_merge"] == "left_only").sum()), int((m["_merge"] == "right_only").sum())
+    if n_missing or n_extra:
+        raise FeatureTableError(
+            f"key set must equal the validation keys ({len(expected):,} rows): {n_missing:,} missing, "
+            f"{n_extra:,} unexpected. Use build_features() keys with snapshot_day in the validation days."
+        )
+    return p
+
+
+def score(
+    predictions: pd.DataFrame,
+    *,
+    log: ExperimentLog | None = None,
+    hypothesis: str = "",
+    transformation_description: str = "",
+    parent_id: str | None = None,
+    experiment_id: str | None = None,
+    extra: dict | None = None,
+    save_dir=None,
+    invalid_reason: str | None = None,
+) -> dict:
+    """Arm A's counted call: MAE and R² of agent-made validation predictions. Logs like evaluate()."""
+    started = time.perf_counter()
+    extra = dict(extra or {})
+    prior_seconds = extra.pop("wall_clock_seconds", 0.0) or 0.0
+    rec = ExperimentRecord(
+        experiment_id=experiment_id or (log.next_id() if log else "E???"),
+        parent_id=parent_id, arm=log.arm if log else "adhoc", backend="agent", seed=log.seed if log else load_config()["seed"],
+        hypothesis=hypothesis, transformation_description=transformation_description, feature_columns=[],
+        versions=package_versions(), timestamp=datetime.now(timezone.utc).isoformat(timespec="seconds"),
+    )
+    try:
+        if invalid_reason:
+            raise FeatureTableError(invalid_reason)
+        p = validate_predictions(predictions)
+        t = load_targets()
+        m = t[t["split"] == "validation"][KEYS + [TARGET]].merge(p.astype({HOUSEHOLD_KEY: "int32", "snapshot_day": "int16"}), on=KEYS)
+        rec.mae, rec.r2 = round(mae(m[TARGET], m[PRED_COL]), 4), round(r2(m[TARGET], m[PRED_COL]), 4)
+        rec.n_eval = len(m)
+        rec.runtime_seconds = round(time.perf_counter() - started, 2)
+        if save_dir is not None:
+            p.rename(columns={PRED_COL: "prediction"}).to_parquet(Path(save_dir) / "predictions.parquet", index=False)
+    except FeatureTableError as e:
+        rec.status, rec.error = "invalid", str(e)
+    except Exception as e:  # noqa: BLE001
+        first_line = str(e).strip().splitlines()[0] if str(e).strip() else ""
+        rec.status, rec.error = "error", f"{type(e).__name__}: {first_line}"[:500]
+    rec.wall_clock_seconds = round(prior_seconds + time.perf_counter() - started, 2)
+    for k, v in extra.items():
+        if not hasattr(rec, k):
+            raise AttributeError(f"unknown experiment record field {k!r}")
+        setattr(rec, k, v)
+    if log:
+        log.append(rec)
+    return {"experiment_id": rec.experiment_id, "status": rec.status, "error": rec.error,
+            "mae": rec.mae, "r2": rec.r2, "backend": "agent"}

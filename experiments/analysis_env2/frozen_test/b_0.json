@@ -1,0 +1,167 @@
+{
+  "arm": "b",
+  "seed": 0,
+  "experiment_id": "E013",
+  "val_mae": 60.7878,
+  "replay": {
+    "cells_replayed": 22,
+    "replay_seconds": 152.5,
+    "cells": [
+      {
+        "step": 8,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 14,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "**kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py\", line 2407, in fillna\n    new_values = self.values.fillna(value=value, method=None, limit=limit)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: Cannot setitem on a Categorical with a new category (UNK), set the categories first"
+      },
+      {
+        "step": 16,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 27,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 16, in fn\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 6321, in __getattr__\n    return object.__getattribute__(self, name)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'DataFrame' object has no attribute 'description'. Did you mean: 'description_x'?"
+      },
+      {
+        "step": 29,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/ops/array_ops.py\", line 273, in arithmetic_op\n    res_values = op(left, right)\n                 ^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/arrays/categorical.py\", line 1718, in __array_ufunc__\n    raise TypeError(\nTypeError: Object with dtype category cannot perform the numpy op multiply"
+      },
+      {
+        "step": 31,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 45,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "^^^^^^^^^^^^^^^\n  File \"<your code>\", line 35, in add_feats\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/frame.py\", line 4113, in __getitem__\n    indexer = self.columns.get_loc(key)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 3819, in get_loc\n    raise KeyError(key) from err\nKeyError: 'spend_28'"
+      },
+      {
+        "step": 47,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 51,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 57,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "in __init__\n    self.left_on, self.right_on = self._validate_left_right_on(left_on, right_on)\n                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/reshape/merge.py\", line 1608, in _validate_left_right_on\n    raise ValueError(\nValueError: len(left_on) must equal the number of levels in the index of \"right\""
+      },
+      {
+        "step": 59,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "n3.12/site-packages/pandas/core/reshape/merge.py\", line 1298, in _get_merge_keys\n    right_keys.append(right._get_label_or_level_values(rk))\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 1928, in _get_label_or_level_values\n    raise ValueError(\nValueError: The column label 'household_key' is not unique."
+      },
+      {
+        "step": 63,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 93,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 100,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": ", in reduction\n    result = getattr(values, meth)(axis)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py\", line 45, in _amin\n    return umr_minimum(a, axis, None, out, keepdims, initial, where)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: '<=' not supported between instances of 'str' and 'float'"
+      },
+      {
+        "step": 102,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 116,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 9, in fn\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/frame.py\", line 4113, in __getitem__\n    indexer = self.columns.get_loc(key)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 3819, in get_loc\n    raise KeyError(key) from err\nKeyError: 'description'"
+      },
+      {
+        "step": 118,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "**kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py\", line 2407, in fillna\n    new_values = self.values.fillna(value=value, method=None, limit=limit)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: Cannot setitem on a Categorical with a new category (0.0), set the categories first"
+      },
+      {
+        "step": 128,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 130,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 155,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 185,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 202,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      }
+    ],
+    "table_path": "e013_stationary.parquet"
+  },
+  "reproduction": {
+    "n_logged_rows": 36426,
+    "rows_found": 24614,
+    "missing_columns": [],
+    "mismatched_columns": [],
+    "max_rel_diff": 0.0,
+    "reproduced": true
+  },
+  "test_rows_in_table": 12490,
+  "reproduction_kind": "exact",
+  "status": "ok",
+  "backend": "tabpfn",
+  "test_mae_fit_train_val": 63.4903,
+  "test_r2_fit_train_val": 0.6925,
+  "test_mae_fit_train": 63.4219,
+  "test_r2_fit_train": 0.6978,
+  "val_to_test_degradation_same_fit": 2.6341,
+  "model_meta": {
+    "train_val": "/app/tabpfn_models/tabpfn-v3.5-20260909.safetensors",
+    "n_train_rows": 36426,
+    "n_test_rows": 12490
+  }
+}

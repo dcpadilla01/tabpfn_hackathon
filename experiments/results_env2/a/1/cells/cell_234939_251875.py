@@ -1,0 +1,17 @@
+import numpy as np, pandas as pd
+f4 = agent_api.load_saved('e004_features.parquet')
+f5 = agent_api.load_saved('e005_newfeats.parquet')
+p5 = agent_api.load_saved('e005_preds.parquet')
+tt = agent_api.train_targets()
+print('f4', f4.shape, 'f5', f5.shape, 'p5', p5.shape, 'tt', tt.shape)
+print('f4 cols:', list(f4.columns))
+print('f5 cols:', list(f5.columns))
+print('f4 days:', sorted(f4.snapshot_day.unique()))
+print('p5 days:', sorted(p5.snapshot_day.unique()))
+y = tt.future_spend_4w
+print(y.describe())
+print('zero frac %.3f  median %.1f  mean %.1f' % ((y==0).mean(), y.median(), y.mean()))
+print('pct', np.percentile(y, [50,75,90,95,99]))
+c4, c5 = set(f4.columns), set(f5.columns)
+print('overlap cols:', c4 & c5)
+print(f4.dtypes.value_counts())

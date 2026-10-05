@@ -1,0 +1,13 @@
+import agent_api, pandas as pd, numpy as np
+feats = agent_api.load_saved('feats_v4.parquet')
+print('feats_v4', feats.shape)
+cols = list(feats.columns)
+print(len(cols), cols)
+print(feats.dtypes.value_counts())
+pred = agent_api.load_saved('pred_e013.parquet')
+print('pred_e013', pred.shape, list(pred.columns))
+print(pred['prediction'].describe())
+tt = agent_api.train_targets()
+print('tt', tt.shape, sorted(tt.snapshot_day.unique()))
+print(tt.future_spend_4w.describe())
+print('val snaps', agent_api.snapshot_days())

@@ -10,11 +10,11 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from src.config import ROOT  # noqa: E402
+from src.config import ANALYSIS_DIR, ROOT  # noqa: E402
 from src.evaluation.evaluator import evaluate, evaluate_frozen_test  # noqa: E402
 from src.features.baseline import build_baseline_features  # noqa: E402
 
-OUT = ROOT / "experiments" / "analysis" / "frozen_test"
+OUT = ANALYSIS_DIR / "frozen_test"
 
 
 def main() -> None:

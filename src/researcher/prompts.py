@@ -87,12 +87,13 @@ AGENT_API_DOC = """\
   print() inside fn is shown for train snapshots only; at validation snapshots output is
   suppressed and errors report only their type and line.
 - view.households: the households needing a row at that snapshot. view.day, view.week.
+  view.table(name) returns a table by name, e.g. view.table("transactions").
 - baseline_features() -> the E000 feature table (merge on household_key, snapshot_day).
 - train_targets() -> household_key, snapshot_day, future_spend_4w for TRAIN rows only.
 - snapshot(as_of_day=None) -> a view at as_of_day (default/max {visible_day}).
 - history(household_key, as_of_day=None) -> one household's transactions.
 - snapshot_days() -> {{"train": [...], "validation": [...]}}.
-- save_table(df, name) -> path to pass to experiment(); load_saved(path) -> a table you saved earlier.
+- save_table(df, name) -> path to pass to the evaluation tool; load_saved(path) -> a table you saved earlier.
 - KEYS, TARGET constants.
 - describe_tables() -> table descriptions.
 Each run_python call is a fresh process: nothing persists between calls except files saved
@@ -108,6 +109,11 @@ TOOL_DOCS = {
                   "The table needs household_key, snapshot_day and at least one feature column, for "
                   "exactly the train+validation rows (build_features guarantees this). Columns may be "
                   "numeric, bool, string or category; missing values are allowed; at most 500 features.",
+    "score": "score(predictions_path, hypothesis, parent, mutation, reasoning_summary): evaluate your own "
+             "predictions with a fixed evaluation that you cannot change: it reports MAE and R² on the validation "
+             "rows. The file needs household_key, snapshot_day and prediction for exactly the validation rows "
+             "(the validation-snapshot rows that build_features returns). Choosing, building and training the "
+             "model is up to you; train_targets() gives the train labels. Predictions must be finite numbers.",
 }
 
 
@@ -136,6 +142,16 @@ def tool_schemas(tools: list[str]) -> list[dict]:
                 "mutation": {"type": "string", "description": "what you changed relative to the parent"},
                 "reasoning_summary": {"type": "string", "description": "one or two sentences: why you expect this to help"},
             }, "required": ["table_path", "hypothesis", "parent", "mutation", "reasoning_summary"]},
+        },
+        "score": {
+            "description": TOOL_DOCS["score"],
+            "parameters": {"type": "object", "properties": {
+                "predictions_path": {"type": "string", "description": "path returned by save_table"},
+                "hypothesis": {"type": "string", "description": "the claim about the data this experiment tests"},
+                "parent": {"type": "string", "description": "id of the experiment you build on, e.g. E000"},
+                "mutation": {"type": "string", "description": "what you changed relative to the parent"},
+                "reasoning_summary": {"type": "string", "description": "one or two sentences: why you expect this to help"},
+            }, "required": ["predictions_path", "hypothesis", "parent", "mutation", "reasoning_summary"]},
         },
     }
     return [{"type": "function", "function": {"name": t, **s[t]}} for t in tools]

@@ -1,0 +1,5 @@
+feats = agent_api.load_saved("feats_v1.parquet")
+print(feats.shape)
+print(feats.columns.tolist())
+print(feats.head(3))
+print(feats.dtypes)

@@ -75,3 +75,10 @@ def test_test_keys_rejected_during_research():
     t = target_keys(("train", "validation", "test"))[["household_key", "snapshot_day"]].assign(x=1.0)
     with pytest.raises(FeatureTableError, match="unexpected"):
         validate_feature_table(t)
+
+
+def test_view_table_by_name():
+    v = AsOf(300)
+    assert v.table("transactions")["day"].max() <= 300
+    with pytest.raises(KeyError):
+        v.table("targets")

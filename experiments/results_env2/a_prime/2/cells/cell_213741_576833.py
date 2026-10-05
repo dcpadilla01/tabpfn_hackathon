@@ -1,0 +1,16 @@
+import pandas as pd, numpy as np
+e1 = agent_api.load_saved('e001_recent_behavior.parquet')
+print("E001 cols:", list(e1.columns))
+print("shape:", e1.shape)
+tt = agent_api.train_targets()
+print("targets shape:", tt.shape)
+print(tt['future_spend_4w'].describe())
+print("zero share:", (tt['future_spend_4w']==0).mean())
+m = e1.merge(tt, on=['household_key','snapshot_day'], how='inner')
+print("merged:", m.shape)
+num = [c for c in e1.columns if c not in ('household_key','snapshot_day')]
+cor = m[num+['future_spend_4w']].corr(numeric_only=True)['future_spend_4w'].drop('future_spend_4w')
+print(cor.reindex(cor.abs().sort_values(ascending=False).index).round(3))
+v = agent_api.snapshot(459)
+tx = v.table('transactions')
+print("tx rows@459:", len(tx), "hh needing rows:", len(v.households))

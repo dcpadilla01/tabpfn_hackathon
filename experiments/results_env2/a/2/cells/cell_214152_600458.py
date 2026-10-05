@@ -1,0 +1,6 @@
+v = agent_api.snapshot(431)
+dm = v.table("display_mailer")
+print(dm.dtypes)
+print(dm["display"].unique()[:20])
+print(dm["mailer"].unique()[:20])
+print(dm.shape)

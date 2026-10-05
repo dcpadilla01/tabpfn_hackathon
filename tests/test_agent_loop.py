@@ -80,3 +80,20 @@ def test_bad_experiment_args_consume_budget(make):
     r = make([reply(tc(1, "experiment", {"table_path": "nope.parquet", "bogus": 1}))], budget=1)
     recs = r.run()
     assert recs[-1]["status"] == "invalid" and "hypothesis is required" in recs[-1]["error"]
+
+
+def test_arm_a_scores_its_own_predictions(tmp_path, monkeypatch):
+    monkeypatch.setattr(agent_mod, "ExperimentLog", lambda arm, seed: logger_mod.ExperimentLog(arm, seed, root=tmp_path))
+    monkeypatch.setattr(agent_mod, "RunTrace", lambda arm, seed: trace_mod.RunTrace(arm, seed, root=tmp_path))
+    code = ("from sklearn.linear_model import Ridge\n"
+            "ft = build_features(lambda v, d: pd.DataFrame({'n': v.transactions.groupby('household_key').size()}))\n"
+            "tt = train_targets(); tr = ft.merge(tt, on=KEYS)\n"
+            "m = Ridge().fit(tr[['n']].fillna(0), tr[TARGET])\n"
+            "va = ft[ft.snapshot_day >= 459].copy(); va['prediction'] = m.predict(va[['n']].fillna(0))\n"
+            "print(save_table(va[KEYS + ['prediction']], 'p'))")
+    args = {"predictions_path": "p.parquet", "hypothesis": "volume", "parent": "E000", "mutation": "ridge on n", "reasoning_summary": "r"}
+    r = agent_mod.Researcher("a", 0, 1)
+    r.client = FakeClient([reply(tc(1, "run_python", {"code": code})), reply(tc(2, "score", args))])
+    recs = r.run()
+    assert recs[0]["backend"] == "xgb" and recs[0]["experiment_id"] == "E000"   # harness reference root
+    assert recs[1]["status"] == "ok" and recs[1]["backend"] == "agent" and recs[1]["mae"] > 0

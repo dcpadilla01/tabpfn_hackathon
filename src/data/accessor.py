@@ -119,6 +119,12 @@ class AsOf:
     def products(self) -> pd.DataFrame:
         return load_table("product")
 
+    def table(self, name: str) -> pd.DataFrame:
+        """Dynamic access by agent-facing name, e.g. view.table("transactions") (Env-2)."""
+        if name not in AGENT_NAMES:
+            raise KeyError(f"unknown table {name!r}; tables: {', '.join(AGENT_NAMES)}")
+        return getattr(self, name)
+
     def __repr__(self) -> str:
         n = "all" if self.households is None else len(self.households)
         return f"AsOf(day={self.day}, week={self.week}, households={n}, tables={list(AGENT_NAMES)})"

@@ -1,0 +1,12 @@
+v = agent_api.snapshot()
+for name in ["campaigns","campaign_targets","coupon_redemptions","coupons","display_mailer","transactions","products"]:
+    t = v.table(name)
+    print(name, t.shape, t.columns.tolist())
+print("\ncampaigns by description:")
+print(v.table("campaigns").description.value_counts())
+print("\nredemptions head:\n", v.table("coupon_redemptions").head())
+print("\nredemptions per household describe:")
+r = v.table("coupon_redemptions").groupby("household_key").size()
+print(r.describe())
+print("\ndisplay/mailer values:", v.table("display_mailer").display.value_counts().head(10).to_dict(), v.table("display_mailer").mailer.value_counts().head(10).to_dict())
+print("\nday range tx:", v.table("transactions").day.min(), v.table("transactions").day.max())

@@ -1,0 +1,283 @@
+{
+  "arm": "a",
+  "seed": 2,
+  "experiment_id": "E016",
+  "val_mae": 61.6505,
+  "replay": {
+    "cells_replayed": 43,
+    "replay_seconds": 1985.7,
+    "cells": [
+      {
+        "step": 6,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 8,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "runner_062924_917583.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 2, in <module>\n  File \"<harness>/src/researcher/agent_api.py\", line 188, in load_saved\n    raise AccessDenied(\"load_saved only reads .parquet files saved in your workspace\")\nsrc.researcher.agent_api.AccessDenied: load_saved only reads .parquet files saved in your workspace"
+      },
+      {
+        "step": 10,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "s>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 4852, in _drop_axis\n    new_axis = axis.drop(labels, errors=errors)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 7136, in drop\n    raise KeyError(f\"{labels[mask].tolist()} not found in axis\")\nKeyError: \"['future_spend_4w'] not found in axis\""
+      },
+      {
+        "step": 12,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 33,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "ells/runner_062930_623500.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 93, in <module>\n  File \"<harness>/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py\", line 107, in _clip\n    return um.positive(a, out=out, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: positive() got an unexpected keyword argument 'lower'"
+      },
+      {
+        "step": 35,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 43,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py\", line 2407, in fillna\n    new_values = self.values.fillna(value=value, method=None, limit=limit)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: Cannot setitem on a Categorical with a new category (OTHER), set the categories first"
+      },
+      {
+        "step": 45,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "ccessor.py\", line 194, in __init__\n    self._inferred_dtype = self._validate(data)\n                           ^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/strings/accessor.py\", line 248, in _validate\n    raise AttributeError(\"Can only use .str accessor with string values!\")\nAttributeError: Can only use .str accessor with string values!. Did you mean: 'std'?"
+      },
+      {
+        "step": 47,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 49,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 81,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 95,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 125,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 152,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "in __init__\n    self.left_on, self.right_on = self._validate_left_right_on(left_on, right_on)\n                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/reshape/merge.py\", line 1608, in _validate_left_right_on\n    raise ValueError(\nValueError: len(left_on) must equal the number of levels in the index of \"right\""
+      },
+      {
+        "step": 154,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 158,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 163,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "unner_063528_708375.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 61, in <module>\n  File \"<harness>/src/researcher/agent_api.py\", line 188, in load_saved\n    raise AccessDenied(\"load_saved only reads .parquet files saved in your workspace\")\nsrc.researcher.agent_api.AccessDenied: load_saved only reads .parquet files saved in your workspace"
+      },
+      {
+        "step": 172,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 204,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 227,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "RuntimeError: fn failed at snapshot_day=95:\nNameError: name 'w' is not defined\nTraceback (most recent call last):\n  File \"<harness>/src/researcher/agent_api.py\", line 106, in _run_isolated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 27, in build\nNameError: name 'w' is not defined"
+      },
+      {
+        "step": 231,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "l last):\n  File \"<harness>/src/researcher/agent_api.py\", line 106, in _run_isolated\n    payload = (\"ok\", fn(_acc.AsOf(day, households=households), day))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<your code>\", line 144, in build\n  File \"<your code>\", line 34, in block\n  File \"<your code>\", line 28, in agg\nAttributeError: 'function' object has no attribute 'nunique'"
+      },
+      {
+        "step": 233,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 235,
+        "orig_status": "error",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 237,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 259,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "orm\n    df, feature_names, feature_types = _transform_pandas_df(\n                                       ^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/xgboost/data.py\", line 655, in _transform_pandas_df\n    raise ValueError(\nValueError: Duplicate column names are not supported. Duplicates found: ['spend_y1_4w', 'baskets_y1_4w', 'spend_y1_8w', 'spend_y2_4w', 'active_y1']"
+      },
+      {
+        "step": 271,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 288,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 290,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 292,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "n features: 103\n\n[stderr]\nTraceback (most recent call last):\n  File \"<run>/cells/runner_065324_597708.py\", line 12, in <module>\n    exec(compile(_code, \"<your code>\", \"exec\"), _ns)\n  File \"<your code>\", line 14, in <module>\nNameError: name 'xgb' is not defined"
+      },
+      {
+        "step": 294,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 312,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "(**kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py\", line 2407, in fillna\n    new_values = self.values.fillna(value=value, method=None, limit=limit)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: Cannot setitem on a Categorical with a new category (NA), set the categories first"
+      },
+      {
+        "step": 314,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "(**kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py\", line 2407, in fillna\n    new_values = self.values.fillna(value=value, method=None, limit=limit)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: Cannot setitem on a Categorical with a new category (-1), set the categories first"
+      },
+      {
+        "step": 316,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 318,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "ss>/.venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 4852, in _drop_axis\n    new_axis = axis.drop(labels, errors=errors)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 7136, in drop\n    raise KeyError(f\"{labels[mask].tolist()} not found in axis\")\nKeyError: \"['snapshot_day_s'] not found in axis\""
+      },
+      {
+        "step": 322,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 342,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 350,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 352,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 354,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 364,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 374,
+        "orig_status": "error",
+        "replay_status": "error",
+        "error": "ages/pandas/core/internals/construction.py\", line 114, in arrays_to_mgr\n    index = _extract_index(arrays)\n            ^^^^^^^^^^^^^^^^^^^^^^\n  File \"<harness>/.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py\", line 667, in _extract_index\n    raise ValueError(\"If using all scalar values, you must pass an index\")\nValueError: If using all scalar values, you must pass an index"
+      },
+      {
+        "step": 376,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      },
+      {
+        "step": 378,
+        "orig_status": "ok",
+        "replay_status": "ok",
+        "error": null
+      }
+    ],
+    "table_path": "pred_e016.parquet"
+  },
+  "regime": "train-only (agent's own fit)",
+  "reproduction": {
+    "validation_rows": 9989,
+    "rows_found": 9989,
+    "max_abs_diff": 0.0,
+    "reproduced": true
+  },
+  "test_rows_predicted": 12490,
+  "status": "ok",
+  "test_mae_fit_train": 64.8473,
+  "test_r2_fit_train": 0.6755,
+  "val_to_test_degradation_same_fit": 3.1968
+}

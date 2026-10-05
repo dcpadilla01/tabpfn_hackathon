@@ -27,3 +27,12 @@ experiments/analysis/frozen_test/*/
 # keep label-free prediction files so bootstraps regenerate from a clone (small)
 !experiments/results/*/*/E*/predictions.parquet
 !experiments/analysis/frozen_test/*_test_predictions*.parquet
+
+# Env-2 smoke/dev runs (seed >= 900)
+experiments/results_env2/*/9[0-9][0-9]/
+experiments/analysis_env2/frozen_test/*/
+
+# worktree links to the shared data directories (symlinks are not matched by "dir/" patterns)
+data/raw
+data/interim
+data/processed

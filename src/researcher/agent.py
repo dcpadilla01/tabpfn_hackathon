@@ -31,6 +31,7 @@ from src.researcher.trace import RunTrace
 from src.tools.experiment import ExperimentTool
 from src.tools.inspect import inspect as inspect_tool
 from src.tools.run_python import run_python
+from src.tools.score import ScoreTool
 
 MAX_NUDGES = 3
 LLM_RETRIES = 3
@@ -40,8 +41,6 @@ class Researcher:
     def __init__(self, arm: str, seed: int, budget: int, overwrite: bool = False):
         self.arm, self.seed, self.budget = arm, seed, budget
         self.cfg = arm_config(arm)
-        if self.cfg["backend"] is None:
-            raise NotImplementedError("Arm A (score tool) is built in Phase 9")
         llm = load_config()["llm"]
         self.model, self.temperature = llm["model"], llm["temperature"]
         self.max_tokens, self.cap = llm["max_tokens"], llm["max_tool_calls_between_experiments"]
@@ -57,7 +56,8 @@ class Researcher:
         self.workspace = self.log.dir / "workspace"
         self.harness_dir = self.log.dir / "cells"
         self.workspace.mkdir(parents=True, exist_ok=True)
-        self.tool = ExperimentTool(self.cfg["backend"], self.log, self.workspace, self.trace)
+        tool_cls = ScoreTool if "score" in self.cfg["tools"] else ExperimentTool
+        self.tool = tool_cls(self.cfg["backend"], self.log, self.workspace, self.trace)
 
         self.system = prompts.system_prompt(self.cfg, budget, snapshot_days(), research_visible_day())
         self.tools = prompts.tool_schemas(self.cfg["tools"])
@@ -77,7 +77,9 @@ class Researcher:
     def _root(self) -> None:
         """E000 with this arm's backend: the root every run starts from (not budgeted)."""
         self.trace.begin_experiment("E000")
-        evaluate(build_baseline_features(), self.cfg["backend"], log=self.log, experiment_id="E000",
+        # Arm A has no harness model: its root is the baseline table scored by the fixed XGBoost evaluator
+        # (identical to A′'s E000), recorded as a harness reference.
+        evaluate(build_baseline_features(), self.cfg["backend"] or "xgb", log=self.log, experiment_id="E000",
                  hypothesis="Who the household is (demographics) and when the snapshot is (calendar) predict 4-week spend.",
                  transformation_description="Baseline: demographic codes, has_demographics, snapshot day index, week-of-year.")
 
@@ -110,7 +112,8 @@ class Researcher:
                     self.tool.pending_code = "\n\n# ---- cell ----\n".join(code_blocks)
                     args, err = self._args(tc)
                     t0 = time.perf_counter()
-                    fields = ("table_path", "hypothesis", "parent", "mutation", "reasoning_summary")
+                    first = "predictions_path" if name == "score" else "table_path"
+                    fields = (first, "hypothesis", "parent", "mutation", "reasoning_summary")
                     res = self.tool(**{f: str(args.get(f) or "") for f in fields})
                     self._log_tool(name, args, res, "ok" if res["status"] == "ok" else "error",
                                    time.perf_counter() - t0, res.get("error"))

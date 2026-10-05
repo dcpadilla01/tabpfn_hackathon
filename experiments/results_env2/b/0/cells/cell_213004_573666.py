@@ -1,0 +1,10 @@
+import agent_api as A
+v = A.snapshot()
+ct = v.table("campaign_targets")
+print(ct.shape, ct.household_key.nunique())
+cp = v.table("coupon_redemptions")
+print(cp.shape, cp.household_key.nunique(), cp.day.max())
+print(cp.head(3))
+camps = v.table("campaigns")
+print(camps.shape)
+print(camps.head(3))

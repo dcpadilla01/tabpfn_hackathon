@@ -57,3 +57,55 @@ Earlier locked decisions are in `CLAUDE.md` ("Locked Decisions", "Environments a
 - **Decision:** publish derived data for reproducibility under dunnhumby's research terms (owner confirmed the
   terms allow it): feature tables of the six selected runs (release `env1-artifacts`, 148 MB), label-free
   per-row predictions, and agent transcripts (which include printed excerpts). Raw files stay unpublished.
+
+## 2026-10-04 — Env-2: what differs from Env-1 (branch `env-2`)
+
+Env-2 reruns Arms B and A′ and adds Arm A, seeds 0–2, 20 experiments each, results in
+`experiments/results_env2/`. Env-1 stays the primary result; the two are never mixed in one table.
+
+**Differences (agent-visible unless noted):**
+1. Run directory scrubbed from tool output (`<run>`), so the arm label is not visible (Env-1: visible in tracebacks).
+2. `print` inside `fn` is shown at train snapshots and suppressed at validation snapshots; validation-snapshot
+   errors are reduced to type + line (Env-1: prints inside `fn` never reached the agent; errors unfiltered).
+   The prompt states this in one added sentence.
+3. Shared prompt wording: `save_table` returns "a path to pass to the evaluation tool" (Env-1: "…to experiment()").
+4. Arm A exists: tools `inspect`, `run_python`, `score`; sklearn, XGBoost, scipy importable; root E000 is the
+   baseline table on the fixed XGBoost evaluator (a harness reference, identical to A′'s E000).
+5. Subprocess environment, every arm: `LOKY_MAX_CPU_COUNT=2` added (affects only joblib users, i.e. Arm A).
+6. Harness-only (not agent-visible): frozen-test replay mode; `EXPERIMENT_ENV` switch.
+
+**Unchanged:** LLM (`z-ai/glm-5.3-flash`, temperature 0.7, max 16k tokens, no reasoning cap), budget (20),
+15-call cap, 300 s per-cell timeout (already in Env-1 for every arm), `OMP_NUM_THREADS=1` (already in
+Env-1), evaluator and backends, seeds 0–2, data, split, target.
+
+**Launch plan (16 GB M1):** start B and A′ (6 runs, as in Env-1), check memory, then add Arm A's 3 runs.
+
+## 2026-10-04 — Env-2 sandbox friction fix (from the Arm A smoke run)
+
+The Arm A smoke run (seed 900, budget 3) had 11 rejected cells, 8 of 14 calls in one experiment, nearly all benign
+library introspection. For **every arm in Env-2** (an Env-2 difference from Env-1):
+- `__name__`, `__version__`, `__doc__` are readable; all other dunders stay blocked.
+- `getattr(obj, "literal"[, default])` is allowed only with a string-literal name that passes the attribute rules;
+  dynamic `getattr`, `setattr`, `delattr` stay blocked. New `view.table(name)` gives dynamic table access safely,
+  and the rejection message points to it. The prompt gains one line documenting `view.table(name)`.
+- `import time` is allowed.
+Re-checked against the smoke run: 3 of 11 rejections would now pass; 7 were dynamic `getattr` over table names
+(now served by `view.table`), 1 a file write (`np.save('/tmp/…')`), correctly still blocked. The 6 code errors in
+that run were ordinary pandas mistakes, not harness-induced.
+
+## 2026-10-05 05:51 CST — Env-2 frozen test: pre-declaration (no Env-2 test number computed yet)
+
+- **Scope change, stated plainly.** Env-2 was declared as a validation-and-behaviour comparison (CLAUDE.md,
+  "Environments and primary results"). A frozen test is being added **now, before any Env-2 test score has been
+  computed**: `experiments/analysis_env2/` does not exist at the time of writing. That is why this is a
+  pre-declaration, not a post-hoc choice.
+- **Primary cross-arm regime: train-only** (fit on train, score test once), for A, A′ and B. Arm A can only be
+  scored this way: its agents trained their own models on train labels.
+- **Replication of Env-1:** A′ and B are also scored with the train + validation refit, Env-1's primary regime,
+  reported as a replication, not as the Env-2 cross-arm result.
+- **Arm A replay rule.** Each A run's final candidate (chosen on validation only) is re-run from its own code with
+  test rows switched on. It must first reproduce the logged validation predictions; a run that cannot produce test
+  predictions is reported as **not replayable**. No workarounds, no hand edits. Non-replayable runs are an
+  expected, acceptable outcome (agents may hard-code snapshot-day thresholds).
+- **Order of work:** effort split (three arms), time-to-quality in hours (three arms), validation bootstrap (three
+  arms), transfer 2×2 (A′/B replication), frozen test A′/B, then Arm A frozen test as time permits.
