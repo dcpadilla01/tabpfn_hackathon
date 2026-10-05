@@ -51,8 +51,9 @@ What the evidence supports:
 
 1. **TabPFN makes the researcher better, fast — and it holds on the frozen test.** Every B run beats every A′
    run on validation, and B reaches the level A′ ends at within a median of 3 experiments (minutes), a level
-   two of three A′ runs never reach. On the held-out test period the gap shrinks from 1.52 to **0.94 MAE**
-   (selection on validation is optimistic) but stays clear: all 9 run pairings favour B. "Fast" holds in
+   two of three A′ runs never reach. On the held-out test period the gap is **0.94 MAE** (1.52 on validation)
+   and stays clear: all 9 run pairings favour B. The validation→test change mixes period drift (E000, with no
+   search, loses 5–8 MAE), the fitting-regime change and two approximate replays; we do not separate them. "Fast" holds in
    both units: B runs reach 62.24 after 1–8 experiments and 0.02–0.87 hours from run start; one A′ run
    reaches it after 17 experiments and 2.17 hours, two never do.
 2. **TabPFN beat XGBoost on every feature table, but the features themselves were tuned to their backend.**
@@ -90,7 +91,7 @@ score to minimise will re-create model engineering around any fixed primitive.*
 is a descriptive reference point, not a pre-registered target.
 
 **Representation transfer 2×2** — each run's best feature table on both backends (validation MAE; seeds
-paired by index, which carries no meaning since the LLM is unseeded). Total gap = B features on TabPFN − A′
+paired by index, which carries no meaning since LLM outputs are not deterministic). Total gap = B features on TabPFN − A′
 features on XGBoost. Negative = favours B / TabPFN.
 
 | Pair | A′ feat · XGB | A′ feat · TabPFN | B feat · XGB | B feat · TabPFN | Total gap | Ordering 1: model (A′ feat) / feature (TabPFN) | Ordering 2: feature (XGB) / model (B feat) |
@@ -299,8 +300,8 @@ licence acceptance at <https://ux.priorlabs.ai>; the API key in `.env` is passed
 is the stored output of the reported runs (Env-1): logs, transcripts, the code the agents ran, and label-free
 prediction files. Step 5a regenerates every table and figure from these files. The agents' feature tables
 are not in git (1.7 GB); the six that the transfer and replay checks need are a release download
-(`make artifacts`). Re-running the researcher (step 4) produces new trajectories, because the LLM is not
-seeded. The data are dunnhumby's, used for research under their terms; transcripts contain excerpts the
+(`make artifacts`). Re-running the researcher (step 4) produces new trajectories: a seed is passed to the LLM, but the provider does not
+guarantee determinism. The data are dunnhumby's, used for research under their terms; transcripts contain excerpts the
 agents printed while exploring.
 
 ## Compute and versions
@@ -309,7 +310,8 @@ agents printed while exploring.
   `tabpfn-v3.5-20260909`); 35k × 30 fit+predict in ~17 s. Every experiment log records the seed, the package
   versions and the checkpoint. Small differences across CPU/GPU/MPS are expected even with a fixed seed.
 - XGBoost 3.4.1 locally (`hist`). LLM: `z-ai/glm-5.3-flash` via OpenRouter, temperature 0.7, no reasoning
-  cap; it is the one non-seeded component, hence several runs per arm. Provider routing varied per call and
+  cap. Each request passes the run's seed (0, 1, 2), but the provider does not guarantee determinism, hence
+  several runs per arm. Provider routing varied per call and
   is logged.
 - Totals for the six MVP runs: ~16M tokens, ≈ $2.2 LLM cost, ≈ 0.9M TabPFN credits.
 
@@ -347,5 +349,9 @@ experiments/     results/<arm>/<seed>/ (logs, code, transcripts), analysis/
 
 ## Attribution
 
-Data: **dunnhumby — The Complete Journey** (© dunnhumby; not redistributed; see `data/README.md`).
+Data: **dunnhumby — The Complete Journey** (© dunnhumby; see `data/README.md`). The raw files are not
+redistributed here. For reproducibility, data derived from them are published under dunnhumby's research
+terms: per-household × snapshot feature tables for the six selected runs (release `env1-artifacts`),
+label-free per-row predictions, and agent transcripts that include excerpts the agents printed while
+exploring.
 Model: **TabPFN-3.5** by **Prior Labs**. Built for the Prior Labs TabPFN-3.5 Hackathon.

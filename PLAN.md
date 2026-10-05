@@ -8,7 +8,7 @@ We test whether an autonomous ML researcher using TabPFN-3.5 can explore more us
 
 Prior Labs TabPFN-3.5 Hackathon.
 
-Official scope explicitly includes agents and creative applications of TabPFN-3.5. Submission requires a runnable project/repository; demo video is optional. Deadline: **Monday, October 6, 2026**. Today is Friday, October 2.
+Official scope explicitly includes agents and creative applications of TabPFN-3.5. Submission requires a runnable project/repository; demo video is optional. Deadline: **Tuesday, October 6, 2026**. Today is Friday, October 2.
 
 Official submission page:
 

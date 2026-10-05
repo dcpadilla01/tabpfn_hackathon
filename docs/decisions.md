@@ -41,3 +41,19 @@ Earlier locked decisions are in `CLAUDE.md` ("Locked Decisions", "Environments a
   Replaced by: the model effect favours TabPFN in all six cells; features are co-adapted to their backend
   (mean interaction −2.48 ≈ the total gap).
 - **Regenerate:** `uv run python -m src.analysis.phase11_extra` → `time_to_threshold.csv`, `transfer_2x2.csv`.
+
+## 2026-10-03 — Researcher LLM
+
+- **Decision (project owner, before any run):** the researcher uses **`z-ai/glm-5.3-flash` via OpenRouter**,
+  temperature 0.7, max 16,000 tokens per call, no reasoning cap, through a provider-agnostic OpenAI-compatible
+  client. `CLAUDE.md` originally named Claude Sonnet 5.5 on the Anthropic SDK; `PLAN.md` already named GLM 5.3
+  Flash via OpenRouter. Both now agree with the README.
+- **Reason:** cost (stated by the project owner; to be confirmed). Six 20-experiment runs cost ≈ $2.2 in total.
+- **Determinism:** each request passes the run's seed (0, 1, 2); the provider does not guarantee deterministic
+  outputs, and OpenRouter routed calls to different providers (logged per call). Hence ≥ 3 runs per arm.
+
+## 2026-10-04 — Publication of derived data
+
+- **Decision:** publish derived data for reproducibility under dunnhumby's research terms (owner confirmed the
+  terms allow it): feature tables of the six selected runs (release `env1-artifacts`, 148 MB), label-free
+  per-row predictions, and agent transcripts (which include printed excerpts). Raw files stay unpublished.

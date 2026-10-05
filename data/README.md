@@ -4,10 +4,10 @@ This project uses **dunnhumby — The Complete Journey**: two years of household
 grocery transactions from 2,500 households, with demographics, product hierarchy,
 direct-marketing campaigns, coupons and in-store display/mailer exposure.
 
-> Data © dunnhumby. Used under dunnhumby's terms for the Source Files; not
-> redistributed in this repository. Get it from dunnhumby:
-> <https://www.dunnhumby.com/source-files/>. The user guide (PDF) is also distributed
-> by dunnhumby and is not committed here.
+> Data © dunnhumby. The raw files are not redistributed in this repository; get them from dunnhumby:
+> <https://www.dunnhumby.com/source-files/>. Derived data (per-household feature tables for the six selected
+> runs as a release download, label-free predictions, transcript excerpts) are published for reproducibility
+> under dunnhumby's research terms. The user guide (PDF) is distributed by dunnhumby and is not committed here.
 
 ## Setup
 
