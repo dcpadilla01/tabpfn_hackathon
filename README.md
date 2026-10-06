@@ -1,316 +1,191 @@
-# What does a cheap predictive hypothesis do to an autonomous data scientist?
+# TabPFN for autonomous research
 
-[[YOUR OPENING BLOCK HERE — "Why I built this / What I tested / What I learned" — replaces this paragraph and the
-thesis quote below]]
+## Why I built this
 
-**Prior Labs TabPFN-3.5 Hackathon entry.** We give the same LLM researcher the same data, task, prompt and
-budget, and change only its tool list: a fixed **TabPFN-3.5** model behind `experiment()` (Arm B), a fixed,
-untuned **XGBoost** behind `experiment()` (Arm A′), or no fixed model at all — the agent builds its own (Arm A,
-Env-2). Then we measure what it finds, what it costs, and where its effort goes.
+I wanted to test if giving an AI agent the `experiment()` primitive would improve an autonomous researcher. It is a very primitive [agent](agent_design.md) on purpose because I needed to see every call made by the model without a harness (complex or minimal) confounding the results. 
+
+What TabPFN has built is extremely exciting, it allows us to move from working on mere data preparation to actually discovering predictive features. That's why I believe this will enable LLMs to spend less tokens getting data ready for prediction (provided that all other statistical constraints are respected, see [below](#future-work)).
+
+## What I tested
+
+**Prediction Task:** Using two years of grocery data (transactions, coupons, campaigns, etc.) predict how much a household will spend in the *next four weeks*. 
+
+I gave the same agent the same data, task, prompt and budget, and change only its tool list:
+| Arm | Who does the modelling | Scoring tool |
+|---|---|---|
+| **B** | a fixed **TabPFN-3.5** model the agent cannot see or change | `experiment(feature table)` |
+| **A′** | a fixed, untuned **XGBoost** model | `experiment(feature table)` |
+| **A** | **the agent itself**: it picks, builds and trains its own models (sklearn, XGBoost, scipy) | `score(its own predictions)` |
 
 > **Working thesis.** TabPFN reduces the cost of autonomous predictive experimentation by collapsing
 > preprocessing, model selection and tuning into a reusable prediction primitive.
 
-> **Pinned results.** Env-1 numbers come from commit [`1fb5872`](https://github.com/dcpadilla01/tabpfn_hackathon/tree/1fb5872), Env-2 numbers from [`db3810c`](https://github.com/dcpadilla01/tabpfn_hackathon/tree/db3810c).
-> Later commits change documentation, the artifact download, and one harness fix that no agent code used.
-> A fresh public clone re-ran every replay for both environments on 2026-10-05; all results matched.
+## Results
 
-## Three arms, one sentence each
+**Train-only**: Test MAE is fit on train only, the regime all three arms can be scored in. 
 
-- **B — TabPFN behind `experiment()`:** best in both environments; reaches the free-form researcher's final level
-  with its first experiment, in minutes.
-- **A — free-form, builds its own models:** 0.9 MAE behind B on validation and test; spends 45% of its effort on
-  model engineering vs 21% for the harnessed arms.
-- **A′ — untuned XGBoost behind `experiment()`:** worst; a primitive is only as good as its backend.
+| 3 runs per arm | **Arm B (TabPFN)** | **Arm A (free-form)** | **Arm A′ (untuned XGBoost)** |
+|---|---:|---:|---:|
+| Best validation MAE (mean ± sd) | **60.71 ± 0.08** | 61.58 ± 0.07 | 62.27 ± 0.06 |
+| Held-out test MAE (train-only fit) | **63.79** (3 runs) | 64.65 (2 runs) | 65.69 (2 runs)* |
+| First reaches A's final level (61.58) | **experiment 1, after 1–5 min** | 2.7 h, 7.0 h, never | never |
+| Hours per run | 3.8 | **6.3** | 3.7 |
+| Share of effort on model engineering | 21% | **45%** | 21% |
 
-Env-1 (two arms) remains the pre-declared primary; Env-2 replicates it to within 0.03 MAE and adds Arm A.
-Details: [Env-2: adding the free-form researcher](#env-2-adding-the-free-form-researcher-arm-a).
+*Only 2 runs because A/1 and A'/0 did not reproduce correctly. 
 
-## Quickstart
+### Where the effort went
 
-**Requirements:** macOS or Linux (the harness uses `os.fork`; Windows is not supported), `git`, `make`, and
-[`uv`](https://docs.astral.sh/uv/getting-started/installation/) (it installs Python 3.12). Two API keys:
-**TabPFN** from the [Prior Labs platform](https://platform.priorlabs.ai) and **OpenRouter** from
-[openrouter.ai/keys](https://openrouter.ai/keys). The **dunnhumby Complete Journey** CSVs — see
-[`data/README.md`](data/README.md).
+Every tool call is labelled from what the agent *did* (its code and actions, never its reasoning text).
 
-```bash
-git clone https://github.com/dcpadilla01/tabpfn_hackathon.git && cd tabpfn_hackathon
-uv sync                                     # environment from uv.lock
-cp .env.example .env                        # then paste TABPFN_API_KEY and OPENROUTER_API_KEY
-# copy the eight dunnhumby CSVs into data/raw/
-make data check targets test                # build + verify data, 58 tests (≈ 2 min)
-EXPERIMENT_ENV=env1 uv run python -m src.analysis.compare_runs  # regenerate Env-1 headline results (no API)
-make run ARM=b SEED=3 BUDGET=3              # a short live research run with TabPFN (≈ 30–40 min)
-```
+| | Arm B (TabPFN) | Arm A (free-form) | Arm A′ (untuned XGBoost) |
+|---|---:|---:|---:|
+| **Model engineering** | 20.8% | **45.2%** | 21.2% |
+| Debugging | 26.3% | 26.9% | 27.1% |
+| Data exploration + feature construction | 36.9% | **18.0%** | 38.5% |
+| Code cells that fit any model | 31.6% | **56.8%** | 32.1% |
 
-| Cost of a live run | LLM (GLM 5.3 Flash) | TabPFN API credits | Wall-clock |
-|---|---|---|---|
-| `BUDGET=3` | ≈ $0.05 | ≈ 40k (B only) | ≈ 30–40 min |
-| `BUDGET=20` (as reported) | ≈ $0.35–0.40 | ≈ 200–280k (B only) | ≈ 2.9–3.7 h |
+### Transfer Table (from Env-1)
 
-Arm A′ (`ARM=a_prime`) runs XGBoost locally and uses no TabPFN credits. Full reproduction steps are under
-[Reproduce](#reproduce).
+Does TabPFN find better features, or fit the same features better? 
 
-## Results at a glance (Env-1: 3 runs per arm, 20 experiments each)
+Each run's best feature table was re-scored on the other backend (Env-1, validation, mean over seed pairs):
 
-| | **B — TabPFN-3.5** | **A′ — XGBoost** |
-|---|---:|---:|
-| Best validation MAE (mean ± sd over runs) | **60.72 ± 0.04** | 62.24 ± 0.24 |
-| Paired, household-clustered bootstrap, B − A′ | **−1.52** MAE, 95% CI [−2.19, −1.02] | |
-| Experiments / hours to reach A′'s mean best (62.24)³, per run | **3, 8, 1 / 0.11, 0.87, 0.02 h** | 17 / 2.17 h (1 of 3 runs; 2 never) |
-| **Frozen test MAE** (fit train+val), mean ± sd | **64.09 ± 0.12** | 65.03 ± 0.18 |
-| Paired bootstrap on test, B − A′ | **−0.94** MAE, 95% CI [−1.28, −0.61] | |
-| Valid experiments / 60 | 52 | 58 |
-| Valid hypotheses per hour / per M tokens | 5.50 / 6.49 | **5.80 / 7.58** |
-| Effort on model engineering + debugging (share of tool calls) | 58% | 51% |
-| LLM cost per run | ≈ $0.37 | ≈ $0.35 |
+| Model   | A′'s features | B's features |
+|---------|--------------:|-------------:|
+| XGBoost |         62.24 |        64.33 |
+| TabPFN  |         61.11 |        60.72 |
 
-What the evidence supports:
+TabPFN scores lower on every table. But B's features hurt XGBoost (+2.09) while helping TabPFN only slightly (−0.39): each agent's representations are specific to the backend that scored them, and the feature×backend interaction is larger than the whole gap, so the gap cannot be split into "model" and "features". Env-2 replicates the direction on 4 of 6 tables; the two exceptions carry a leftover row-number index column, and re-fitting without it restores TabPFN's lead (60.92, 60.78 vs 62.32, 62.20).
 
-1. **TabPFN makes the researcher better, fast — and it holds on the frozen test.** Every B run beats every A′
-   run on validation, and B reaches the level A′ ends at within a median of 3 experiments (minutes), a level
-   two of three A′ runs never reach. On the held-out test period the gap is **0.94 MAE** (1.52 on validation)
-   and stays clear: all 9 run pairings favour B. The validation→test change mixes period drift (E000, with no
-   search, loses 5–8 MAE), the fitting-regime change and two approximate replays; we do not separate them. "Fast" holds in
-   both units: B runs reach 62.24 after 1–8 experiments and 0.02–0.87 hours from run start; one A′ run
-   reaches it after 17 experiments and 2.17 hours, two never do.
-2. **TabPFN beat XGBoost on every feature table, but the features themselves were tuned to their backend.**
-   Swapping backends, TabPFN scored lower on all six best tables (all six Env-1 tables; four of six in Env-2, the
-   two exceptions traced to an ID-like `index` column — see Env-2). Agent B's features helped TabPFN slightly on
-   average and hurt XGBoost in every run, so the two decomposition orders give very different answers (74% vs
-   238% "model"). B's lead can't be split into a model part and a feature part. Each agent's representations
-   fit the evaluator it was selected on (see Phase 11 details).
-3. **A fixed primitive moves effort toward the data — it does not remove model engineering.** Between the two
-   harnessed arms the backend did not change effort: TabPFN did not make individual hypotheses cheaper (Env-1: 5.50
-   vs 5.80 valid hypotheses per hour for B vs A′), and B and A′ split their effort alike (model engineering 20.8% vs
-   21.2% in Env-2). Against a free-form researcher, the fixed primitive halves
-   model engineering (45% → 21%; cells that fit a model 57% → 32%) and doubles data work (exploration + feature
-   construction 18% → 37–38%). Harnessed agents still spend about a third of their cells rebuilding models
-   (numpy ridge, least squares, two hand-written gradient-boosting implementations) to pre-screen features
-   against train labels.
+### Hypothesis Costs
 
-**Env-2** (below) reruns A′ and B, which replicate their Env-1 means to within 0.03 MAE, and adds the free-form
-researcher, Arm A.
+| per run, Env-2                               | Arm A (free-form) | Arm A′ (untuned XGBoost) | Arm B (TabPFN) |
+|----------------------------------------------|--------------:|-------------:|-----------:|
+| Valid experiments (of 20)                    |          17.0 |         17.3 |       17.0 |
+| Hours                                        |          6.33 |         3.67 |       3.76 |
+| Valid experiments per hour                   |          2.73 |         4.87 |       4.53 |
+| Uncached LLM tokens per valid experiment     |          186k |         122k |       127k |
+| Tool calls per experiment                    |          12.4 |          8.5 |        8.4 |
+| run_python errors                            |            61 |           41 |         41 |
+| Median evaluator time (s)                    |          0.03 |          4.0 |       21.7 |
+| LLM cost (USD)                               |          0.31 |         0.28 |       0.25 |
 
-The headline finding is therefore narrower and, we think, more interesting than the thesis: *a strong
-reusable primitive raises the quality ceiling and the speed to a good answer, but an autonomous agent with a
-score to minimise will still build models around a fixed primitive — the primitive moves the work toward the data,
-it does not remove it.*
+## Takeaways
 
-![Best-so-far validation MAE per run](experiments/analysis/trajectories.png)
+- **Arm B wins (TabPFN).** Beats arm A on eror and on time to a good answer.  
+- **More time, more accuracy, less LLM cost** At less expense from LLM calls, more time (due to TabPFN's calls) Arm B achieved the best MAE. 
+- **A primitive is only as good as its backend** The **exact** same harness with an untuned XGBoost (arm A') is the worst of three. **Even the free form agent beats it**.
+- **The `experiment()` tool DOES move work toward the data but did not remove it** Arm A spent 45% of its effort on modeling, twice as much as arm B. But *I believe this can be overcome with a better harness*. 
 
-### Phase 11 details (Env-1)
+### What held
 
-**Time to threshold** — first experiment whose validation MAE ≤ 62.24³; hours are wall-clock from run start
-(E000 record) to the end of that experiment's evaluation.
+- Given that the AI agent had an `experiment()` primitive did it redirect its efforts to find predictive features?
+  - It **did spend less time on modeling**. See Arm A vs Arm B (45% -> 21%)
+  - It still does some modeling work (21%). If this is done, a robust tool like TabPFN needs to be used. 
+  - It **did redirect its effort towards exploration and building features**: 18% -> 38%.
 
-| Run | First experiment ≤ 62.24 | Experiments | Hours from start | Run length (h) |
-|---|---|---:|---:|---:|
-| B/0 | E003 | 3 | 0.11 | 2.92 |
-| B/1 | E008 | 8 | 0.87 | 2.97 |
-| B/2 | E001 | 1 | 0.02 | 3.65 |
-| A′/0 | never | — | — | 3.34 |
-| A′/1 | E017 | 17 | 2.17 | 3.05 |
-| A′/2 | never | — | — | 3.70 |
+### What did not
 
-³ The threshold (62.24 = A′'s mean best validation MAE) was chosen after the runs, from their results; it
-is a descriptive reference point, not a pre-registered target.
+- Hypothesis: The 20 calls per experiment made using `experiment()` an expensive feature so the AI agent built its own. 
 
-**Representation transfer 2×2** — each run's best feature table on both backends (validation MAE; seeds
-paired by index, which carries no meaning since LLM outputs are not deterministic). Total gap = B features on TabPFN − A′
-features on XGBoost. Negative = favours B / TabPFN.
-
-| Pair | A′ feat · XGB | A′ feat · TabPFN | B feat · XGB | B feat · TabPFN | Total gap | Ordering 1: model (A′ feat) / feature (TabPFN) | Ordering 2: feature (XGB) / model (B feat) |
-|---|---:|---:|---:|---:|---:|---|---|
-| 0 | 62.45 | 60.93 | 62.52 | 60.67 | −1.78 | −1.52 / −0.26 (model 86%) | +0.07 / −1.85 (model 104%) |
-| 1 | 61.98 | 60.71 | 62.54 | 60.76 | −1.22 | −1.26 / +0.05 (model 104%) | +0.56 / −1.78 (model 146%) |
-| 2 | 62.29 | 61.69 | 67.93 | 60.73 | −1.56 | −0.60 / −0.96 (model 39%) | +5.64 / −7.20 (model 461%) |
-| **mean** | 62.24 | 61.11 | 64.33 | 60.72 | **−1.52** | **−1.13 / −0.39 (model 74%)** | **+2.09 / −3.61 (model 238%)** |
-
-- The **model effect is negative in all six cells** (both orderings, every pair): TabPFN fits either arm's
-  features better.
-- The **feature effect changes sign with the backend**: on TabPFN, B's features are better on average
-  (−0.39; mixed by pair); on XGBoost, A′'s are (+2.09; +0.32 without pair 2). The interaction (−2.48 on
-  average) is as large as the total gap: each arm's tables are co-adapted to the backend they were selected
-  on. An earlier draft reported "≈¾ model, ¼ features"; that holds only in ordering 1 and is withdrawn.
-
-### Frozen test (Phase 12)
-
-Each run's final candidate was chosen on validation only and evaluated once on the 5 test snapshots
-(12,490 rows). Test features did not exist during research, so `scripts/evaluate_test.py` replays every
-code cell that saved a table up to the final experiment, with a harness-only switch that makes
-`build_features` also emit test-snapshot rows (still as-of per snapshot), and checks that the replayed
-train+validation rows reproduce the logged feature table before scoring. The agents' `assert` statements
-(research-time row counts) are stripped; they compute nothing.
-
-| Run | Final | Val MAE | Test MAE (fit train+val) | Test MAE (fit train) | Reproduction |
-|---|---|---:|---:|---:|---|
-| B/0 | E018 | 60.67 | 64.14 | 63.74 | exact |
-| B/1 | E015 | 60.76 | 64.18 | 64.18 | exact |
-| B/2 | E019 | 60.73 | 63.95 | 63.78 | approximate¹ |
-| A′/0 | E019 | 62.45 | 65.22 | 65.70 | exact |
-| A′/1 | E020 | 61.98 | 64.86 | 65.12 | exact |
-| A′/2 | E009 | 62.29 | 65.00 | 65.04 | approximate¹ |
-
-¹ Same rows and columns; some values differ because the agent's code computes them over the whole table.
-See *Replay exceptions* below.
-
-**Fitting regime × arm** (means over 3 runs; Δ = test − validation; E000 = the demographics + calendar
-root on the same backend and regime):
-
-| Fitting regime | Arm | Validation | Test | Δ | E000 val → test | E000 Δ | Test B − A′ (95% CI) |
-|---|---|---:|---:|---:|---:|---:|---|
-| **train + validation (primary)** | B — TabPFN | 60.72 | **64.09** | +3.37 | 92.53 → 98.64 | +6.11 | **−0.94** [−1.28, −0.61] |
-| **train + validation (primary)** | A′ — XGBoost | 62.24 | 65.03 | +2.79 | 92.45 → 97.74 | +5.30 | |
-| train only | B — TabPFN | 60.72 | 63.90 | +3.18 | 92.53 → 100.18 | +7.65 | −1.39 [−1.95, −0.95] |
-| train only | A′ — XGBoost | 62.24 | 65.29 | +3.05 | 92.45 → 99.68 | +7.23 | |
-
-- **Primary regime.** Refitting the selected feature table on train + validation and scoring test was
-  declared the primary Phase 12 result in `scripts/evaluate_test.py` before any test number was computed,
-  and it stays primary. The train-only fit (the exact model that was scored on validation) is reported
-  beside it; it shows the larger B advantage, which is one reason we do not promote it after the fact.
-- **Both regimes agree on direction:** B beats A′ on test in all 9 run pairings in either regime
-  (household-clustered bootstrap CIs all below zero).
-- **The test period is harder, not the agents overfit.** E000 — which involves no search at all — loses 5–8
-  MAE from validation to test; the researched candidates lose ~3 in both arms.
-- **Adding validation rows helps XGBoost more than TabPFN** (65.29 → 65.03 vs 63.90 → 64.09), so B's edge is
-  1.39 with the training data the agents worked with and 0.94 with one more quarter of data — consistent with
-  TabPFN's advantage being largest in the small-data regime. One data point; we do not generalise it.
-- **"Evaluate once."** Each final candidate was scored in both regimes, once each. To save per-row predictions
-  for the bootstrap, the identical deterministic scoring was re-run; every re-run reproduced the same numbers.
-  No choice (candidate, features, regime) was made on test.
-
-#### Replay exceptions
-
-**B/2 (E019, val 60.73).** 29 hinge features `hg_{spend_84, spend_28, fwd28_mean, wk_avg_84, spend_56}_j =
-max(log1p(x) − q_j, 0)` differ between the logged and replayed tables (max relative difference 0.068). The knots
-`q_j` are quantiles of the feature computed over every row of the table the agent was working on
-(cell b/2 step 347, E018: `lv = np.log1p(...T[src]...)`; `qs = np.quantile(lv, [0.15, …, 0.9])`; that table
-printed `base shape (36426, 186)` = 26,437 train + 9,989 validation rows). So at research time the knots were
-already fit on train + validation covariates; in the replay the same code also sees test-period covariates,
-which moves the knots slightly. Only feature values (spend aggregates) enter the quantiles — no labels. The
-original numbers are kept and the run is flagged *approximate*.
-
-**A′/2 (E009, val 62.29).** The agent submitted a column `index` left over from `reset_index()`. It is the row
-position in a table sorted by (household_key, snapshot_day): 0…36,425 at research time, 0…48,915 in the
-replay, so values shift once test rows are interleaved. It is a recoding of the keys (Spearman 1.0 with
-household_key; increasing with snapshot_day within every household) and carries no label or future
-information; snapshot order was already a feature (`snapshot_day_index`). Because rows are household-major,
-test rows interleave with training rows: only 5 of 12,490 test rows fall outside the primary regime's training
-range of `index`. The original numbers are kept and the run is flagged *approximate*.
-
-#### Replay-fidelity sensitivity
-
-The four exact replays only (B/0, B/1, A′/0, A′/1), primary regime (fit train + validation). **n = 2 per arm**;
-no confidence interval is reported for this subset.
-
-| Arm | n | Validation | Test | Δ |
-|---|---:|---:|---:|---:|
-| B — TabPFN | 2 | 60.72 | 64.16 | +3.44 |
-| A′ — XGBoost | 2 | 62.21 | 65.04 | +2.83 |
-| **B − A′** | | −1.49 | **−0.88** | |
-
-The test gap on exact replays (−0.88) is within 0.06 of the all-runs primary result (−0.94).
+See [Future Work](#future-work)
 
 ---
 
-## Env-2: adding the free-form researcher (Arm A)
+## Deep Dive on an Experiment
 
-Env-2 reruns A′ and B and adds **Arm A**: the same researcher with no fixed model. It has sklearn, XGBoost and
-scipy, chooses and trains its own models, and submits validation predictions to `score()` (one call = one
-experiment). Env-2 uses the post-audit harness: run path scrubbed, prints inside `fn` visible at train
-snapshots only, narrower sandbox rejections. The full list is in `docs/decisions.md`. Seeds 0–2, 20 experiments,
-nine runs in parallel on one machine. **Env-2 is reported separately and never mixed with Env-1.** Wall-clock times
-are comparable across arms within Env-2, but not with Env-1 (nine concurrent runs against six).
+### Arm B: hypothesis to score in about a minute
 
-| Env-2 (3 runs per arm) | **A — free-form** | A′ — fixed XGBoost | **B — TabPFN** |
-|---|---:|---:|---:|
-| Best validation MAE (mean ± sd) | 61.58 ± 0.07 | 62.27 ± 0.06 | **60.71 ± 0.08** |
-| Hours per run | 6.33 | 3.67 | 3.76 |
-| Valid experiments per hour / per M tokens | 2.73 / 5.38 | 4.87 / 8.23 | 4.53 / 7.93 |
-| Cell timeouts (300 s) per run | 2.3 | 0.3 | 0.3 |
-| First reaches A's mean best (61.58)⁴ | 2.7 h, 7.0 h, never | never (×3) | **E001, 1–5 min (×3)** |
-| First reaches A′'s mean best (62.27)⁴ | 0.5 h, 0.3 h, 1.25 h | 2.42 h (1 run); never (×2) | **E001, 1–5 min (×3)** |
+**Run B/0, experiment 1.** Starting point: E000, customer demographics and calendar only: MAE 92.53.
 
-Validation, paired household-clustered bootstrap (arm level): **B − A = −0.87** [−1.64, −0.37];
-B − A′ = −1.56 [−2.19, −1.09]; **A′ − A = +0.69** [+0.37, +1.01]. B and A′ replicate their Env-1 means to
-within 0.03 MAE.
+> **Hypothesis:** *"A household's recent purchasing behaviour (spend in trailing windows, trip frequency, recency,
+> trend) predicts its next-4-week spend; …"*
 
-⁴ Post-hoc thresholds (each arm's mean best). B reaches both with its first experiment in every run.
+| Step | What the agent did | Time |
+|---|---|---:|
+| 1 | `run_python`: print the table descriptions and snapshot dates; first attempt errors | 12 s |
+| 2 | `run_python`: look at one snapshot's transactions and a household's history | 7 s |
+| 3 | `run_python`: read the training answers: mean, median, share of zero-spend households | 7 s |
+| 4 | `run_python`: write the feature function, build the table, save it | 21 s |
+| 5 | `experiment`: TabPFN trains and scores | 20 s |
 
-**Reading the three arms.**
-- **What the harness is worth (A vs A′):** negative here. The free-form researcher beats the fixed, untuned
-  XGBoost by 0.7 MAE. *A primitive is only as good as its backend*: A′ shows what a mediocre fixed backend
-  costs. That is also why B's lead over A′ (1.6) is larger than its lead over A (0.9).
-- **What TabPFN is worth (A′ vs B):** 1.6 MAE on validation, as in Env-1.
-- **The overall comparison (A vs B):** B beats the researcher that is free to build its own models, reaches A's
-  final level with its first experiment, and spends about 60% of A's time per run. A's lower productivity
-  includes its cell timeouts (2.3 per run against 0.3), so the gap is not purely agent behaviour.
+**Result: MAE 61.53**, a third better than the baseline, in **5 tool calls and about a minute**. The feature function
+is ordinary pandas, the hypothesis translated directly into columns (abridged from `E001/code.py`):
 
-**Effort — one classifier, both environments.** Each tool call is labelled once, by the action-based rules in
-`src/analysis/effort.py`. Because one label per call puts a cell that builds features *and* fits a model under
-"model engineering", we also report the share of executed cells that contain any model fit, which is the more
-robust measure.
+```python
+def make_feats(view, sd):                       # one snapshot date at a time; nothing after sd is visible
+    tx = view.table("transactions")
+    out = pd.DataFrame(index=view.households)
+    for w in [28, 56, 84, 112, 364]:            # "spend in trailing windows"
+        out[f"spend_{w}"] = tx[tx.day > sd - w].groupby("household_key").sales_value.sum()
+    out["trips_28"] = ...                       # "trip frequency"
+    out["days_since_last"] = ...                # "recency"
+    out["trend"] = ...                          # "last 28 days vs the 28 before"
+    return out
 
-| Env | Arm | Model engineering | Debugging | Data exploration + feature construction | **Cells with any model fit** | Cells fitting on labels |
-|---|---|---:|---:|---:|---:|---:|
-| Env-1 | B | 27.1% | 31.3% | 29.2% | **44.9%** | 43.0% |
-| Env-1 | A′ | 24.8% | 25.9% | 35.7% | **39.5%** | 39.3% |
-| Env-2 | B | 20.8% | 26.3% | 36.9% | **31.6%** | 31.6% |
-| Env-2 | A′ | 21.2% | 27.1% | 38.5% | **32.1%** | 31.6% |
-| Env-2 | **A** | **45.2%** | 26.9% | 18.0% | **56.8%** | 54.2% |
+ft = build_features(make_feats)                 # the harness runs it per snapshot, past data only
+path = save_table(ft, "e001_history")         # then the agent calls the experiment tool with this path,
+                                                 # its hypothesis, and parent E000
+```
 
-- **Direction:** given the plumbing, the free-form researcher spends far more of its effort on modelling. That
-  shows on both measures (57% of cells fit a model against about 32%; 45% against about 21% by primary label).
-  A fixed primitive does move effort away from plumbing, while the harnessed arms still rebuild some of it.
-- **Between environments, the harnessed arms' model-fitting share fell** (cells with any fit: 45% → 32% for B,
-  40% → 32% for A′). This is measured; the cause is not established. Restored prints would predict fewer
-  debugging retries, but debugging fell for B (31 → 26%) and rose for A′ (26 → 27%). Rejected cells also fell
-  (16 → 6 and 14 → 6 per run) under the narrower sandbox rules, and the two changes are confounded.
+### Arm A: the same idea, plus building the model
 
-**Transfer (A′/B replication).** TabPFN scores lower than XGBoost on 4 of 6 best tables. The two exceptions
-(A′ seeds 0 and 1: 64.62 and 64.75 on TabPFN against 62.32 and 62.20 on XGBoost) both contain `index`, a
-row-number column left by `reset_index()` that recodes `household_key`. A diagnostic re-fit without that one
-column (`experiments/analysis_env2/diagnostic_index_column.json`) gives 60.92 and 60.78 on TabPFN. TabPFN is
-sensitive to an ID-like leftover column in a way XGBoost is not, in these two tables. Logged numbers are unchanged.
+**Run A/0, experiment 13** (its best). By now the features were settled; the hypothesis was about the *model*:
 
-**Frozen test (pre-declared 2026-10-05 05:51, before any Env-2 test score).** Cross-arm primary: train-only, the
-only regime Arm A can be scored in (its agents fit on train labels). Replication: train + validation for A′ and B.
+> **Hypothesis (paraphrased):** averaging a diverse ensemble of XGBoost median-regression models trained on the raw
+> target with one trained on the residual (target minus a persistence baseline) improves accuracy.
 
-| Regime | Arm | Runs scored | Validation | Test | Δ | Test vs B (95% CI) |
-|---|---|---:|---:|---:|---:|---|
-| **train-only (primary)** | **B** | 3 | 60.71 | **63.79** | +3.08 | — |
-| **train-only (primary)** | A | 2 | 61.58 | 64.65 | +3.06 | B − A = −0.86 [−1.45, −0.45] |
-| **train-only (primary)** | A′ | 2 | 62.25 | 65.69 | +3.45 | B − A′ = −1.91 [−2.55, −1.41] |
-| train + validation (replication) | B | 3 | 60.71 | 63.96 | +3.25 | — |
-| train + validation (replication) | A′ | 2 | 62.25 | 65.05 | +2.80 | B − A′ = −1.09 [−1.44, −0.75] (Env-1: −0.94) |
+It took **14 tool calls and 20 minutes**. The first LLM call alone spent 4.5 minutes and 11,900 tokens planning.
+Then came 13 `run_python` cells: training models (30–130 seconds each), checking them on a held-out slice of the
+training period (fit on dates up to 403, check on 431), and fixing three errors. Finally `score`: **MAE 61.52**. B's first experiment had reached the same
+level in about a minute.
 
-Per run: B/0–2 exact reproductions. A/0 and A/2 exact. **A/1 not replayable**: it reproduced its validation
-predictions exactly, but its code predicts validation rows only, so no test predictions were produced. A′/2 exact.
-A′/1 approximate (`index`). **A′/0 not reproduced**: a cell that failed at research time succeeded in the replay,
-and the tables diverged. Per the pre-declared rule there were no workarounds and no hand edits; the means above use
-the runs that produced a test score. A′ − A on test = +1.05 [+0.71, +1.40].
+That contrast is the whole study in miniature: **with a strong fixed model, a hypothesis about the data is one
+feature function away from a score. Without one, every idea also needs a model built, tuned and debugged.**
+
+## Reading the results
+
+`experiments/results_env2/<arm>/<seed>/` holds one run (arms `b`, `a_prime`, `a`; seeds 0–2):
+
+- `experiments.jsonl`: **start here**. One line per experiment: hypothesis, parent, MAE, status, time, tokens.
+- `E0xx/code.py`: the code the agent ran for that experiment.
+- `transcript.jsonl`: the full session, message by message.
+- `system_prompt.txt`, `tools.json`: exactly what the agent was told.
+
+Summary tables are in `experiments/analysis_env2/`.
+
+
+---
 
 ## Design
 
 ```text
-                 ┌──────────── identical in every arm ────────────┐
- LLM researcher ─┤ objective prompt · budget · as-of data API      ├─► experiment(table) ─► fixed evaluator
- (GLM 5.3 Flash) │ inspect · run_python (pandas/numpy only)        │        backend: TabPFN-3.5 (B)
-                 └─────────────────────────────────────────────────┘                 XGBoost   (A′)
+                 ┌──────────── identical in every arm ────────────────┐
+ LLM researcher ─┤ objective prompt · budget · as-of data API · E000   │
+ (GLM 5.3 Flash) │ inspect · run_python                                │
+                 └───────────────┬────────────────────┬───────────────┘
+                                 │                    │
+            A′ / B: run_python (pandas, numpy)   A: run_python (+ sklearn, XGBoost, scipy)
+                    experiment(feature table)       score(own validation predictions)
+                                 │                    │
+                          fixed evaluator ◄───────────┘
+                     backend: TabPFN-3.5 (B)     metric, split, keys owned
+                              XGBoost   (A′)     by the evaluator in all arms
 ```
 
 - **Task.** dunnhumby *The Complete Journey*: ~2,500 households, 711 days. Predict
   `future_spend_4w` = a household's spend in the 28 days after a snapshot day. 22 snapshots every 28 days;
   temporal split by snapshot (13 train / 4 validation / 5 test); zero-spend windows kept (~20% of rows).
-  Metric: **MAE**; point prediction is loss-consistent in both arms (TabPFN median; XGBoost L1 objective).
-- **Arms differ only in the backend.** A′ and B receive byte-identical prompts and tool descriptions; the
+  Metric: MAE. The point prediction is loss-consistent in the harnessed arms (TabPFN median; XGBoost L1 objective); Arm A chooses its own.
+- **Arms differ only in the tool list.** A′ and B receive byte-identical prompts and tool descriptions; the
   backend is never named. XGBoost is fixed and untuned (`reg:absoluteerror`, 500 trees, lr 0.05, depth 6, no
   early stopping); TabPFN-3.5 is used with defaults through the Prior Labs API. Neither is tuned — the
   transfer check is what answers "XGBoost was handicapped".
+  
+  Arm A replaces experiment() with score(), which checks that the submitted keys match the validation split exactly, computes the metric, logs, and never returns a label; its run_python allowlist adds sklearn, XGBoost and scipy. Prompt and budget are otherwise identical.
 - **Budget.** 20 experiments per run; at most 15 other tool calls between experiments (exceeding it fails
-  the experiment); invalid `experiment()` calls also consume budget. Context resets every experiment: the
+  the experiment); invalid `experiment()` or `score()` calls also consume budget. Context resets every experiment: the
   agent sees a compact history table, never earlier code.
 - **E000** (demographics + snapshot calendar only) is the common root: MAE 92.5 on both backends.
 - **No agent framework.** A ~200-line hand-written loop (`src/researcher/agent.py`) on an OpenAI-compatible
@@ -328,7 +203,7 @@ the runs that produced a test score. A′ − A on test = +1.05 [+0.71, +1.40].
   cell is re-audited after the run (`make audit`: clean).
 - **Evaluator owns everything else**: keys, target, split, encoding, backend config, metric, logging.
 
-### The side channel we found — and closed
+### Side channel found and closed after runs (no impact)
 
 At validation snapshot 543 the as-of view legitimately contains the label windows of validation snapshots
 459/487/515. Only `fn`'s returned DataFrame is meant to leave the child process, but two other routes
@@ -339,7 +214,7 @@ own debug output, equally in both arms), and all 33 `fn` failures happened at a 
 validation snapshot ran. That is a closed route by accident and ordering, not by design. It is now closed
 **by design, with tests**: inside `fn`, output is visible at train snapshots and suppressed at validation
 snapshots, and validation-snapshot errors are reduced to type and line. Runs after this fix form a separate
-environment (Env-2) and are never mixed with the results above.
+environment (Env-2) and are never mixed with the results below (Env-1 Appendix).
 
 **A second route, found after both environments had run.** `snapshot()` and `history()` refuse any day after the
 research horizon (459), but the view class they wrap, `AsOf`, was also exported to agent code, and the class itself
@@ -347,12 +222,11 @@ had no cap: `AsOf(683)` would have returned data covering the validation and tes
 mentioned it. An audit of all 2,650 code cells executed in both environments (smoke runs included) found **no
 cell that calls or even names `AsOf`**, so no reported number is affected. It is now closed **by design, with
 tests**: the cap lives in the view class (set only inside the agent's process; inside each `build_features`
-snapshot, views are limited to that snapshot's own day), `AsOf` is no longer a public name, and every route we
-could find (direct, imported, `type(view)(day)`, changing the limit) is refused. This change postdates both
-environments' runs and the pinned commits below. Replaying Env-1 B/0 and Env-2 A/0 under the fixed code
+snapshot, views are limited to that snapshot's own day), `AsOf` is no longer a public name, and every route found (direct, imported, `type(view)(day)`, changing the limit) is refused. This change postdates both
+environments' runs. Replaying Env-1 B/0 and Env-2 A/0 under the fixed code
 reproduced their committed results exactly (no cell changed outcome).
 
-## Behaviour findings (Env-1)
+## Behaviour findings 
 
 - **Agents rebuilt model engineering around a fixed model.** 380 of 923 executed cells (41%) fit the
   agent's own model on train labels — ridge/least-squares sweeps, and in two B runs a gradient-boosting
@@ -362,18 +236,39 @@ reproduced their committed results exactly (no cell changed outcome).
 - **Four agents reached for labels they were not given.** Four cells filtered `train_targets()` for
   validation snapshot days. They received zero rows (MAE `nan`). This most likely reflects a wrong
   assumption that the function covers every split rather than intent, but the behaviour is real: an agent
-  with a budget and a score to minimise went looking for validation labels, and we only know the
-  protection held because we checked.
+  with a budget and a score to minimise went looking for validation labels, the protection held because it was checked. 
 - **One agent mapped its sandbox on purpose**, writing a probe that calls each API function from inside a
   snapshot and reports what is allowed. It found nothing beyond train labels.
 - **Stacking without care.** One submitted feature (`gbm_pred`, B seed 2 E017) was fitted on train labels
   and predicted back onto the same train rows; not a validation leak, not a best table, and it scored worse
   than the run's best — the agent noticed, but its out-of-fold rewrite was never saved.
-- **Failures.** B: 8 failed experiments, of which 3 came from one run reusing a run-directory path leaked in
-  tracebacks (a harness bug, since fixed) and 5 were agent errors; A′: 2 agent errors. 5 vs 2 is too few to
-  call an arm difference.
 
-## Reproduce
+## Future Work
+
+### Less expensive primitive
+I gave each arm 20 calls of `experiment()`/`score()` A´,B/A per run. They **could not afford to go wrong**. 
+
+A cap is necessary, it is likely that 20 made the call look expensive. Charging the agent in tokens or wall-clock instead would test whether the local proxies disappear. 
+
+### Harness-Free, Memory-Bound
+There is work being done within [MLE-Bench](https://github.com/openai/mle-bench) to run autonomous agents for ML Research. This was a very constrained approach. 
+
+Tying an Open Source MLE-Bench benchmark framework with TabPFN would provide a glimpse of true capabilities. 
+
+### Leakage Free by Design
+This would make an excellent tool for predictive tasks. I am aware of the work TabPFN has made in RelArena and a library or tool to feed the model leakage free data (e.g., the as-of accessor) would make it a much stronger builder of predictive tasks. 
+
+## Quickstart
+
+**Requirements:** 
+- macOS or Linux
+- `git`, `make`, [`uv`](https://docs.astral.sh/uv/getting-started/installation/) (it installs Python 3.12)
+- Two API keys:
+  - **TabPFN** from the [Prior Labs platform](https://platform.priorlabs.ai)
+  - **OpenRouter** from [openrouter.ai/keys](https://openrouter.ai/keys). 
+- The **dunnhumby Complete Journey** CSVs. See [`data/README.md`](data/README.md).
+
+### Reproduce
 
 Steps 1–3 and 5a need no research runs. Commands marked **API** spend TabPFN credits; **LLM** spends
 OpenRouter credit.
@@ -433,7 +328,7 @@ are not in git (1.7 GB); the six that the transfer and replay checks need are a 
 guarantee determinism. The data are dunnhumby's, used for research under their terms; transcripts contain excerpts the
 agents printed while exploring.
 
-## Compute and versions
+### Compute and versions
 
 - TabPFN-3.5 via the Prior Labs API (`tabpfn-client` 0.6.1, model `v3.5_default`, checkpoint
   `tabpfn-v3.5-20260909`); 35k × 30 fit+predict in ~17 s. Every experiment log records the seed, the package
@@ -445,30 +340,6 @@ agents printed while exploring.
 - Totals for the six Env-1 runs: ~16M tokens, ≈ $2.2 LLM cost, ≈ 0.9M TabPFN credits.
 - Totals for the nine Env-2 runs: ~22M tokens, ≈ $2.5 LLM cost, ≈ 0.75M TabPFN credits (Arm B only); run hours per
   arm (sum of three runs): A 19.0, A′ 11.0, B 11.3. Nine runs shared one 16 GB machine.
-
-## Limitations
-
-- **Three runs per arm, one dataset, one LLM.** The bootstrap CI reflects row sampling, not run-to-run LLM
-  variance; with three runs per arm that variance is only roughly characterised (sd 0.04 vs 0.24).
-- **Best-of-20 on validation is optimistic** (B's edge 1.52 on validation, 0.94 on test in the primary
-  regime); the frozen test is the honest number. Two of six test numbers come from approximate replays (see the Phase 12 table).
-- **Effort classification is rule-based on actions** (code patterns, retries), checked by hand on a sample;
-  its "preprocessing" class is unreliable (≈3% of calls).
-- **Arm A was run in Env-2 only,** with A′ and B rerun in the same environment; it is not comparable with Env-1
-  rows. Env-2's frozen test scores **n = 2** runs for A and for A′ (one not replayable, one not reproduced), against
-  n = 3 for B.
-- **The harnessed arms' model-fitting share fell between environments** (cells with any fit: 45% → 32% for B,
-  40% → 32% for A′). We measured the drop but did not establish its cause; the Env-2 harness changes are confounded.
-- Not run: tree/best-first search over experiments; a second dataset.
-
-## What this could become
-
-[[YOUR "WHAT THIS COULD BECOME" TEXT HERE]]
-
-## What we do not claim
-
-TabPFN does not eliminate data science; it does not always beat XGBoost; feature engineering is not
-unnecessary; autonomous research is not solved.
 
 ## Repository
 
@@ -495,3 +366,55 @@ Model: **TabPFN-3.5** by **Prior Labs**. Built for the Prior Labs TabPFN-3.5 Hac
 
 **License:** the code in this repository is released under the [MIT License](LICENSE). The dunnhumby data and
 data derived from it are not covered by that license; they remain subject to dunnhumby's terms.
+
+---
+
+## Appendix: Env-1, the two-arm pilot
+
+The first environment ran B and A′ only (3 runs each, 20 experiments), before the harness fixes that Env-2 added
+(see `docs/decisions.md`).
+
+| Env-1 | B — TabPFN | A′ — untuned XGBoost |
+|---|---:|---:|
+| Best validation MAE (mean ± sd) | **60.72 ± 0.04** | 62.24 ± 0.24 |
+| Held-out test MAE (fit on train + validation, pre-declared primary) | **64.09 ± 0.12** | 65.03 ± 0.18 |
+| Test gap, B − A′ (95% CI) | **−0.94** [−1.28, −0.61] | |
+| Experiments to reach 62.24 | 3, 8, 1 | 17 (1 run); never (2) |
+| Valid experiments per hour | 5.50 | 5.80 |
+| Model engineering + debugging (share of tool calls) | 58% | 51% |
+
+### Replay exceptions
+
+**B/2 (E019, val 60.73).** 29 hinge features `hg_{spend_84, spend_28, fwd28_mean, wk_avg_84, spend_56}_j =
+max(log1p(x) − q_j, 0)` differ between the logged and replayed tables (max relative difference 0.068). The knots
+`q_j` are quantiles of the feature computed over every row of the table the agent was working on
+(cell b/2 step 347, E018: `lv = np.log1p(...T[src]...)`; `qs = np.quantile(lv, [0.15, …, 0.9])`; that table
+printed `base shape (36426, 186)` = 26,437 train + 9,989 validation rows). So at research time the knots were
+already fit on train + validation covariates; in the replay the same code also sees test-period covariates,
+which moves the knots slightly. Only feature values (spend aggregates) enter the quantiles — no labels. The
+original numbers are kept and the run is flagged *approximate*.
+
+**A′/2 (E009, val 62.29).** The agent submitted a column `index` left over from `reset_index()`. It is the row
+position in a table sorted by (household_key, snapshot_day): 0…36,425 at research time, 0…48,915 in the
+replay, so values shift once test rows are interleaved. It is a recoding of the keys (Spearman 1.0 with
+household_key; increasing with snapshot_day within every household) and carries no label or future
+information; snapshot order was already a feature (`snapshot_day_index`). Because rows are household-major,
+test rows interleave with training rows: only 5 of 12,490 test rows fall outside the primary regime's training
+range of `index`. The original numbers are kept and the run is flagged *approximate*.
+
+**Failures.** B: 8 failed experiments, of which 3 came from one run reusing a run-directory path leaked in
+  tracebacks (a harness bug, since fixed) and 5 were agent errors; A′: 2 agent errors. 5 vs 2 is too few to
+  call an arm difference.
+
+### Replay-fidelity sensitivity
+
+The four exact replays only (B/0, B/1, A′/0, A′/1), primary regime (fit train + validation). **n = 2 per arm**;
+no confidence interval is reported for this subset.
+
+| Arm | n | Validation | Test | Δ |
+|---|---:|---:|---:|---:|
+| B — TabPFN | 2 | 60.72 | 64.16 | +3.44 |
+| A′ — XGBoost | 2 | 62.21 | 65.04 | +2.83 |
+| **B − A′** | | −1.49 | **−0.88** | |
+
+The test gap on exact replays (−0.88) is within 0.06 of the all-runs primary result (−0.94).
