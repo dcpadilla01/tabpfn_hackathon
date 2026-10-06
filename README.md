@@ -32,6 +32,8 @@ I gave the same agent the same data, task, prompt and budget, and change only it
 | Hours per run | 3.8 | **6.3** | 3.7 |
 | Share of effort on model engineering | 21% | **45%** | 21% |
 
+![Best-so-far validation MAE vs hours, three arms, Env-2](docs/figures/trajectories_env2.png)
+
 *Only 2 runs because A/1 and A'/0 did not reproduce correctly. 
 
 ### Where the effort went
