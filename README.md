@@ -1,20 +1,30 @@
 # What does a cheap predictive hypothesis do to an autonomous data scientist?
 
+[[YOUR OPENING BLOCK HERE — "Why I built this / What I tested / What I learned" — replaces this paragraph and the
+thesis quote below]]
+
 **Prior Labs TabPFN-3.5 Hackathon entry.** We give the same LLM researcher the same data, task, prompt and
-budget, and change one thing — the model behind its `experiment()` tool: **TabPFN-3.5** (Arm B) or a fixed,
-untuned **XGBoost** (Arm A′). Then we measure what it finds, what it costs, and where its effort goes.
+budget, and change only its tool list: a fixed **TabPFN-3.5** model behind `experiment()` (Arm B), a fixed,
+untuned **XGBoost** behind `experiment()` (Arm A′), or no fixed model at all — the agent builds its own (Arm A,
+Env-2). Then we measure what it finds, what it costs, and where its effort goes.
 
 > **Working thesis.** TabPFN reduces the cost of autonomous predictive experimentation by collapsing
 > preprocessing, model selection and tuning into a reusable prediction primitive.
 
-> **Pinned results.** Env-1 numbers were produced from the code and stored results at commit
-> [`1fb5872`](https://github.com/dcpadilla01/tabpfn_hackathon/tree/1fb5872), the Env-1 harness. Reproducibility
-> from a fresh public clone was checked end to end on 2026-10-04 (at `d7bcbbf`; `1fb5872` only updated the
-> repository URL). Env-2 numbers were produced at
-> [`db3810c`](https://github.com/dcpadilla01/tabpfn_hackathon/tree/db3810c). Later commits change documentation and the
-> artifact download, plus one harness fix (2026-10-05: the as-of view class now enforces the research horizon itself;
-> see *The side channel we found*), which no agent code in either environment used. On 2026-10-05, at `08d8e4a`, a fresh public clone re-ran every replay and recompute command for
-> both environments (step 5b): all 15 frozen-test verdicts, both transfer tables and E000 matched the committed results.
+> **Pinned results.** Env-1 numbers come from commit [`1fb5872`](https://github.com/dcpadilla01/tabpfn_hackathon/tree/1fb5872), Env-2 numbers from [`db3810c`](https://github.com/dcpadilla01/tabpfn_hackathon/tree/db3810c).
+> Later commits change documentation, the artifact download, and one harness fix that no agent code used.
+> A fresh public clone re-ran every replay for both environments on 2026-10-05; all results matched.
+
+## Three arms, one sentence each
+
+- **B — TabPFN behind `experiment()`:** best in both environments; reaches the free-form researcher's final level
+  with its first experiment, in minutes.
+- **A — free-form, builds its own models:** 0.9 MAE behind B on validation and test; spends 45% of its effort on
+  model engineering vs 21% for the harnessed arms.
+- **A′ — untuned XGBoost behind `experiment()`:** worst; a primitive is only as good as its backend.
+
+Env-1 (two arms) remains the pre-declared primary; Env-2 replicates it to within 0.03 MAE and adds Arm A.
+Details: [Env-2: adding the free-form researcher](#env-2-adding-the-free-form-researcher-arm-a).
 
 ## Quickstart
 
@@ -66,26 +76,31 @@ What the evidence supports:
    both units: B runs reach 62.24 after 1–8 experiments and 0.02–0.87 hours from run start; one A′ run
    reaches it after 17 experiments and 2.17 hours, two never do.
 2. **TabPFN beat XGBoost on every feature table, but the features themselves were tuned to their backend.**
-   Swapping backends, TabPFN scored lower on all six best tables. Agent B's features helped TabPFN slightly on
+   Swapping backends, TabPFN scored lower on all six best tables (all six Env-1 tables; four of six in Env-2, the
+   two exceptions traced to an ID-like `index` column — see Env-2). Agent B's features helped TabPFN slightly on
    average and hurt XGBoost in every run, so the two decomposition orders give very different answers (74% vs
    238% "model"). B's lead can't be split into a model part and a feature part. Each agent's representations
    fit the evaluator it was selected on (see Phase 11 details).
-3. **TabPFN did *not* make individual hypotheses cheaper, and did *not* move effort away from plumbing.**
-   Per experiment, both arms cost the same tokens and time; B tests slightly *fewer* valid hypotheses per
-   hour and per token. Agents in *both* fixed-model arms rebuilt the plumbing they were spared: **41% of all
-   code they ran fitted their own models** (numpy ridge, least squares, two hand-written gradient-boosting
-   implementations) to pre-screen features against train labels.
+3. **A fixed primitive moves effort toward the data — it does not remove model engineering.** Between the two
+   harnessed arms the backend did not change effort: TabPFN did not make individual hypotheses cheaper (Env-1: 5.50
+   vs 5.80 valid hypotheses per hour for B vs A′), and B and A′ split their effort alike (model engineering 20.8% vs
+   21.2% in Env-2). Against a free-form researcher, the fixed primitive halves
+   model engineering (45% → 21%; cells that fit a model 57% → 32%) and doubles data work (exploration + feature
+   construction 18% → 37–38%). Harnessed agents still spend about a third of their cells rebuilding models
+   (numpy ridge, least squares, two hand-written gradient-boosting implementations) to pre-screen features
+   against train labels.
 
 **Env-2** (below) reruns A′ and B, which replicate their Env-1 means to within 0.03 MAE, and adds the free-form
 researcher, Arm A.
 
 The headline finding is therefore narrower and, we think, more interesting than the thesis: *a strong
 reusable primitive raises the quality ceiling and the speed to a good answer, but an autonomous agent with a
-score to minimise will re-create model engineering around any fixed primitive.*
+score to minimise will still build models around a fixed primitive — the primitive moves the work toward the data,
+it does not remove it.*
 
 ![Best-so-far validation MAE per run](experiments/analysis/trajectories.png)
 
-### Phase 11 details
+### Phase 11 details (Env-1)
 
 **Time to threshold** — first experiment whose validation MAE ≤ 62.24³; hours are wall-clock from run start
 (E000 record) to the end of that experiment's evaluation.
@@ -258,7 +273,7 @@ robust measure.
 (A′ seeds 0 and 1: 64.62 and 64.75 on TabPFN against 62.32 and 62.20 on XGBoost) both contain `index`, a
 row-number column left by `reset_index()` that recodes `household_key`. A diagnostic re-fit without that one
 column (`experiments/analysis_env2/diagnostic_index_column.json`) gives 60.92 and 60.78 on TabPFN. TabPFN is
-sensitive to an ID-like leftover column in a way XGBoost is not. Logged numbers are unchanged.
+sensitive to an ID-like leftover column in a way XGBoost is not, in these two tables. Logged numbers are unchanged.
 
 **Frozen test (pre-declared 2026-10-05 05:51, before any Env-2 test score).** Cross-arm primary: train-only, the
 only regime Arm A can be scored in (its agents fit on train labels). Replication: train + validation for A′ and B.
@@ -337,7 +352,7 @@ could find (direct, imported, `type(view)(day)`, changing the limit) is refused.
 environments' runs and the pinned commits below. Replaying Env-1 B/0 and Env-2 A/0 under the fixed code
 reproduced their committed results exactly (no cell changed outcome).
 
-## Behaviour findings
+## Behaviour findings (Env-1)
 
 - **Agents rebuilt model engineering around a fixed model.** 380 of 923 executed cells (41%) fit the
   agent's own model on train labels — ridge/least-squares sweeps, and in two B runs a gradient-boosting
@@ -427,7 +442,9 @@ agents printed while exploring.
   cap. Each request passes the run's seed (0, 1, 2), but the provider does not guarantee determinism, hence
   several runs per arm. Provider routing varied per call and
   is logged.
-- Totals for the six MVP runs: ~16M tokens, ≈ $2.2 LLM cost, ≈ 0.9M TabPFN credits.
+- Totals for the six Env-1 runs: ~16M tokens, ≈ $2.2 LLM cost, ≈ 0.9M TabPFN credits.
+- Totals for the nine Env-2 runs: ~22M tokens, ≈ $2.5 LLM cost, ≈ 0.75M TabPFN credits (Arm B only); run hours per
+  arm (sum of three runs): A 19.0, A′ 11.0, B 11.3. Nine runs shared one 16 GB machine.
 
 ## Limitations
 
@@ -438,8 +455,15 @@ agents printed while exploring.
 - **Effort classification is rule-based on actions** (code patterns, retries), checked by hand on a sample;
   its "preprocessing" class is unreliable (≈3% of calls).
 - **Arm A was run in Env-2 only,** with A′ and B rerun in the same environment; it is not comparable with Env-1
-  rows. Env-2's frozen test scores 2 of 3 runs for A and A′ (one not replayable, one not reproduced).
+  rows. Env-2's frozen test scores **n = 2** runs for A and for A′ (one not replayable, one not reproduced), against
+  n = 3 for B.
+- **The harnessed arms' model-fitting share fell between environments** (cells with any fit: 45% → 32% for B,
+  40% → 32% for A′). We measured the drop but did not establish its cause; the Env-2 harness changes are confounded.
 - Not run: tree/best-first search over experiments; a second dataset.
+
+## What this could become
+
+[[YOUR "WHAT THIS COULD BECOME" TEXT HERE]]
 
 ## What we do not claim
 
@@ -464,7 +488,7 @@ experiments/     results/<arm>/<seed>/ (logs, code, transcripts), analysis/
 
 Data: **dunnhumby — The Complete Journey** (© dunnhumby; see `data/README.md`). The raw files are not
 redistributed here. For reproducibility, data derived from them are published under dunnhumby's research
-terms: per-household × snapshot feature tables for the six selected runs (release `env1-artifacts`),
+terms: per-household × snapshot feature tables for the selected runs (releases `env1-artifacts` and `env2-artifacts`),
 label-free per-row predictions, and agent transcripts that include excerpts the agents printed while
 exploring.
 Model: **TabPFN-3.5** by **Prior Labs**. Built for the Prior Labs TabPFN-3.5 Hackathon.
