@@ -2,6 +2,8 @@
 
 I gave an AI researcher a fixed prediction primitive (`experiment()`) changing only what's behind it. With **TabPFN 3.5** it reached lower error than a researcher free to build its own models in the first experiments, minutes in. The primitive moved the researcher's effort towards data explorations, although, it did not remove modelling efforts completely. 
 
+**▶ [Walkthrough on YouTube](https://youtu.be/jwAZkgB5LtI)** · Prior Labs TabPFN-3.5 Hackathon entry
+
 <p align="center">
   <img src="docs/figures/hero_readme.png" alt="Same researcher, same data and same budget" width=900>
 </p>
