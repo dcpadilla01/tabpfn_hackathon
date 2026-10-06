@@ -334,7 +334,8 @@ cell that calls or even names `AsOf`**, so no reported number is affected. It is
 tests**: the cap lives in the view class (set only inside the agent's process; inside each `build_features`
 snapshot, views are limited to that snapshot's own day), `AsOf` is no longer a public name, and every route we
 could find (direct, imported, `type(view)(day)`, changing the limit) is refused. This change postdates both
-environments' runs and the pinned commits below.
+environments' runs and the pinned commits below. Replaying Env-1 B/0 and Env-2 A/0 under the fixed code
+reproduced their committed results exactly (no cell changed outcome).
 
 ## Behaviour findings
 

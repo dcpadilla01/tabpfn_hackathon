@@ -78,3 +78,6 @@ before agent code runs; each forked `build_features` child lowers it to its own 
 alignment and the baseline table lift it for their own call only. `AsOf` was removed from the public API. The
 horizon attribute is a dunder, so the static checker rejects any read or write of it. Tests cover direct,
 imported, `type(view)(day)` and limit-changing routes (`tests/test_run_python.py`).
+
+Verification after the fix: replays of Env-1 B/0 and Env-2 A/0 under the fixed harness reproduced their committed
+frozen-test results exactly; no replayed cell changed outcome.
