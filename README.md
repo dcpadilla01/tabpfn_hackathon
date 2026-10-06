@@ -1,5 +1,11 @@
 # TabPFN for autonomous research
 
+I gave an AI researcher a fixed prediction primitive (`experiment()`) changing only what's behind it. With **TabPFN 3.5** it reached lower error than a researcher free to build its own models in the first experiments, minutes in. The primitive moved the researcher's effort towards data explorations, although, it did not remove modelling efforts completely. 
+
+<p align="center">
+  <img src="docs/figures/hero_readme.png" alt="Same researcher, same data and same budget" width=900>
+</p>
+
 ## Why I built this
 
 I wanted to test if giving an AI agent the `experiment()` primitive would improve an autonomous researcher. It is a very primitive [agent](agent_design.md) on purpose because I needed to see every call made by the model without a harness (complex or minimal) confounding the results. 
@@ -46,6 +52,8 @@ Every tool call is labelled from what the agent *did* (its code and actions, nev
 | Debugging | 26.3% | 26.9% | 27.1% |
 | Data exploration + feature construction | 36.9% | **18.0%** | 38.5% |
 | Code cells that fit any model | 31.6% | **56.8%** | 32.1% |
+
+![Share of tool calls by activity, three arms, Env-2](docs/figures/effort_env2.png)
 
 ### Transfer Table (from Env-1)
 
