@@ -65,3 +65,16 @@ rows. The agent knew (`# simulate harness: … train rows in-sample`), attempted
 - Tracebacks exposed `<harness>/experiments/results/<arm>/<seed>/…`, revealing the arm label (`b` / `a_prime`).
   The label does not name the backend. Scrubbed for later runs.
 - Agent debug prints inside `fn` were silently lost in the MVP runs (same in both arms): a source of friction.
+
+## Addendum (2026-10-05): uncapped view class
+
+Found after both environments had run. `snapshot()`/`history()` capped direct access at day 459, but the class they
+wrap, `AsOf`, was in the agent's public API without a cap: agent code could build `AsOf(683)` and see validation and
+test label windows. Audit of every executed `run_python` cell in Env-1 and Env-2 (2,650 cells, smoke runs
+included): **0 cells call `AsOf(…)`; 0 cells mention the name.** No reported result is affected.
+
+Fix: the cap is enforced in `AsOf.__init__` via a class-level horizon that the runner locks to the research horizon
+before agent code runs; each forked `build_features` child lowers it to its own snapshot day; harness-internal
+alignment and the baseline table lift it for their own call only. `AsOf` was removed from the public API. The
+horizon attribute is a dunder, so the static checker rejects any read or write of it. Tests cover direct,
+imported, `type(view)(day)` and limit-changing routes (`tests/test_run_python.py`).

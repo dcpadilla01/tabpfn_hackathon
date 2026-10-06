@@ -145,3 +145,47 @@ build_features(fn)
 """
     r = run_python(code, w, h)
     assert r.status == "error" and "ValueError at line" in r.output and "leaky" not in r.output
+
+
+# ---- the as-of horizon is enforced by the view class itself (closes the public-AsOf route) ----
+@pytest.mark.parametrize("code", [
+    "from agent_api import AsOf",                      # no longer a public name
+    "import agent_api\nagent_api.AsOf(683)",
+    "type(snapshot()).__horizon__ = None",             # dunder: cannot touch the lock
+    "getattr(type(snapshot()), '__horizon__')",
+])
+def test_horizon_escape_routes_rejected_statically(code):
+    assert check_code(code)
+
+
+def test_view_class_refuses_days_beyond_horizon(ws):
+    w, h = ws
+    r = run_python("v = AsOf(683)", w, h)                       # not in the agent's namespace any more
+    assert r.status == "error" and "NameError" in r.output
+    r = run_python("v = type(snapshot())(683)", w, h)          # indirect construction
+    assert r.status == "error" and "beyond the allowed horizon" in r.output
+    r = run_python("print(type(snapshot())(459).day)", w, h)   # the horizon itself is fine
+    assert r.status == "ok" and "459" in r.output
+
+
+def test_inside_fn_views_are_capped_at_their_own_snapshot(ws):
+    w, h = ws
+    code = '''
+def fn(view, day):
+    type(view)(day + 28)            # look ahead into this snapshot's own label window
+    return pd.DataFrame({"x": 0.0}, index=view.households)
+build_features(fn)
+'''
+    r = run_python(code, w, h)
+    assert r.status == "error" and "PermissionError" in r.output
+
+
+def test_legitimate_routes_still_work(ws):
+    w, h = ws
+    code = '''
+ft = build_features(lambda v, d: pd.DataFrame({"n": v.transactions.groupby("household_key").size()}))
+b = baseline_features()
+print(len(ft), int(ft.snapshot_day.max()), len(b), snapshot().day)
+'''
+    r = run_python(code, w, h)
+    assert r.status == "ok" and "36426 543 36426 459" in r.output, r.output

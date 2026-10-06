@@ -49,7 +49,14 @@ class AsOf:
     """Every table as it was knowable on `day`. Attributes are computed lazily and cached;
     each access returns a fresh copy so caller code cannot corrupt the view."""
 
+    #: Latest day a view may be built for; None = unrestricted (harness). Set only inside the agent's
+    #: subprocess (see agent_api._lock_horizon). Dunder name: agent code cannot read or write it.
+    __horizon__: int | None = None
+
     def __init__(self, day: int, households: pd.Index | None = None):
+        horizon = type(self).__horizon__
+        if horizon is not None and int(day) > horizon:
+            raise PermissionError(f"a view for day {int(day)} is beyond the allowed horizon (day {horizon})")
         self.day = int(day)
         self.week = int(week_of_day(self.day))
         #: households with a target row at this snapshot (None outside build_features)

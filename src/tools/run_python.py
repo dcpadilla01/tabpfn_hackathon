@@ -124,6 +124,7 @@ warnings.simplefilter("ignore", FutureWarning)
 warnings.simplefilter("ignore", DeprecationWarning)
 from src.researcher import agent_api
 sys.modules["agent_api"] = agent_api
+agent_api._lock_horizon()
 _ns = {{"__name__": "__main__", "agent_api": agent_api}}
 exec("from agent_api import *", _ns)
 _code = open({code_path!r}).read()

@@ -32,12 +32,27 @@ _IN_CHILD = False
 from src.researcher.agent_api_public import PUBLIC_API as _PUBLIC
 
 __all__ = [
-    "RESEARCH_VISIBLE_DAY", "AsOf", "snapshot", "history", "build_features", "baseline_features",
+    "RESEARCH_VISIBLE_DAY", "snapshot", "history", "build_features", "baseline_features",
     "train_targets", "snapshot_days", "save_table", "load_saved", "describe_tables", "KEYS", "TARGET", "pd", "np",
 ]
 
-AsOf = _acc.AsOf
 describe_tables = _acc.describe_tables
+
+
+def _lock_horizon() -> None:
+    """Called by the run_python runner before any agent code: no view beyond the research horizon."""
+    _acc.AsOf.__horizon__ = RESEARCH_VISIBLE_DAY
+
+
+class _unlocked:
+    """Harness-internal: lift the horizon for one internal call (keys alignment, the baseline table)."""
+
+    def __enter__(self):
+        self.saved = _acc.AsOf.__horizon__
+        _acc.AsOf.__horizon__ = None
+
+    def __exit__(self, *exc):
+        _acc.AsOf.__horizon__ = self.saved
 
 
 class AccessDenied(RuntimeError):
@@ -97,6 +112,7 @@ def _run_isolated(fn, day: int, households: pd.Index):
         # At validation snapshots the view contains earlier validation snapshots' label windows.
         # Only the returned DataFrame may leave the child: silence output, and reduce errors to
         # type + line (messages can carry data values).
+        _acc.AsOf.__horizon__ = day  # child only: views up to this snapshot's own day
         quiet = day >= RESEARCH_VISIBLE_DAY
         if quiet:
             devnull = os.open(os.devnull, os.O_WRONLY)
@@ -154,14 +170,16 @@ def build_features(fn, splits=("train", "validation")) -> pd.DataFrame:
         parts.append((int(day), hh, out))
     # Reuse the accessor's alignment/validation with precomputed outputs.
     cache = {d: o for d, _, o in parts}
-    return _acc.build_features(lambda view, d: cache[d], splits=tuple(splits))
+    with _unlocked():  # alignment only: fn already ran per snapshot; these views are not handed to agent code
+        return _acc.build_features(lambda view, d: cache[d], splits=tuple(splits))
 
 
 def baseline_features() -> pd.DataFrame:
     """The E000 feature table (demographics + snapshot calendar) for train and validation."""
     from src.features.baseline import build_baseline_features
 
-    return build_baseline_features()
+    with _unlocked():  # harness-built table (demographics + calendar only)
+        return build_baseline_features()
 
 
 def save_table(df: pd.DataFrame, name: str) -> str:

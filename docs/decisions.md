@@ -120,3 +120,11 @@ that run were ordinary pandas mistakes, not harness-induced.
 - Env-2's wall-clock numbers come from nine concurrent runs on one 16 GB machine. A memory spike at 23:16
   (four heavy cells at once; one hit the 300 s timeout) lost no run. Cross-arm time comparisons within Env-2 are
   fair; comparisons with Env-1 (six concurrent runs) are not.
+
+## 2026-10-05 — Close the uncapped `AsOf` route (post-hoc harness fix)
+
+- **Finding:** the view class `AsOf` was public and uncapped (`AsOf(683)` reached validation/test label windows).
+- **Evidence it was unused:** 0 of 2,650 executed cells in both environments call or name `AsOf`.
+- **Decision:** fix in the class (horizon enforced in `__init__`, locked by the runner, per-snapshot inside
+  `build_features`), unexport `AsOf`, add tests, disclose in the README and the audit report. The code changes after
+  the pinned result commits; results are not re-run because no agent code used the route.

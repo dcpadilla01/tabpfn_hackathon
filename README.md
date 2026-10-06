@@ -12,7 +12,8 @@ untuned **XGBoost** (Arm A′). Then we measure what it finds, what it costs, an
 > from a fresh public clone was checked end to end on 2026-10-04 (at `d7bcbbf`; `1fb5872` only updated the
 > repository URL). Env-2 numbers were produced at
 > [`db3810c`](https://github.com/dcpadilla01/tabpfn_hackathon/tree/db3810c). Later commits change documentation and the
-> artifact download only. On 2026-10-05, at `08d8e4a`, a fresh public clone re-ran every replay and recompute command for
+> artifact download, plus one harness fix (2026-10-05: the as-of view class now enforces the research horizon itself;
+> see *The side channel we found*), which no agent code in either environment used. On 2026-10-05, at `08d8e4a`, a fresh public clone re-ran every replay and recompute command for
 > both environments (step 5b): all 15 frozen-test verdicts, both transfer tables and E000 matched the committed results.
 
 ## Quickstart
@@ -324,6 +325,16 @@ validation snapshot ran. That is a closed route by accident and ordering, not by
 **by design, with tests**: inside `fn`, output is visible at train snapshots and suppressed at validation
 snapshots, and validation-snapshot errors are reduced to type and line. Runs after this fix form a separate
 environment (Env-2) and are never mixed with the results above.
+
+**A second route, found after both environments had run.** `snapshot()` and `history()` refuse any day after the
+research horizon (459), but the view class they wrap, `AsOf`, was also exported to agent code, and the class itself
+had no cap: `AsOf(683)` would have returned data covering the validation and test label windows. The prompt never
+mentioned it. An audit of all 2,650 code cells executed in both environments (smoke runs included) found **no
+cell that calls or even names `AsOf`**, so no reported number is affected. It is now closed **by design, with
+tests**: the cap lives in the view class (set only inside the agent's process; inside each `build_features`
+snapshot, views are limited to that snapshot's own day), `AsOf` is no longer a public name, and every route we
+could find (direct, imported, `type(view)(day)`, changing the limit) is refused. This change postdates both
+environments' runs and the pinned commits below.
 
 ## Behaviour findings
 
