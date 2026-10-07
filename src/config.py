@@ -30,7 +30,7 @@ def load_config(path: str | Path = ROOT / "config" / "default.yaml") -> dict:
         return yaml.safe_load(f)
 
 
-# Experiment environment (see CLAUDE.md "Environments and primary results"). Env-1 = the reported runs in
+# Experiment environment (see docs/build_plan_2026-10.md "Environments and primary results"). Env-1 = the reported runs in
 # experiments/results; Env-2 = the post-audit harness, kept in experiments/results_env2. Never mixed.
 ENVIRONMENT = os.environ.get("EXPERIMENT_ENV") or load_config().get("environment", "env1")
 if ENVIRONMENT not in ("env1", "env2"):

@@ -1,7 +1,7 @@
 # Decisions log
 
 Protocol decisions taken after work started, with the reason and what they do *not* change.
-Earlier locked decisions are in `CLAUDE.md` ("Locked Decisions", "Environments and primary results").
+Earlier locked decisions are in the build plan, `docs/build_plan_2026-10.md` ("Locked Decisions", "Environments and primary results").
 
 ## 2026-10-04 — Phase 12 primary regime
 
@@ -46,7 +46,7 @@ Earlier locked decisions are in `CLAUDE.md` ("Locked Decisions", "Environments a
 
 - **Decision (project owner, before any run):** the researcher uses **`z-ai/glm-5.3-flash` via OpenRouter**,
   temperature 0.7, max 16,000 tokens per call, no reasoning cap, through a provider-agnostic OpenAI-compatible
-  client. `CLAUDE.md` originally named Claude Sonnet 5.5 on the Anthropic SDK; `PLAN.md` already named GLM 5.3
+  client. The build plan (then `CLAUDE.md`) originally named Claude Sonnet 5.5 on the Anthropic SDK; `PLAN.md` already named GLM 5.3
   Flash via OpenRouter. Both now agree with the README.
 - **Reason:** cost (stated by the project owner; to be confirmed). Six 20-experiment runs cost ≈ $2.2 in total.
 - **Determinism:** each request passes the run's seed (0, 1, 2); the provider does not guarantee deterministic
@@ -95,8 +95,8 @@ that run were ordinary pandas mistakes, not harness-induced.
 
 ## 2026-10-05 05:51 CST — Env-2 frozen test: pre-declaration (no Env-2 test number computed yet)
 
-- **Scope change, stated plainly.** Env-2 was declared as a validation-and-behaviour comparison (CLAUDE.md,
-  "Environments and primary results"). A frozen test is being added **now, before any Env-2 test score has been
+- **Scope change, stated plainly.** Env-2 was declared as a validation-and-behaviour comparison (build plan,
+  `docs/build_plan_2026-10.md`, "Environments and primary results"). A frozen test is being added **now, before any Env-2 test score has been
   computed**: `experiments/analysis_env2/` does not exist at the time of writing. That is why this is a
   pre-declaration, not a post-hoc choice.
 - **Primary cross-arm regime: train-only** (fit on train, score test once), for A, A′ and B. Arm A can only be
